@@ -1,0 +1,1 @@
+<?php NerdPress::widget_area( 'Sidebar Primary' ); ?>

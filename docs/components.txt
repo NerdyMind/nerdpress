@@ -1,0 +1,51 @@
+Bootstrap
+http://getbootstrap.com
+3.0.3
+
+Roots base theme
+https://github.com/roots/roots
+6.5.1
+
+Animate.css
+https://github.com/daneden/animate.css
+3.0.0
+
+Bootstrap-hover-dropdown
+https://github.com/CWSpear/bootstrap-hover-dropdown
+2.0.1
+
+Lightbox for Bootstrap 3
+https://github.com/ashleydw/lightbox
+3.0.3b
+
+HTML5 Shiv
+https://github.com/aFarkas/html5shiv
+3.7.0
+
+jQuery Fittext
+https://github.com/davatron5000/FitText.js
+1.1
+
+FitVids.js
+https://github.com/davatron5000/FitVids.js
+1.0.3
+
+FlexSlider
+https://github.com/woothemes/FlexSlider
+2.2.2
+
+jQuery Placeholder
+https://github.com/mathiasbynens/jquery-placeholder
+2.0.7
+
+Modernizr
+http://modernizr.com/download/
+2.7.0
+
+Respond.js
+https://github.com/scottjehl/Respond
+1.4.0
+
+Retina.js
+https://github.com/imulus/retinajs
+1.2.0
