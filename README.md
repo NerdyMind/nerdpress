@@ -18,7 +18,6 @@ NerdPress is a rapid and flexible theme development framework for WordPress. Bas
 
 ## NerdPress Enhancements:
 
-* [FontAwesome](https://github.com/FortAwesome/Font-Awesome) icon font
 * Easy creation of custom post types and taxonomies using [Super CPT](https://github.com/mboynes/super-cpt)
 * Easy breadcrumb manipulation and graceful handling of custom post types
 * Modular component structure
@@ -34,6 +33,7 @@ NerdPress is a rapid and flexible theme development framework for WordPress. Bas
 * Customizable layouts via NerdPress Panels
 * Requires Advanced Custom Fields — installs automatically on activation
 * Easy widget-based page creation (optional)
+* [FontAwesome](https://github.com/FortAwesome/Font-Awesome) icon font
 * JavaScript libraries Included (and treasured): 
     * [Bootstrap Hover Dropdown](https://github.com/CWSpear/bootstrap-hover-dropdown)
     * [Bootstrap Lightbox](https://github.com/ashleydw/lightbox)
