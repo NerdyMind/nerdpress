@@ -40,7 +40,7 @@ NerdPress is a rapid and flexible theme development framework for WordPress. Bas
     * [HTML5Shiv](https://github.com/aFarkas/html5shiv)
     * [FitVids.js](https://github.com/davatron5000/FitVids.js)
     * [FlexSlider](https://github.com/woothemes/FlexSlider)
-    * placeholder[Placeholder.js](https://github.com/jamesallardice/Placeholders.js/) support for IE8
+    * [Placeholder.js](https://github.com/jamesallardice/Placeholders.js/) support for IE8
     * [Respond.js](https://github.com/scottjehl/Respond)
     * [Retina.js](https://github.com/imulus/retinajs)
     * [jQuery Fittext](https://github.com/davatron5000/FitText.js)
