@@ -7,16 +7,11 @@ $nerdpress_config = array(
 			'columns' => 4,
 			'mode' => null,
 		),
-/*
-		'Footer' => array(
-			'mode' => null,
-		),
-*/
 	),
 	'breadcrumbs' => true,
 	'root_relative_urls' => false,
 	'nice_search' => true,
-	'analytics_id' => 'UA-28670316-2',
+	'analytics_id' => '',
 	'analytics_demographics' => false,
 	'post_excerpt_length' => 40,
 	'navbar_fixed' => false,
