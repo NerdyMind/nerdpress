@@ -302,4 +302,5 @@ div#wp-responsive-toggle a:before {
 .nerdpress-edit-link {
 	position: absolute;
 	right: 15px;
+	z-index: 1001;
 }

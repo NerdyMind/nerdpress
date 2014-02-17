@@ -21,7 +21,7 @@ if(function_exists("register_field_group"))
 				'prepend' => '',
 				'append' => '',
 				'formatting' => 'none',
-				'maxlength' => 65,
+				'maxlength' => 022,
 			),
 			array (
 				'key' => 'field_52ec1f7f28a1d',
@@ -42,7 +42,7 @@ if(function_exists("register_field_group"))
 				'type' => 'textarea',
 				'default_value' => '',
 				'placeholder' => 'Enter your description here',
-				'maxlength' => 155,
+				'maxlength' => 255,
 				'formatting' => 'none',
 			),
 			array (
