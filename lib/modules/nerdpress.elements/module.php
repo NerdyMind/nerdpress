@@ -57,6 +57,7 @@ class NerdPressElementWidget extends WP_Widget {
 	}
 	
 	function form($instance) {
+		global $post;
 		$instance = wp_parse_args( (array) $instance, array( 'title' => '' ) );
 		$title = $instance['title'];
 		$element = $instance['element'];
@@ -72,20 +73,18 @@ class NerdPressElementWidget extends WP_Widget {
 				<select class="widefat" id="<?php echo $this->get_field_id('element'); ?>" name="<?php echo $this->get_field_name('element'); ?>">
 					<?
 					$wr = array(
-						'post_type' 			=> 'nerdpress_element',
+						'post_type' 			=> 'nrd_element',
 						'posts_per_page' 	=> -1,
 					);
 					
-					$wq = new WP_Query ( $wr );
+					$elements = get_posts( $wr );
 					
-					if ( $wq->have_posts() ) :
-					
-						while ( $wq->have_posts() ) : $wq->the_post();
+					if ( $elements ) :
+						foreach ( $elements as $element ) :
 					?>
-						<option value="<?= get_field( 'element_type' ); ?>-<?= get_the_ID(); ?>"><? the_title(); ?> (<?= ucfirst( get_field( 'element_type' ) ); ?>) </option>
+						<option value="<?= get_field( 'element_type', $element->ID ); ?>-<?= $element->ID; ?>"><? echo $element->post_title; ?> (<?= ucfirst( get_field( 'element_type', $element->ID ) ); ?>) </option>
 					<?
-						endwhile; wp_reset_query();
-					
+						endforeach;
 					endif;
 					?>
 				</select>
@@ -117,7 +116,7 @@ class NerdPressElementWidget extends WP_Widget {
 		
 		// WIDGET CODE GOES HERE
 		$r = array(
-			'post_type' => 'nerdpress_element',
+			'post_type' => 'nrd_element',
 			'p' 				=> $element_id,
 		);
 		

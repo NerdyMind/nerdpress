@@ -16,7 +16,7 @@ class NerdPress {
 		add_filter( 'wp_title', array( &$this, 'seo_title' ), 10, 2 );
 		add_action( 'wp_head', array( &$this, 'seo_description') );
 		add_action( 'tgmpa_register', array( &$this, 'register_required_plugins' ) );
-		add_filter( 'scpt_show_admin_menu', '__return_false' ); // Hide SuperCPT's usless icon menu item
+		add_filter( 'scpt_show_admin_menu', '__return_false' ); // Hide SuperCPT's useless icon menu item
 		add_action( 'after_setup_theme', array( &$this, 'setup_post_types' ) );
 		add_filter('comment_reply_link', array( &$this, 'bootstrap_reply_link_class' ) );
 		add_filter( 'the_password_form', array( &$this, 'bootstrap_password_form' ) );
