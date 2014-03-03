@@ -4,7 +4,7 @@ class NerdPress {
 	function __construct() {
 		add_action('init', array( &$this, 'init_filesystem' ) );
 		add_action( 'widgets_init', array( &$this, 'register_widget_areas' ) );
-		add_action( 'init', array( &$this, 'integrations' ) );
+		add_action( 'init', array( &$this, 'addl_integrations' ) );
 		add_filter( 'roots_display_sidebar', array( &$this, 'hide_sidebar_on' ) );
 		add_action( 'wp_enqueue_scripts', array( &$this, 'load_scripts' ), 200 );
 		add_shortcode( 'nerdpress_sitemap', array( &$this, 'sitemap' ) );
@@ -20,7 +20,8 @@ class NerdPress {
 		add_action( 'after_setup_theme', array( &$this, 'setup_post_types' ) );
 		add_filter('comment_reply_link', array( &$this, 'bootstrap_reply_link_class' ) );
 		add_filter( 'the_password_form', array( &$this, 'bootstrap_password_form' ) );
-		add_filter( 'bbp_no_breadcrumb', array(&$this, 'bbpress_no_breadcrumbs' ) );
+		add_action( 'wp_footer', array( &$this, 'statcounter' ) );
+		add_action( 'init', array( &$this, 'load_menu_locations' ) );
 	}
 
 	function init_filesystem() {
@@ -31,20 +32,24 @@ class NerdPress {
 	}
 	
 	function variable( $var ) {
-		global $nerdpress_config;
-		return $nerdpress_config[ $var ];
+		if ( get_field( $var, 'option' ) ) 
+			return get_field( $var, 'option' );
+		else 
+			return false;
 	}
 
 	function register_widget_areas() {
 		$widget_areas = self::variable( 'widget_areas' );
 		
 		if ( $widget_areas ) :
-			foreach ( $widget_areas as $widget_area => $data ) :
+			foreach ( $widget_areas as $widget_area ) :
+				$safe_name = strtolower( str_replace( ' ', '-', $widget_area['area_name'] ) );
+			
 				register_sidebar(array(
-					'name' 				=> __( $widget_area, 'nerdpress' ),
-					'id' 					=> 'widget-area-' . strtolower( str_replace( ' ', '-', $widget_area ) ),
-					'class' 				=> $data['class'],
-					'before_widget' 	=> '<section class="widget %1$s %2$s ' . $data['mode'] . '"><div class="widget-inner">',
+					'name' 				=> __( $widget_area['area_name'], 'nerdpress' ),
+					'id' 					=> $safe_name,
+					'class' 				=> $safe_name,
+					'before_widget' 	=> '<section class="widget %1$s %2$s ' . $widget_area['area_class'] . '"><div class="widget-inner">',
 					'after_widget' 		=> '</div></section>',
 					'before_title' 		=> '<h3>',
 					'after_title' 			=> '</h3>',
@@ -54,15 +59,32 @@ class NerdPress {
 	}
 	
 	function widget_area( $widget_area_id ) {
-		if ( is_dynamic_sidebar( $widget_area_id ) ) dynamic_sidebar( $widget_area_id );
-		include( locate_template( 'templates/edit-link.php' ) );
+		global $wp_registered_sidebars;
+		
+		$safe_name = strtolower( str_replace( ' ', '-', $widget_area_id ) );
+		
+		if ( array_key_exists( $safe_name, $wp_registered_sidebars ) ) :
+		
+			if ( is_dynamic_sidebar( $safe_name ) ) :
+				echo "\n" . '<div class="' . $all_widget_areas[$safe_name]['class'] . '">' . "\n";
+				dynamic_sidebar( $safe_name );
+				echo "\n" . '</div>' . "\n";
+				include( locate_template( 'templates/edit-link.php' ) );
+			endif;
+		
+		else :
+			if ( current_user_can( 'administrator' ) ) 
+				echo '<div class="alert alert-danger"><strong>Problem!</strong> You asked for widget area <code>' . $widget_area_id . '</code> but no widget area exists with this name. 
+				<a href="' . admin_url( 'admin.php?page=nerdpress-settings' ) . '" class="btn btn-sm btn-default" target="_blank">
+					<i class="fa fa-cog text-primary"></i> Add It</a></div>';
+		endif;
 	}
 	
-	function integrations() {
-		$integrations = self::variable( 'integrations' );
+	function addl_integrations() {
+		$addl_integrations = self::variable( 'addl_integrations' );
 		
-		if ( $integrations ) :		
-			foreach ( $integrations as $integration ) {
+		if ( $addl_integrations ) :		
+			foreach ( $addl_integrations as $integration ) {
 				require_once( themePATH . '/' . themeFOLDER . '/lib/modules/nerdpress.core/integrations/' . $integration . '.php' );
 			}		
 		endif;
@@ -91,9 +113,29 @@ class NerdPress {
 	}
 
 	function display_sidebar() {
+		$hide_sidebar_conditions = array();
+		
+		$hide_sidebar_conditions_option = self::variable( 'hide_sidebar_conditions' );
+		
+		if ( $hide_sidebar_conditions_option ) :
+		foreach ( $hide_sidebar_conditions_option as $condition ) {
+			$hide_sidebar_conditions[] = $condition['condition'];
+		}
+		endif;
+		
+		$hide_sidebar_templates = array();
+		
+		$hide_sidebar_templates_option = self::variable( 'hide_sidebar_templates' );
+		
+		if ( $hide_sidebar_templates_option ) :
+			foreach ( $hide_sidebar_templates_option as $template ) {
+				$hide_sidebar_templates[] = $template;
+			}
+		endif;
+	
 		$sidebar_config = new Roots_Sidebar(
-			self::variable( 'hide_sidebar_conditions' ),
-			self::variable( 'hide_sidebar_templates' )
+			$hide_sidebar_conditions,
+			$hide_sidebar_templates
 		);
 		
 		return apply_filters('roots_display_sidebar', $sidebar_config->display);
@@ -127,40 +169,41 @@ class NerdPress {
 		wp_enqueue_script( 'main', get_template_directory_uri() . '/assets/js/main.js', array( 'jquery' ), NULL, true );
 		wp_enqueue_script( 'placeholder', get_template_directory_uri() . '/assets/js/vendor/jquery.placeholder.js', array( 'jquery'), NULL, true );		
 		wp_enqueue_script( 'retina', get_template_directory_uri() . '/assets/js/vendor/retina.js', NULL, NULL, true );
+		
 		if ( self::variable( 'analytics_id' ) ) 
 			wp_enqueue_script( 'analytics', get_template_directory_uri() . '/assets/js/analytics.php', array( 'jquery' ), NULL, NULL );
 		
-		if ( self::variable( 'script_animatecss' ) ) :
+		$load_scripts = self::variable( 'load_scripts' );
+		$script_header = self::variable( 'script_header' );
+		$script_footer = self::variable( 'script_footer' );
+		
+		if ( in_array( 'animatecss', $load_scripts ) ) :
 			wp_register_style( 'animate-css', get_template_directory_uri() . '/assets/css/animate.min.css' );
 			wp_enqueue_style( 'animate-css' );
 		endif;
 		
-		if ( self::variable( 'script_flexslider' ) ) 
+		if ( in_array( 'flexslider', $load_scripts ) ) 
 			wp_enqueue_script( 'flexslider', get_template_directory_uri() . '/assets/js/vendor/jquery.flexslider-min.js', array( 'jquery'), '2.2.0', true );
 			
-		if ( self::variable( 'script_lightbox' ) ) 
+		if ( in_array( 'lightbox', $load_scripts ) ) 
 			wp_enqueue_script( 'lightbox', get_template_directory_uri() . '/assets/js/vendor/ekko-lightbox.js', array( 'jquery'), NULL, true );
 			
-		if ( self::variable( 'script_vimeo' ) ) 
+		if ( in_array( 'vimeo_api', $load_scripts ) ) 
 			wp_enqueue_script( 'froogaloop', '//a.vimeocdn.com/js/froogaloop2.min.js', NULL, NULL, true );
 			
-		if ( self::variable( 'script_bootstrap_hover' ) ) 
+		if ( in_array( 'bootstrap_hover', $load_scripts ) ) 
 			wp_enqueue_script( 'bootstrap-hover', get_template_directory_uri() . '/assets/js/vendor/bootstrap-hover-dropdown.js', array( 'jquery' ), NULL, true );
 			
-		if ( self::variable( 'script_header' ) ) :
-			$script_header = self::variable( 'script_header' );
-			
-			foreach ( $script_header as $script ) :
-				wp_enqueue_script( $script, $script );
-			endforeach;
+		if ( $script_header ) :
+			foreach ( $script_header as $script ) {
+				wp_enqueue_script( $script['script_url'], $script['script_url'] );
+			}
 		endif;
 		
-		if ( self::variable( 'script_footer' ) ) :
-			$script_footer = self::variable( 'script_footer' );
-			
-			foreach ( $script_footer as $script ) :
-				wp_enqueue_script( $script, $script, NULL, NULL, true );
-			endforeach;
+		if ( $script_footer ) :
+			foreach ( $script_footer as $script ) {
+				wp_enqueue_script( $script['script_url'], $script['script_url'], NULL, NULL, true );
+			}
 		endif;
 	}
 	
@@ -176,6 +219,8 @@ class NerdPress {
 	}
 	
 	function breadcrumbs() {
+		if ( !self::variable( 'breadcrumbs' ) ) return;
+		
 		global $breadcrumbs, $post, $wp_query;
 		
 		$skip_post_types = array(
@@ -549,7 +594,7 @@ class NerdPress {
 			self::make_crumb( null, 'Page ' . $paged );
 		endif; // Paged
 		
-		if ( self::variable( 'breadcrumbs' ) && !is_front_page() && !is_home() ) get_template_part( 'templates/breadcrumbs' );
+		if ( !is_front_page() && !is_home() ) get_template_part( 'templates/breadcrumbs' );
 	} // breadcrumbs
 	
 	function sitemap() {
@@ -640,7 +685,9 @@ class NerdPress {
 	function register_required_plugins() {
 	
 		$plugins_list = wp_remote_get( 'http://repo.nerdymind.com/nerdpress-helpers/plugin-list.php' );
-		$plugins = json_decode( $plugins_list['body'], true );
+		
+		if ( $plugins_list ) 
+			$plugins = json_decode( $plugins_list['body'], true );
 	
 		// Change this to your theme text domain, used for internationalising strings
 		$theme_text_domain = 'nerdpress';
@@ -683,7 +730,8 @@ class NerdPress {
 			)
 		);
 	
-		tgmpa( $plugins, $config );	
+		if ( $plugins ) 
+			tgmpa( $plugins, $config );	
 	}
 	
 	function setup_post_types() {
@@ -695,26 +743,26 @@ class NerdPress {
 		$post_types = self::variable( 'post_types' );
 		$taxonomies = self::variable( 'taxonomies' );
 		
-		if ( is_array( $post_types ) ) :
+		//print_r( $post_types );
+		
+		if ( $post_types ) :
 		
 			foreach ( $post_types as $post_type => $options ) :
-				if ( $options['create'] != true ) continue;
+				if ( $options['type_create'] != true ) continue;
 				
-				if ( $options['singular'] && $options['plural'] ) 
-					$$post_type = new Super_Custom_Post_Type( $post_type, $options['singular'], $options['plural'] );
+				$$post_type = new Super_Custom_Post_Type( 
+					$options['type_name'], 
+					$options['type_singular'], 
+					$options['type_plural'], 
+					array( 'hierarchical' => $options['type_hierarchical'] ? true : false ) 
+				);					
 					
-				elseif( $options['singular'] ) 
-					$$post_type = new Super_Custom_Post_Type( $post_type, $options['singular'] );
+				if ( $options['type_icon'] != '' ) 
+					$$post_type->set_icon( $options['type_icon'] );
 					
-				else 
-					$$post_type = new Super_Custom_Post_Type( $post_type );					
-					
-				if ( $options['icon'] != '' ) 
-					$$post_type->set_icon( $options['icon'] );
-					
-				if ( $options['slug'] != '' ) 
+				if ( $options['type_slug'] != '' ) 
 					$$post_type->cpt['rewrite'] = array(
-						'slug' => $options['slug'],
+						'slug' => $options['type_slug'],
 						'with_front' => true,
 						'pages' => true,
 						'feeds' => true,
@@ -723,16 +771,21 @@ class NerdPress {
 		
 		endif;
 		
-		if ( is_array( $taxonomies ) ) :
-		
+		if ( $taxonomies ) :
+			
 			foreach ( $taxonomies as $taxonomy => $options ) :
 			
-				if ( $options['create'] != true ) continue;
+				if ( $options['tax_create'] != true ) continue;
 				
-				$$taxonomy = new Super_Custom_Taxonomy( $taxonomy );
+				$$taxonomy = new Super_Custom_Taxonomy( 
+					$options['tax_name'], 
+					$options['tax_singular'], 
+					$options['tax_plural'], 
+					$options['tax_hierarchical'] ? 'cat' : 'tag'
+				);
 				
-				if ( $options['connect_to'] != '' ) 
-					connect_types_and_taxes( $$options['connect_to'], $$taxonomy );
+				if ( $options['tax_connect'] ) 
+					$$taxonomy->connect_post_types( $options['tax_connect'] );
 			
 			endforeach;
 		
@@ -762,8 +815,26 @@ class NerdPress {
 		return $content;
 	}
 	
-	function bbpress_no_breadcrumbs( $param ) {
-		return true;
+	function statcounter() {
+		$statcounter_id = self::variable( 'statcounter_id' );
+		
+		if ( !$statcounter_id ) return;
+		
+		get_template_part( 'templates/statcounter' );
+	}
+	
+	function load_menu_locations() {
+		$menu_locations = self::variable( 'menu_locations' );
+		
+		if ( $menu_locations ) :
+			foreach ( $menu_locations as $location ) {
+				$the_location = array(
+					$location['location'] => __( $location['location'], 'nerdpress' ),
+				);
+				
+				register_nav_menus( $the_location );
+			}
+		endif;
 	}
 	
 } // End class

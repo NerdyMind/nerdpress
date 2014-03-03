@@ -3,7 +3,7 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<?php NerdPress::widget_area( 'Footer' ); ?>
-				
+			
 				<div class="copyright">
 					Copyright &copy;<?php echo date('Y'); ?> <?php bloginfo('name'); ?>
 				</div>

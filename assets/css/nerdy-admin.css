@@ -304,3 +304,11 @@ div#wp-responsive-toggle a:before {
 	right: 15px;
 	z-index: 998;
 }
+
+.acf-button {
+	color: #fff !important;
+}
+
+.acf-button.grey {
+	color: #333 !important;
+}

@@ -644,3 +644,9 @@ function nerdpress_bbps_get_topic_status() {
 }
 
 remove_action('bbp_theme_before_topic_title', 'bbps_modify_title');
+
+add_filter( 'bbp_no_breadcrumb', 'nerdpress_bbps_no_breadcrumbs' );
+
+function nerdpress_bbps_no_breadcrumbs( $param ) {
+	return true;
+}

@@ -1,1 +1,1 @@
-<?php NerdPress::widget_area( 'Sidebar Primary' ); ?>
+<?php NerdPress::widget_area( 'Primary Sidebar' ); ?>

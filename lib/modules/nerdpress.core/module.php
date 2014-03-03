@@ -16,6 +16,7 @@ $files_to_include = array(
 	'functions.admin.php',
 	'functions.fields.php',
 	'functions.shortcodes.php',
+	'nerdpress-config.php',
 );
 
 foreach ( $files_to_include as $file ) {
