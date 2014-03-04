@@ -3,7 +3,6 @@
 // http://www.blastam.com/blog/index.php/2013/03/how-to-track-downloads-in-google-analytics-v2/
 require_once( '../../../../../wp-load.php' );
 header( 'Content-Type:text/javascript' );
-require_once( '../../lib/modules/nerdpress.core/config.php' );
 $analytics_id = get_option( 'options_analytics_id' );
 $analytics_demographics = get_option( 'options_analytics_demographics' );
 
