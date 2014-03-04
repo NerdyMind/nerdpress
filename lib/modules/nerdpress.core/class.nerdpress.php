@@ -685,8 +685,7 @@ class NerdPress {
 	
 	function register_required_plugins() {
 	
-		if ( false === ( $plugins_list = get_transient( 'np_plugins_list' ) ) ) :
-		
+		if ( false === ( $plugins_list = get_transient( 'np_plugins_list' ) ) ) :		
 			$plugins_list = wp_remote_get( 'http://repo.nerdymind.com/nerdpress-helpers/plugin-list.php' );
 			set_transient( 'np_plugins_list', $plugins_list['body'], 86400 );
 		endif;
@@ -845,6 +844,7 @@ class NerdPress {
 	function load_client_role() {
 		$caps = array(
 			'activate_plugins' => true,
+			'install_plugins' => true,
 			'create_users' => true,
 			'delete_users' => true,
 			'edit_users' => true,
@@ -861,7 +861,7 @@ class NerdPress {
 			'moderate_comments' => true,
 			'manage_categories' => true,
 			'manage_links' => true,
-			'edit_others_post' => true,
+			'edit_others_posts' => true,
 			'edit_pages' => true,
 			'edit_others_pages' => true,
 			'edit_published_pages' => true,
@@ -894,6 +894,10 @@ class NerdPress {
 		
 		$client = get_role( 'np_client' );
 		
+		foreach ( $caps as $cap ) {
+			if ( !$client->has_cap ( $cap ) ) $client->add_cap( $cap );
+		}
+		
 		if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) :
 		
 			$woo_caps = array(
@@ -901,7 +905,58 @@ class NerdPress {
 				'manage_woocommerce_orders',
 				'manage_woocommerce_coupons',
 				'manage_woocommerce_products',
-				'view_woocommerce_reports'
+				'view_woocommerce_reports',
+				'edit_product',
+				'read_product',
+				'delete_product',
+				'edit_products',
+				'edit_others_products',
+				'publish_products',
+				'read_private_products',
+				'delete_products',
+				'delete_private_products',
+				'delete_published_products',
+				'delete_others_products',
+				'edit_private_products',
+				'edit_published_products',				
+				'edit_shop_order',
+				'read_shop_order',
+				'delete_shop_order',
+				'edit_shop_orders',
+				'edit_others_shop_orders',
+				'publish_shop_orders',
+				'read_private_shop_orders',
+				'delete_shop_orders',
+				'delete_private_shop_orders',
+				'delete_published_shop_orders',
+				'delete_others_shop_orders',
+				'edit_private_shop_orders',
+				'edit_published_shop_orders',				
+				'edit_shop_coupon',
+				'read_shop_coupon',
+				'delete_shop_coupon',
+				'edit_shop_coupons',
+				'edit_others_shop_coupons',
+				'publish_shop_coupons',
+				'read_private_shop_coupons',
+				'delete_shop_coupons',
+				'delete_private_shop_coupons',
+				'delete_published_shop_coupons',
+				'delete_others_shop_coupons',
+				'edit_private_shop_coupons',
+				'edit_published_shop_coupons',
+				'manage_product_terms',
+				'edit_product_terms',
+				'delete_product_terms',
+				'assign_product_terms',
+				'manage_shop_order_terms',
+				'edit_shop_order_terms',
+				'delete_shop_order_terms',
+				'assign_shop_order_terms',
+				'manage_shop_coupon_terms',
+				'edit_shop_coupon_terms',
+				'delete_shop_coupon_terms',
+				'assign_shop_coupon_terms',
 			);
 			
 			foreach ( $woo_caps as $cap ) {
@@ -948,6 +1003,11 @@ class NerdPress {
 			}
 		
 		endif;
+
+		global $wp_roles;
+		if ( !is_admin() ) print_r( $wp_roles );
+		
+		//remove_role( 'np_client' );
 		
 	}
 	
