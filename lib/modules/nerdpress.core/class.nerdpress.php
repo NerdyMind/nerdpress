@@ -22,6 +22,7 @@ class NerdPress {
 		add_filter( 'the_password_form', array( &$this, 'bootstrap_password_form' ) );
 		add_action( 'wp_footer', array( &$this, 'statcounter' ) );
 		add_action( 'init', array( &$this, 'load_menu_locations' ) );
+		add_action( 'init', array( &$this, 'load_client_role' ) );
 	}
 
 	function init_filesystem() {
@@ -684,10 +685,14 @@ class NerdPress {
 	
 	function register_required_plugins() {
 	
-		$plugins_list = wp_remote_get( 'http://repo.nerdymind.com/nerdpress-helpers/plugin-list.php' );
+		if ( false === ( $plugins_list = get_transient( 'np_plugins_list' ) ) ) :
+		
+			$plugins_list = wp_remote_get( 'http://repo.nerdymind.com/nerdpress-helpers/plugin-list.php' );
+			set_transient( 'np_plugins_list', $plugins_list['body'] );
+		endif;
 		
 		if ( $plugins_list ) 
-			$plugins = json_decode( $plugins_list['body'], true );
+			$plugins = json_decode( $plugins_list, true );
 	
 		// Change this to your theme text domain, used for internationalising strings
 		$theme_text_domain = 'nerdpress';
@@ -835,6 +840,115 @@ class NerdPress {
 				register_nav_menus( $the_location );
 			}
 		endif;
+	}
+	
+	function load_client_role() {
+		$caps = array(
+			'activate_plugins' => true,
+			'create_users' => true,
+			'delete_users' => true,
+			'edit_users' => true,
+			'export' => true,
+			'import' => true,
+			'list_users' => true,
+			'remove_users' => true,
+			'promote_users' => true,
+			'switch_themes' => true,
+			'update_core' => true,
+			'update_plugins' => true,
+			'update_themes' => true,
+			'edit_dashboard' => true,
+			'moderate_comments' => true,
+			'manage_categories' => true,
+			'manage_links' => true,
+			'edit_others_post' => true,
+			'edit_pages' => true,
+			'edit_others_pages' => true,
+			'edit_published_pages' => true,
+			'publish_pages' => true,
+			'delete_pages' => true,
+			'delete_others_pages' => true,
+			'delete_published_pages' => true,
+			'delete_others_posts' => true,
+			'delete_private_posts' => true,
+			'edit_private_posts' => true,
+			'read_private_posts' => true,
+			'delete_private_posts' => true,
+			'edit_private_pages' => true,
+			'read_private_pages' => true,
+			'edit_published_posts' => true,
+			'upload_files' => true,
+			'publish_posts' => true,
+			'delete_published_posts' => true,
+			'edit_posts' => true,
+			'delete_posts' => true,
+			'read' => true,
+			'edit_theme_options' => true,
+		);
+		
+		add_role(
+			'np_client',
+			__( 'Client' ),
+			$caps
+		);
+		
+		$client = get_role( 'np_client' );
+		
+		if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) :
+		
+			$woo_caps = array(
+				'manage_woocommerce',
+				'manage_woocommerce_orders',
+				'manage_woocommerce_coupons',
+				'manage_woocommerce_products',
+				'view_woocommerce_reports'
+			);
+			
+			foreach ( $woo_caps as $cap ) {
+				if ( !$client->has_cap( $cap ) ) $client->add_cap( $cap );
+			}
+		
+		endif;
+		
+		if ( class_exists( 'bbPress' ) ) :
+		
+			$bbp_caps = array(
+				'publish_forums',
+				'edit_forums',
+				'edit_others_forums',
+				'delete_forums',
+				'delete_others_forums',
+				'read_private_forums',
+				'read_hidden_forums',
+				'publish_topics',
+				'edit_topics',
+				'edit_others_topics',
+				'delete_topics',
+				'delete_others_topics',
+				'read_private_topics',
+				'publish_replies',
+				'edit_replies',
+				'edit_others_replies',
+				'delete_replies',
+				'delete_others_replies',
+				'read_private_replies',
+				'manage_topic_tags',
+				'edit_topic_tags',
+				'delete_topic_tags',
+				'assign_topic_tags',
+				'spectate',
+				'participate',
+				'moderate',
+				'throttle',
+				'view_trash',
+			);
+			
+			foreach ( $bbp_caps as $cap ) {
+				if ( !$client->has_cap( $cap ) ) $client->add_cap( $cap );
+			}
+		
+		endif;
+		
 	}
 	
 } // End class
