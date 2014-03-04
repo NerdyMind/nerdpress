@@ -27,3 +27,4 @@
 [03-Mar-2014 20:29:04 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/soundwav/public_html/wp-content/themes/nerdpress/lib/modules/nerdpress.core/class-tgm-plugin-activation.php on line 973
 [03-Mar-2014 20:29:04 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/soundwav/public_html/wp-content/themes/nerdpress/lib/modules/nerdpress.core/class-tgm-plugin-activation.php:973) in /home/soundwav/public_html/wp-content/themes/nerdpress/assets/js/analytics.php on line 5
 [03-Mar-2014 23:46:31 UTC] PHP Fatal error:  Cannot use object of type WP_Error as array in /home/soundwav/public_html/wp-content/themes/nerdpress/lib/modules/nerdpress.core/class.nerdpress.php on line 688
+[04-Mar-2014 00:23:25 UTC] PHP Fatal error:  Cannot use object of type WP_Error as array in /home/soundwav/public_html/wp-content/themes/nerdpress/lib/modules/nerdpress.core/class.nerdpress.php on line 690

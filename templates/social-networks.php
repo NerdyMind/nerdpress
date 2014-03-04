@@ -19,7 +19,7 @@
 		if ( current_user_can( 'administrator' ) ) 
 				echo '<div class="alert alert-danger"><strong>Problem!</strong> You are using the <code>[nerdpress_social_networks]</code> shortcode but 
 				haven\'t entered any social networks. 
-				<a href="' . admin_url( 'admin.php?page=nerdpress-settings' ) . '" class="btn btn-sm btn-default" target="_blank">
+				<a href="' . admin_url( 'options-general.php?page=nerdpress-settings' ) . '" class="btn btn-sm btn-default" target="_blank">
 					<i class="fa fa-cog text-primary"></i> Fix This</a></div>';	
 endif;
 ?>

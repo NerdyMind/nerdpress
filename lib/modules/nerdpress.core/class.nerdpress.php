@@ -75,7 +75,7 @@ class NerdPress {
 		else :
 			if ( current_user_can( 'administrator' ) ) 
 				echo '<div class="alert alert-danger"><strong>Problem!</strong> You asked for widget area <code>' . $widget_area_id . '</code> but no widget area exists with this name. 
-				<a href="' . admin_url( 'admin.php?page=nerdpress-settings' ) . '" class="btn btn-sm btn-default" target="_blank">
+				<a href="' . admin_url( 'options-general.php?page=nerdpress-settings' ) . '" class="btn btn-sm btn-default" target="_blank">
 					<i class="fa fa-cog text-primary"></i> Add It</a></div>';
 		endif;
 	}
