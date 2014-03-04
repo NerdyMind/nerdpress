@@ -6,7 +6,7 @@ define( 'themeNAME', wp_get_theme() );
 define( 'nerdpress', true );
 
 // Prioritize NerdPress config file since others depend on it
-require_once( 'config.php' );
+require_once( 'nerdpress-config.php' );
 
 /* ===== Additional Functions ===== */
 
@@ -16,7 +16,6 @@ $files_to_include = array(
 	'functions.admin.php',
 	'functions.fields.php',
 	'functions.shortcodes.php',
-	'nerdpress-config.php',
 );
 
 foreach ( $files_to_include as $file ) {

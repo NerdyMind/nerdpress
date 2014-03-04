@@ -3,10 +3,6 @@
 class NerdPressConfig {
 	
 	function __construct() {
-		if ( is_admin() ) add_filter( 'acf/load_field/name=hide_sidebar_templates', array( &$this, 'nerdpress_load_config_templates' ) );
-		if ( is_admin() ) add_filter( 'acf/load_field/name=tax_connect', array( &$this, 'nerdpress_load_config_post_types' ) );
-		add_action( 'init', array( &$this, 'load_fields' ) );
-		
 		if ( function_exists( 'acf_add_options_sub_page' ) ) :
 		
 			$nerdpress_args = array(
@@ -18,6 +14,10 @@ class NerdPressConfig {
 			
 			acf_add_options_sub_page( $nerdpress_args );
 		endif;		
+
+		if ( is_admin() ) add_filter( 'acf/load_field/name=hide_sidebar_templates', array( &$this, 'nerdpress_load_config_templates' ) );
+		if ( is_admin() ) add_filter( 'acf/load_field/name=tax_connect', array( &$this, 'nerdpress_load_config_post_types' ) );
+		add_action( 'after_setup_theme', array( &$this, 'load_fields' ) );
 	}
 	
 	function nerdpress_load_config_templates( $field ) {

@@ -1,10 +1,12 @@
 <?php
+$brand_wp = get_option( 'options_brand_wp' );
+
 // Customise the footer in admin area
 function nerdpress_footer_admin() {
 	echo '<strong>NerdPress</strong><sup>&trade;</sup> Framework for WordPress by <a href="http://nerdymind.com/" target="_blank">NerdyMind Marketing</a>. <em style="font-size: x-small">Made with &#x2764; in Fort Collins, Colorado.</em>';
 }
 
-if ( NerdPress::variable( 'brand_wp' ) ) add_filter( 'admin_footer_text', 'nerdpress_footer_admin' );
+if ( $brand_wp ) add_filter( 'admin_footer_text', 'nerdpress_footer_admin' );
 
 class nerdy_Admin_Color_Scheme {
 
@@ -51,7 +53,7 @@ class nerdy_Admin_Color_Scheme {
 
 new nerdy_Admin_Color_Scheme();
 
-if ( NerdPress::variable( 'brand_wp' ) ) add_filter('get_user_option_admin_color', 'change_admin_color');
+if ( $brand_wp ) add_filter('get_user_option_admin_color', 'change_admin_color');
 
 function change_admin_color($result) {
     return 'nerdy';
@@ -91,7 +93,7 @@ class Admin_Bar_Color {
 	}
 }
 
-if ( NerdPress::variable( 'brand_wp' ) ) $admin_bar_color = new Admin_Bar_Color();
+if ( $brand_wp ) $admin_bar_color = new Admin_Bar_Color();
 
 // Prevents the admin bar from being shown on the frontend.
 if ( !is_user_logged_in() && !is_admin() ) show_admin_bar( false );
