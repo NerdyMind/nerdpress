@@ -688,7 +688,7 @@ class NerdPress {
 		if ( false === ( $plugins_list = get_transient( 'np_plugins_list' ) ) ) :
 		
 			$plugins_list = wp_remote_get( 'http://repo.nerdymind.com/nerdpress-helpers/plugin-list.php' );
-			set_transient( 'np_plugins_list', $plugins_list['body'] );
+			set_transient( 'np_plugins_list', $plugins_list['body'], 86400 );
 		endif;
 		
 		if ( $plugins_list ) 
