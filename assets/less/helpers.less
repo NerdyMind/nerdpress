@@ -162,3 +162,19 @@ ul.li-lfloat  li a, ol.li-lfloat li a, ul.li-rfloat li a, ol.li-rfloat li a {dis
 .pad-right20 {
 	.pad-right(20px);
 }
+
+/* ===== Chrome @FontFace Bug Fix ===== */
+
+body
+{
+  -webkit-animation-duration: 0.1s;
+	-webkit-animation-name: fontfix;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-timing-function: linear;
+	-webkit-animation-delay: 0.1s;
+}
+
+@-webkit-keyframes fontfix{
+	from{ 	opacity: 1; }
+	to{	opacity: 1; }
+}
