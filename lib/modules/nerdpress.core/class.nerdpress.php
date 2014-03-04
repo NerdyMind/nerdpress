@@ -1002,13 +1002,7 @@ class NerdPress {
 				if ( !$client->has_cap( $cap ) ) $client->add_cap( $cap );
 			}
 		
-		endif;
-
-		global $wp_roles;
-		if ( !is_admin() ) print_r( $wp_roles );
-		
-		//remove_role( 'np_client' );
-		
+		endif;	
 	}
 	
 } // End class
