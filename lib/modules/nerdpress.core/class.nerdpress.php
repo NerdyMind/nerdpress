@@ -409,21 +409,22 @@ class NerdPress {
 			
 			$post_type_config = self::variable( 'post_types' );
 					
-			if ( array_key_exists( $post_type->name, $post_type_config ) ) :
+			foreach ( $post_type_config as $type ) :
 			
-				if ( $post_type_config[ $post_type->name ]['breadcrumb'] ) 
-					self::make_crumb( null, get_the_title( $post_type_config[ $post_type->name ]['breadcrumb'] ) );
+				if ( $type['type_name'] != $post_type->name ) continue;
+				
+				if ( $type['type_breadcrumb'] ) 
+					self::make_crumb( get_permalink( $type['type_breadcrumb'] ), get_the_title( $type['type_breadcrumb'] ) );
 					
 				elseif ( $post_type->has_archive == 1 ) 
-					self::make_crumb( null, $post_type->labels->name );
+					self::make_crumb( home_url( $post_type->rewrite['slug'] ), $post_type->labels->name );
 					
 				elseif ( $post_type->has_archive ) 
-					self::make_crumb( null, get_the_title( get_page_by_path( $post_type->has_archive ) ) );
+					self::make_crumb( home_url( $post_type->has_archive ), get_the_title( get_page_by_path( $post_type->has_archive ) ) );
 					
 				else 
-					self::make_crumb( null, $post_type->labels->name );
-					
-			endif;
+					self::make_crumb( home_url(), $post_type->labels->name );
+			endforeach;
 		
 		endif; // Post type archive
 		
@@ -440,11 +441,13 @@ class NerdPress {
 				$post_type = get_post_type_object( get_post_type() );
 				
 				$post_type_config = self::variable( 'post_types' );
-						
-				if ( array_key_exists( $post_type->name, $post_type_config ) ) :
 				
-					if ( $post_type_config[ $post_type->name ]['breadcrumb'] ) 
-						self::make_crumb( get_permalink( $post_type_config[ $post_type->name ]['breadcrumb'] ), get_the_title( $post_type_config[ $post_type->name ]['breadcrumb'] ) );
+				foreach ( $post_type_config as $type ) :
+				
+					if ( $type['type_name'] != $post_type->name ) continue;
+					
+					if ( $type['type_breadcrumb'] ) 
+						self::make_crumb( get_permalink( $type['type_breadcrumb'] ), get_the_title( $type['type_breadcrumb'] ) );
 						
 					elseif ( $post_type->has_archive == 1 ) 
 						self::make_crumb( home_url( $post_type->rewrite['slug'] ), $post_type->labels->name );
@@ -454,11 +457,8 @@ class NerdPress {
 						
 					else 
 						self::make_crumb( home_url(), $post_type->labels->name );
-				
-				endif;
-				
-				//self::make_crumb( home_url(), $post_type->labels->name );
-				
+				endforeach;
+
 				$parent_id = $this_term->parent;
 				$subcrumbs = array();
 				
