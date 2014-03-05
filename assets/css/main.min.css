@@ -6459,6 +6459,10 @@ div.wrap.full-width div.content.row {
   margin-left: 0;
   margin-right: 0;
 }
+div.wrap.full-width div.content.row main.main {
+  padding-left: 0;
+  padding-right: 0;
+}
 /* ===== Plugins ===== */
 .ekko-lightbox-container {
   position: relative;
