@@ -26,6 +26,9 @@ class NerdPress {
 		
 		if ( in_array( 'gravityforms/gravityforms.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) && !get_option( 'rg_gforms_key' ) ) 
 			add_action( 'init', array( &$this, 'setup_gravity_forms' ) );
+		
+		if ( in_array( 'nerdpress-panels/siteorigin-panels.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) && !get_option( 'rg_gforms_key' ) ) 
+			add_action( 'init', array( &$this, 'setup_nerdpress_panels' ) );
 	}
 
 	function init_filesystem() {
@@ -1024,6 +1027,13 @@ class NerdPress {
 		update_option( 'rg_gforms_key', '55443c0c81be6d6cef07480d077ff677' );
 		update_option( 'rg_gforms_disable_css', '1' );
 		update_option( 'rg_gforms_enable_html5', '1' );
+	}
+	
+	function setup_nerdpress_panels() {
+		$value = 'a:8:{s:10:"animations";b:1;s:15:"bundled-widgets";b:1;s:10:"responsive";b:1;s:12:"mobile-width";i:780;s:12:"margin-sides";i:30;s:13:"margin-bottom";i:30;s:12:"copy-content";b:0;s:10:"inline-css";b:0;}';
+		
+		if ( get_option( 'nerdpress_panels_display' ) != $value ) 
+			update_option( 'nerdpress_panels_display', $value );
 	}
 	
 } // End class
