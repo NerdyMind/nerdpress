@@ -23,6 +23,7 @@ class NerdPress {
 		add_action( 'wp_footer', array( &$this, 'statcounter' ) );
 		add_action( 'init', array( &$this, 'load_menu_locations' ) );
 		add_action( 'init', array( &$this, 'load_client_role' ) );
+		add_action( 'init', array( &$this, 'setup_gravity_forms' ) );
 	}
 
 	function init_filesystem() {
@@ -1015,6 +1016,14 @@ class NerdPress {
 			}
 		
 		endif;	
+	}
+	
+	function setup_gravity_forms() {
+		if ( in_array( 'gravityforms/gravityforms.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) && !get_option( 'rg_gforms_key' ) ) :
+			update_option( 'rg_gforms_key', '55443c0c81be6d6cef07480d077ff677' );
+			update_option( 'rg_gforms_disable_css', '1' );
+			update_option( 'rg_gforms_enable_html5', '1' );
+		endif;
 	}
 	
 } // End class
