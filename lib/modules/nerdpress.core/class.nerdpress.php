@@ -438,25 +438,36 @@ class NerdPress {
 				$this_term = get_term( $tax_object->term_id, $tax_object->taxonomy );
 				$the_tax = get_taxonomy( $tax_object->taxonomy );
 				
-				$post_type = get_post_type_object( get_post_type() );
-				
 				$post_type_config = self::variable( 'post_types' );
+				$taxonomy_config = self::variable( 'taxonomies' );
 				
-				foreach ( $post_type_config as $type ) :
+				foreach ( $taxonomy_config as $tax ) :
 				
-					if ( $type['type_name'] != $post_type->name ) continue;
+					if ( $tax['tax_name'] != $this_term->taxonomy ) continue;
 					
-					if ( $type['type_breadcrumb'] ) 
-						self::make_crumb( get_permalink( $type['type_breadcrumb'] ), get_the_title( $type['type_breadcrumb'] ) );
+					if ( $tax['tax_breadcrumb'] ) 
+						self::make_crumb( get_permalink( $tax['tax_breadcrumb'] ), get_the_title( $tax['tax_breadcrumb'] ) );
 						
-					elseif ( $post_type->has_archive == 1 ) 
-						self::make_crumb( home_url( $post_type->rewrite['slug'] ), $post_type->labels->name );
+					if ( $tax['tax_connect'] && !$tax['tax_breadcrumb'] ) :
 						
-					elseif ( $post_type->has_archive ) 
-						self::make_crumb( home_url( $post_type->has_archive ), get_the_title( get_page_by_path( $post_type->has_archive ) ) );
+						foreach ( $post_type_config as $type ) :
 						
-					else 
-						self::make_crumb( home_url(), $post_type->labels->name );
+							if ( $type['type_name'] != $tax['tax_connect'] ) continue;
+							
+							$post_type = get_post_type_object( $tax['tax_connect'] );
+							
+							if ( $post_type->has_archive == 1 ) 
+								self::make_crumb( home_url( $post_type->rewrite['slug'] ), $post_type->labels->name );
+								
+							elseif ( $post_type->has_archive ) 
+								self::make_crumb( home_url( $post_type->has_archive ), get_the_title( get_page_by_path( $post_type->has_archive ) ) );
+						
+						endforeach;
+						
+					endif;
+					
+					self::make_crumb( null, $the_tax->labels->name );
+					
 				endforeach;
 
 				$parent_id = $this_term->parent;
