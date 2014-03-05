@@ -11,7 +11,7 @@ class NerdPress {
 		add_action( 'login_enqueue_scripts', array( &$this, 'login_logo' ) );
 		add_filter( 'login_headerurl', array( &$this, 'login_url' ) );
 		add_filter( 'login_headertitle', array( &$this, 'login_title' ) );
-		add_action( 'plugins_loaded', array( &$this, 'limit_revisions' ) );
+		add_filter( 'wp_revisions_to_keep', array( &$this, 'limit_revisions' ), 10, 2 );
 		add_shortcode( 'nerdpress_social_networks', array( &$this, 'social_networks' ) );
 		add_filter( 'wp_title', array( &$this, 'seo_title' ), 10, 2 );
 		add_action( 'wp_head', array( &$this, 'seo_description') );
@@ -627,8 +627,8 @@ class NerdPress {
 		return get_bloginfo( 'name' );
 	}
 	
-	function limit_revisions() {
-		define( 'WP_POST_REVISIONS', 2 );
+	function limit_revisions( $num, $post ) {
+		return 2;
 	}
 	
 	function social_networks() {
