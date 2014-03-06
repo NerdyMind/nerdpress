@@ -189,7 +189,7 @@ class NerdPress {
 		$script_header = self::variable( 'script_header' );
 		$script_footer = self::variable( 'script_footer' );
 		
-		if ( is_array( $load_scripts ) ) :
+		if ( $load_scripts ) :
 		
 			if ( in_array( 'animatecss', $load_scripts ) ) :
 				wp_register_style( 'animate-css', get_template_directory_uri() . '/assets/css/animate.min.css' );
@@ -366,22 +366,26 @@ class NerdPress {
 			
 			$post_type_config = self::variable( 'post_types' );
 			
-			foreach ( $post_type_config as $type ) :
+			if ( $post_type_config ) :
 			
-				if ( $type['type_name'] != $post_type->name ) continue;
+				foreach ( $post_type_config as $type ) :
 				
-				if ( $type['type_breadcrumb'] ) 
-					self::make_crumb( get_permalink( $type['type_breadcrumb'] ), get_the_title( $type['type_breadcrumb'] ) );
+					if ( $type['type_name'] != $post_type->name ) continue;
 					
-				elseif ( $post_type->has_archive == 1 ) 
-					self::make_crumb( home_url( $post_type->rewrite['slug'] ), $post_type->labels->name );
-					
-				elseif ( $post_type->has_archive ) 
-					self::make_crumb( home_url( $post_type->has_archive ), get_the_title( get_page_by_path( $post_type->has_archive ) ) );
-					
-				else 
-					self::make_crumb( home_url(), $post_type->labels->name );
-			endforeach;
+					if ( $type['type_breadcrumb'] ) 
+						self::make_crumb( get_permalink( $type['type_breadcrumb'] ), get_the_title( $type['type_breadcrumb'] ) );
+						
+					elseif ( $post_type->has_archive == 1 ) 
+						self::make_crumb( home_url( $post_type->rewrite['slug'] ), $post_type->labels->name );
+						
+					elseif ( $post_type->has_archive ) 
+						self::make_crumb( home_url( $post_type->has_archive ), get_the_title( get_page_by_path( $post_type->has_archive ) ) );
+						
+					else 
+						self::make_crumb( home_url(), $post_type->labels->name );
+				endforeach;
+			
+			endif;
 					
 			// get the taxonomy names of this object
 			$taxonomy_names = get_object_taxonomies( $post_type->name );
@@ -423,23 +427,28 @@ class NerdPress {
 			$post_type = get_post_type_object( get_post_type() );
 			
 			$post_type_config = self::variable( 'post_types' );
-					
-			foreach ( $post_type_config as $type ) :
 			
-				if ( $type['type_name'] != $post_type->name ) continue;
+			if ( $post_type_config ) :
+					
+				foreach ( $post_type_config as $type ) :
 				
-				if ( $type['type_breadcrumb'] ) 
-					self::make_crumb( get_permalink( $type['type_breadcrumb'] ), get_the_title( $type['type_breadcrumb'] ) );
+					if ( $type['type_name'] != $post_type->name ) continue;
 					
-				elseif ( $post_type->has_archive == 1 ) 
-					self::make_crumb( home_url( $post_type->rewrite['slug'] ), $post_type->labels->name );
-					
-				elseif ( $post_type->has_archive ) 
-					self::make_crumb( home_url( $post_type->has_archive ), get_the_title( get_page_by_path( $post_type->has_archive ) ) );
-					
-				else 
-					self::make_crumb( home_url(), $post_type->labels->name );
-			endforeach;
+					if ( $type['type_breadcrumb'] ) 
+						self::make_crumb( get_permalink( $type['type_breadcrumb'] ), get_the_title( $type['type_breadcrumb'] ) );
+						
+					elseif ( $post_type->has_archive == 1 ) 
+						self::make_crumb( home_url( $post_type->rewrite['slug'] ), $post_type->labels->name );
+						
+					elseif ( $post_type->has_archive ) 
+						self::make_crumb( home_url( $post_type->has_archive ), get_the_title( get_page_by_path( $post_type->has_archive ) ) );
+						
+					else 
+						self::make_crumb( home_url(), $post_type->labels->name );
+						
+				endforeach;
+			
+			endif;
 		
 		endif; // Post type archive
 		
@@ -456,34 +465,38 @@ class NerdPress {
 				$post_type_config = self::variable( 'post_types' );
 				$taxonomy_config = self::variable( 'taxonomies' );
 				
-				foreach ( $taxonomy_config as $tax ) :
+				if ( $taxonomy_config ) :
 				
-					if ( $tax['tax_name'] != $this_term->taxonomy ) continue;
+					foreach ( $taxonomy_config as $tax ) :
 					
-					if ( $tax['tax_breadcrumb'] ) 
-						self::make_crumb( get_permalink( $tax['tax_breadcrumb'] ), get_the_title( $tax['tax_breadcrumb'] ) );
+						if ( $tax['tax_name'] != $this_term->taxonomy ) continue;
 						
-					if ( $tax['tax_connect'] && !$tax['tax_breadcrumb'] ) :
-						
-						foreach ( $post_type_config as $type ) :
-						
-							if ( $type['type_name'] != $tax['tax_connect'] ) continue;
+						if ( $tax['tax_breadcrumb'] ) 
+							self::make_crumb( get_permalink( $tax['tax_breadcrumb'] ), get_the_title( $tax['tax_breadcrumb'] ) );
 							
-							$post_type = get_post_type_object( $tax['tax_connect'] );
+						if ( $tax['tax_connect'] && !$tax['tax_breadcrumb'] ) :
 							
-							if ( $post_type->has_archive == 1 ) 
-								self::make_crumb( home_url( $post_type->rewrite['slug'] ), $post_type->labels->name );
+							foreach ( $post_type_config as $type ) :
+							
+								if ( $type['type_name'] != $tax['tax_connect'] ) continue;
 								
-							elseif ( $post_type->has_archive ) 
-								self::make_crumb( home_url( $post_type->has_archive ), get_the_title( get_page_by_path( $post_type->has_archive ) ) );
+								$post_type = get_post_type_object( $tax['tax_connect'] );
+								
+								if ( $post_type->has_archive == 1 ) 
+									self::make_crumb( home_url( $post_type->rewrite['slug'] ), $post_type->labels->name );
+									
+								elseif ( $post_type->has_archive ) 
+									self::make_crumb( home_url( $post_type->has_archive ), get_the_title( get_page_by_path( $post_type->has_archive ) ) );
+							
+							endforeach;
+							
+						endif;
 						
-						endforeach;
+						self::make_crumb( null, $the_tax->labels->name );
 						
-					endif;
-					
-					self::make_crumb( null, $the_tax->labels->name );
-					
-				endforeach;
+					endforeach;
+				
+				endif;
 
 				$parent_id = $this_term->parent;
 				$subcrumbs = array();
