@@ -189,22 +189,26 @@ class NerdPress {
 		$script_header = self::variable( 'script_header' );
 		$script_footer = self::variable( 'script_footer' );
 		
-		if ( in_array( 'animatecss', $load_scripts ) ) :
-			wp_register_style( 'animate-css', get_template_directory_uri() . '/assets/css/animate.min.css' );
-			wp_enqueue_style( 'animate-css' );
-		endif;
+		if ( is_array( $load_scripts ) ) :
 		
-		if ( in_array( 'flexslider', $load_scripts ) ) 
-			wp_enqueue_script( 'flexslider', get_template_directory_uri() . '/assets/js/vendor/jquery.flexslider-min.js', array( 'jquery'), '2.2.0', true );
+			if ( in_array( 'animatecss', $load_scripts ) ) :
+				wp_register_style( 'animate-css', get_template_directory_uri() . '/assets/css/animate.min.css' );
+				wp_enqueue_style( 'animate-css' );
+			endif;
 			
-		if ( in_array( 'lightbox', $load_scripts ) ) 
-			wp_enqueue_script( 'lightbox', get_template_directory_uri() . '/assets/js/vendor/ekko-lightbox.js', array( 'jquery'), NULL, true );
+			if ( in_array( 'flexslider', $load_scripts ) ) 
+				wp_enqueue_script( 'flexslider', get_template_directory_uri() . '/assets/js/vendor/jquery.flexslider-min.js', array( 'jquery'), '2.2.0', true );
+				
+			if ( in_array( 'lightbox', $load_scripts ) ) 
+				wp_enqueue_script( 'lightbox', get_template_directory_uri() . '/assets/js/vendor/ekko-lightbox.js', array( 'jquery'), NULL, true );
+				
+			if ( in_array( 'vimeo_api', $load_scripts ) ) 
+				wp_enqueue_script( 'froogaloop', '//a.vimeocdn.com/js/froogaloop2.min.js', NULL, NULL, true );
+				
+			if ( in_array( 'bootstrap_hover', $load_scripts ) ) 
+				wp_enqueue_script( 'bootstrap-hover', get_template_directory_uri() . '/assets/js/vendor/bootstrap-hover-dropdown.js', array( 'jquery' ), NULL, true );
 			
-		if ( in_array( 'vimeo_api', $load_scripts ) ) 
-			wp_enqueue_script( 'froogaloop', '//a.vimeocdn.com/js/froogaloop2.min.js', NULL, NULL, true );
-			
-		if ( in_array( 'bootstrap_hover', $load_scripts ) ) 
-			wp_enqueue_script( 'bootstrap-hover', get_template_directory_uri() . '/assets/js/vendor/bootstrap-hover-dropdown.js', array( 'jquery' ), NULL, true );
+		endif;
 			
 		if ( $script_header ) :
 			foreach ( $script_header as $script ) {
