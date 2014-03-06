@@ -117,10 +117,23 @@ function nerdpress_admin_bar_options() {
 	
 	$args = array(
 		'parent' => 'nerdy',
-		'title' => 'NerdPress v' . $current_theme->get( 'Version' ),
+		'title' => $current_theme->get( 'Name' ) . ' v' . $current_theme->get( 'Version' ),
 	);
 	
 	$wp_admin_bar->add_node( $args );
+	
+	if ( is_child_theme() ) :
+	
+		$parent_theme = wp_get_theme( 'nerdpress' );
+		
+		$args = array(
+			'parent' => 'nerdy',
+			'title' => 'Child of ' . $parent_theme->get( 'Name' ) . ' v' . $parent_theme->get( 'Version' ),
+		);
+		
+		$wp_admin_bar->add_node( $args );
+	
+	endif;
 	
 	$args = array(
 		'parent' => 'nerdy',
@@ -132,8 +145,16 @@ function nerdpress_admin_bar_options() {
 	);
 	
 	$wp_admin_bar->add_node( $args );
+	
+	$args = array(
+		'parent' => 'site-name',
+		'title' => 'NerdPress Settings',
+		'href' => admin_url( 'options-general.php?page=nerdpress-settings' ),
+	);
+	
+	$wp_admin_bar->add_node( $args );
 }
 
 // Hook into the 'wp_before_admin_bar_render' action
-add_action( 'admin_bar_menu', 'nerdpress_admin_bar_options', 15 );
+add_action( 'admin_bar_menu', 'nerdpress_admin_bar_options', 25 );
 ?>
