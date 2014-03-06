@@ -29,6 +29,11 @@ class NerdPress {
 		
 		if ( in_array( 'nerdpress-panels/siteorigin-panels.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) && !get_option( 'rg_gforms_key' ) ) 
 			add_action( 'init', array( &$this, 'setup_nerdpress_panels' ) );
+			
+		if ( is_child_theme() ) :
+			add_filter( 'nerdpress_compiler', array( &$this, 'child_load_less' ) );
+			add_action( 'after_setup_theme', array( &$this, 'child_monitor_less' ) );
+		endif;
 	}
 
 	function init_filesystem() {
@@ -1034,6 +1039,16 @@ class NerdPress {
 		
 		if ( get_option( 'nerdpress_panels_display' ) != $value ) 
 			update_option( 'nerdpress_panels_display', $value );
+	}
+	
+	function child_load_less( $bootstrap ) {
+		return $bootstrap . '
+		@import "' . get_stylesheet_directory() . '/assets/less/child.less";';
+	}
+
+	function child_monitor_less() {
+		if ( filemtime( get_stylesheet_directory() . '/assets/less/child.less' ) > filemtime( nerdpress_css() ) ) 
+			nerdpress_makecss();
 	}
 	
 } // End class
