@@ -180,7 +180,9 @@ class NerdPress {
 		wp_enqueue_style( 'font-awesome' );
 		
 		wp_enqueue_script( 'bootstrap', '//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js', array( 'jquery' ), NULL, true );
-		wp_enqueue_script( 'main', get_template_directory_uri() . '/assets/js/main.js', array( 'jquery' ), NULL, true );
+		
+		wp_enqueue_script( 'main', get_stylesheet_directory_uri() . '/assets/js/main.js', array( 'jquery' ), NULL, true );
+		
 		wp_enqueue_script( 'placeholder', get_template_directory_uri() . '/assets/js/vendor/jquery.placeholder.js', array( 'jquery'), NULL, true );		
 		wp_enqueue_script( 'retina', get_template_directory_uri() . '/assets/js/vendor/retina.js', NULL, NULL, true );
 		
