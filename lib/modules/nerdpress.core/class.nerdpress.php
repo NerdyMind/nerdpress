@@ -44,6 +44,8 @@ class NerdPress {
 	}
 	
 	function variable( $var ) {
+		if ( !function_exists( 'get_field' ) ) return false;
+		
 		if ( get_field( $var, 'option' ) ) 
 			return get_field( $var, 'option' );
 		else 
