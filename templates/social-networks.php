@@ -9,7 +9,7 @@
 	?>
 		<li>
 			<a href="<?= $network['net_link']; ?>" title="<? bloginfo( 'name' ); ?> on <?= $network['net_name']; ?>" target="_blank">
-				<i class="fa <?= $network['net_icon']; ?>"></i>
+				<i class="fa fa-fw <?= $network['net_icon']; ?>"></i>
 			</a>
 		</li>
 <?php
