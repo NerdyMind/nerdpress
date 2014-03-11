@@ -8,7 +8,7 @@
 		foreach ( $social_networks as $network ) :
 	?>
 		<li>
-			<a href="<?= $network['net_link']; ?>" title="<? bloginfo( 'name' ); ?> on <?= $network['net_name']; ?>" target="_blank">
+			<a href="<?= $network['net_link']; ?>" title="<? bloginfo( 'name' ); ?> on <?= $network['net_name']; ?>" target="_blank" class="social-<?= strtolower( $network['net_name'] ); ?>">
 				<i class="fa fa-fw <?= $network['net_icon']; ?>"></i>
 			</a>
 		</li>
