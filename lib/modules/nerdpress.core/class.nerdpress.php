@@ -6,13 +6,11 @@ class NerdPress {
 		add_action( 'widgets_init', array( &$this, 'register_widget_areas' ) );
 		add_action( 'init', array( &$this, 'addl_integrations' ) );
 		add_filter( 'roots_display_sidebar', array( &$this, 'hide_sidebar_on' ) );
-		add_action( 'wp_enqueue_scripts', array( &$this, 'load_scripts' ), 200 );
-		add_shortcode( 'nerdpress_sitemap', array( &$this, 'sitemap' ) );
+		add_action( 'wp_enqueue_scripts', array( &$this, 'load_scripts' ), 200 );		
 		add_action( 'login_enqueue_scripts', array( &$this, 'login_logo' ) );
 		add_filter( 'login_headerurl', array( &$this, 'login_url' ) );
 		add_filter( 'login_headertitle', array( &$this, 'login_title' ) );
-		add_filter( 'wp_revisions_to_keep', array( &$this, 'limit_revisions' ), 10, 2 );
-		add_shortcode( 'nerdpress_social_networks', array( &$this, 'social_networks' ) );
+		add_filter( 'wp_revisions_to_keep', array( &$this, 'limit_revisions' ), 10, 2 );		
 		add_filter( 'wp_title', array( &$this, 'seo_title' ), 10, 2 );
 		add_action( 'wp_head', array( &$this, 'seo_description') );
 		add_action( 'tgmpa_register', array( &$this, 'register_required_plugins' ) );
@@ -23,6 +21,10 @@ class NerdPress {
 		add_action( 'wp_footer', array( &$this, 'statcounter' ) );
 		add_action( 'init', array( &$this, 'load_menu_locations' ) );
 		add_action( 'init', array( &$this, 'load_client_role' ) );
+		
+		add_shortcode( 'nerdpress_sitemap', array( &$this, 'sitemap' ) );
+		add_shortcode( 'nerdpress_social_networks', array( &$this, 'social_networks' ) );
+		add_shortcode( 'nerdpress_social_share', array( &$this, 'social_share' ) );
 		
 		if ( in_array( 'gravityforms/gravityforms.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) && !get_option( 'rg_gforms_key' ) ) 
 			add_action( 'init', array( &$this, 'setup_gravity_forms' ) );
@@ -643,7 +645,12 @@ class NerdPress {
 	} // breadcrumbs
 	
 	function sitemap() {
+		ob_start();
 		get_template_part( 'templates/sitemap' );
+		$sitemap = ob_get_contents();
+		ob_end_clean();
+		
+		return $sitemap;
 	}
 	
 	function login_logo() {
@@ -664,7 +671,12 @@ class NerdPress {
 	}
 	
 	function social_networks() {
+		ob_start();
 		get_template_part( 'templates/social', 'networks' );
+		$social_networks = ob_get_contents();
+		ob_end_clean();
+		
+		return $social_networks;
 	}
 	
 	function seo_title( $title, $sep ) {
@@ -1070,6 +1082,15 @@ class NerdPress {
 	function child_monitor_less() {
 		if ( filemtime( get_stylesheet_directory() . '/assets/less/child.less' ) > filemtime( nerdpress_css() ) ) 
 			nerdpress_makecss();
+	}
+	
+	function social_share() {
+		ob_start();
+		get_template_part( 'templates/social-share' );
+		$social_share = ob_get_contents();
+		ob_end_clean();
+		
+		return $social_share;
 	}
 	
 } // End class
