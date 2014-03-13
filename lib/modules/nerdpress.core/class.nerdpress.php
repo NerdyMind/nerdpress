@@ -1085,6 +1085,8 @@ class NerdPress {
 	}
 	
 	function social_share() {
+		wp_enqueue_script( 'nerdpress-social-share', get_template_directory_uri() . '/assets/js/plugins/nerdpress-social-share.js', array( 'jquery'), null, true );
+		
 		ob_start();
 		get_template_part( 'templates/social-share' );
 		$social_share = ob_get_contents();
