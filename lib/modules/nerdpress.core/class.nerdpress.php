@@ -1115,7 +1115,7 @@ class NerdPress {
 		$page_links = array();
 		
 		$page_links[] = array(
-			'link' => get_pagenum_link( $paged - 1 ),
+			'link' => ( $paged == 1 ) ? '' : get_pagenum_link( $paged - 1 ),
 			'text' => '<i class="fa fa-angle-double-left"></i>',
 			'class' => ( $paged == 1 ) ? 'disabled' : '',
 		);
@@ -1129,7 +1129,7 @@ class NerdPress {
 		}
 		
 		$page_links[] = array(
-			'link' => get_pagenum_link( $paged + 1 ),
+			'link' => ( $paged == $pages ) ? '' : get_pagenum_link( $paged + 1 ),
 			'text' => '<i class="fa fa-angle-double-right"></i>',
 			'class' => ( $paged == $pages ) ? 'disabled' : '',
 		);

@@ -6,7 +6,13 @@ global $page_links;
 	<ul class="pagination">
 		<?php foreach ( $page_links as $page ) : ?>
 		<li class="<?= $page['class']; ?>">
-			<a href="<?= $page['link']; ?>"><?= $page['text']; ?></a>
+			<?php if ( $page['link'] ) : ?>
+			<a href="<?= $page['link']; ?>">
+			<?php endif; ?>
+				<?= $page['text']; ?>
+			<?php if ( $page['link'] ) : ?>
+			</a>
+			<?php endif; ?>
 		</li>
 		<?php endforeach; ?>
 	</ul>
