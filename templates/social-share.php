@@ -2,9 +2,11 @@
 wp_enqueue_script( 'nerdpress-social-share', get_template_directory_uri() . '/assets/js/plugins/nerdpress-social-share.js', array( 'jquery'), null, true );
 
 $this_url = ( (!empty( $_SERVER['HTTPS'] ) ) ? "https://": "http://" ) . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+$this_url = 'http://www.theverge.com/2014/3/12/5497728/mondo-and-the-lost-art-of-the-movie-poster';
 $json = wp_remote_get(' http://api.sharedcount.com/?url=' . rawurlencode( $this_url ) . '&apikey=37433f776900024b3db1a402feba1b7d76fd62ae' );
-$shared_counts = json_decode( $json['body'], true );
 
+if ( ! is_wp_error( $json ) ) $shared_counts = json_decode( $json['body'], true );
+	
 $social_title = urlencode( get_the_title() );
 $social_url = urlencode( get_permalink() );
 $social_summary = urlencode( get_the_excerpt() );
