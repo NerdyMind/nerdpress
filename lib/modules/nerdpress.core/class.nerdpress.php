@@ -746,7 +746,7 @@ class NerdPress {
 			set_transient( 'np_plugins_list', $plugins_list['body'], 86400 );
 		endif;
 		
-		if ( $plugins_list ) 
+		if ( ! is_wp_error( $plugins_list ) ) 
 			$plugins = json_decode( $plugins_list, true );
 	
 		// Change this to your theme text domain, used for internationalising strings
@@ -1084,7 +1084,19 @@ class NerdPress {
 			nerdpress_makecss();
 	}
 	
-	function social_share() {
+	function social_share( $atts ) {
+		global $share_url;
+				
+		extract( 
+			shortcode_atts( 
+				array(
+					'url' => '',
+				), $atts
+			)
+		);
+		
+		$share_url = $url;
+	
 		wp_enqueue_script( 'nerdpress-social-share', get_template_directory_uri() . '/assets/js/plugins/nerdpress-social-share.js', array( 'jquery'), null, true );
 		
 		ob_start();
