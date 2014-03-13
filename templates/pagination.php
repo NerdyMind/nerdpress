@@ -1,3 +1,7 @@
+<?php
+// Don't delete this, k?
+global $page_links;
+?>
 <div class="text-center">
 	<ul class="pagination">
 		<?php foreach ( $page_links as $page ) : ?>
