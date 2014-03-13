@@ -1107,6 +1107,43 @@ class NerdPress {
 		return $social_share;
 	}
 	
+	function pagination ( $pages = '', $range = 4 ) {
+		global $paged, $page_links;
+		
+		if ( empty( $paged ) ) $paged = 1;
+		
+		$page_links = array();
+		
+		$page_links[] = array(
+			'link' => get_pagenum_link( $paged - 1 ),
+			'text' => '<i class="fa fa-angle-double-left"></i>',
+			'class' => ( $paged == 1 ) ? 'disabled' : '',
+		);
+		
+		for ( $i = 1; $i < ( $pages + 1); $i++ ) {
+			$page_links[] = array(
+				'link' => get_pagenum_link( $i ),
+				'text' => $i,
+				'class' => ( $i == $paged ) ? 'active' : '',
+			);
+		}
+		
+		$page_links[] = array(
+			'link' => get_pagenum_link( $paged + 1 ),
+			'text' => '<i class="fa fa-angle-double-right"></i>',
+			'class' => ( $paged == $pages ) ? 'disabled' : '',
+		);
+		
+		if ( $page_links ) :
+			ob_start();
+			get_template_part( 'templates/pagination' );
+			$pagination = ob_get_contents();
+			ob_end_clean();
+			
+			return $pagination;
+		endif;
+	}
+	
 } // End class
 
 $nerdpress = new NerdPress();
