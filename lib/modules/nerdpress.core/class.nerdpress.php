@@ -1140,7 +1140,7 @@ class NerdPress {
 			$pagination = ob_get_contents();
 			ob_end_clean();
 			
-			return $pagination;
+			echo $pagination;
 		endif;
 	}
 	
