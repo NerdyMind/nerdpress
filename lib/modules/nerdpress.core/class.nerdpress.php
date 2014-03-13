@@ -1120,7 +1120,7 @@ class NerdPress {
 			'class' => ( $paged == 1 ) ? 'disabled' : '',
 		);
 		
-		for ( $i = 1; $i < ( $pages + 1); $i++ ) {
+		for ( $i = 1; $i < ( $pages + 1 ); $i++ ) {
 			$page_links[] = array(
 				'link' => get_pagenum_link( $i ),
 				'text' => $i,
