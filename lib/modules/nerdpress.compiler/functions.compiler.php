@@ -7,7 +7,7 @@ if ( !function_exists( 'nerdpress_compiler' ) ) :
  */
 function nerdpress_compiler() {
   $minify_css = NerdPress::variable( 'minify_css' );
-  $options = ( $minimize_css == 1 ) ? array( 'compress'=>true ) : array( 'compress'=>false );
+  $options = ( $minify_css == 1 ) ? array( 'compress'=>true ) : array( 'compress'=>false );
 
   $bootstrap_location = get_template_directory() . '/assets/less/';
   $webfont_location   = get_template_directory() . '/assets/fonts/';

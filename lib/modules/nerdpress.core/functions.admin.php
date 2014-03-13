@@ -152,7 +152,7 @@ function nerdpress_admin_bar_options() {
 		'href' => admin_url( 'options-general.php?page=nerdpress-settings' ),
 	);
 	
-	$wp_admin_bar->add_node( $args );
+	if ( ! is_admin() ) $wp_admin_bar->add_node( $args );
 }
 
 // Hook into the 'wp_before_admin_bar_render' action

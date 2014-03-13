@@ -104,6 +104,14 @@ class NerdPressConfig {
 						'default_value' => 0,
 					),
 					array (
+						'key' => 'field_530q383247873',
+						'label' => 'Minify',
+						'name' => 'minify_css',
+						'type' => 'true_false',
+						'message' => 'Minify CSS for production',
+						'default_value' => 0,
+					),
+					array (
 						'key' => 'field_530fa4142ffc1',
 						'label' => 'Menu Locations',
 						'name' => 'menu_locations',
