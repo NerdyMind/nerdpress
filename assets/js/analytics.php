@@ -78,3 +78,14 @@ if (typeof jQuery != 'undefined') {
     });
   });
 }
+
+jQuery(document).ready(function($) {
+	$('a[data-toggle="tab"').click(function() {
+		var tabName = $(this).text();
+		_gaq.push(['_trackEvent', 'click', 'tab', tabName]);
+	});
+
+	$('.nerdpress-social-share a').click(function(share) {
+		_gaq.push(['_trackEvent', 'share', 'social', $(this).attr('data-network')]);
+	});
+});
