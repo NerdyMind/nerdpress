@@ -34,5 +34,11 @@ $social_image = urlencode( wp_get_attachment_url( get_post_thumbnail_id( $post->
 				<i class="fa fa-linkedin fa-lg"></i> Share <span class="badge"><?= ( $shared_counts['LinkedIn'] > 0 ) ? $shared_counts['LinkedIn'] : ''; ?></span>
 			</a>
 		</li>
+		
+		<li>
+			<a href="#share-pinterest" class="btn btn-sm btn-social btn-pinterest" data-share="//www.pinterest.com/pin/create/button/?url=<?= $social_url; ?>&description=<?= $social_title; ?>">
+				<i class="fa fa-pinterest fa-lg"></i> Pin It <span class="badge"><?= ( $shared_counts['Pinterest'] > 0 ) ? $shared_counts['Pinterest'] : ''; ?></span>
+			</a>
+		</li>
 	</ul>
 </div>
