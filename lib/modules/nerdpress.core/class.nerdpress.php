@@ -1080,8 +1080,10 @@ class NerdPress {
 	}
 
 	function child_monitor_less() {
-		if ( filemtime( get_stylesheet_directory() . '/assets/less/child.less' ) > filemtime( nerdpress_css() ) ) 
-			nerdpress_makecss();
+		if ( file_exists( get_stylesheet_directory() . '/assets/less/child.less' ) ) {
+			if ( filemtime( get_stylesheet_directory() . '/assets/less/child.less' ) > filemtime( nerdpress_css() ) ) 
+				nerdpress_makecss();
+		}		
 	}
 	
 	function social_share( $atts ) {
