@@ -80,7 +80,7 @@ if (typeof jQuery != 'undefined') {
 }
 
 jQuery(document).ready(function($) {
-	$('a[data-toggle="tab"').click(function() {
+	$('a[data-toggle="tab"]').click(function() {
 		var tabName = $(this).text();
 		_gaq.push(['_trackEvent', 'click', 'tab', tabName]);
 	});
