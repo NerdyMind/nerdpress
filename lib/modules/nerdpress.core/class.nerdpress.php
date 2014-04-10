@@ -33,10 +33,10 @@ class NerdPress {
 			add_action( 'init', array( &$this, 'setup_nerdpress_panels' ) );
 			
 		if ( is_child_theme() ) :
-			if ( NerdPress::variable( 'use_compiler' ) == 1 ) :
+/* 			if ( NerdPress::variable( 'use_compiler' ) == 1 ) : */
 				add_filter( 'nerdpress_compiler', array( &$this, 'child_load_less' ) );
 				add_action( 'after_setup_theme', array( &$this, 'child_monitor_less' ) );
-			endif;
+/* 			endif; */
 		endif;
 	}
 
