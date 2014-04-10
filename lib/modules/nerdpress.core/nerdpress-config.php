@@ -100,8 +100,8 @@ class NerdPressConfig {
 						'label' => 'Branding',
 						'name' => 'brand_wp',
 						'type' => 'true_false',
-						'message' => 'Show NerdyMind branding',
-						'default_value' => 0,
+						'message' => 'Show NerdyMind branding in backend',
+						'default_value' => 1,
 					),
 					array (
 						'key' => 'field_530q383247873',
@@ -110,6 +110,14 @@ class NerdPressConfig {
 						'type' => 'true_false',
 						'message' => 'Minify CSS for production',
 						'default_value' => 0,
+					),
+					array (
+						'key' => 'field_530q383247960',
+						'label' => 'Compiler',
+						'name' => 'use_compiler',
+						'type' => 'true_false',
+						'message' => 'Use web-based compiler',
+						'default_value' => 1,
 					),
 					array (
 						'key' => 'field_530fa4142ffc1',

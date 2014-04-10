@@ -32,7 +32,7 @@ class NerdPress {
 		if ( in_array( 'nerdpress-panels/siteorigin-panels.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) && !get_option( 'rg_gforms_key' ) ) 
 			add_action( 'init', array( &$this, 'setup_nerdpress_panels' ) );
 			
-		if ( is_child_theme() ) :
+		if ( is_child_theme() && self::variable( 'use_compiler' ) ) :
 			add_filter( 'nerdpress_compiler', array( &$this, 'child_load_less' ) );
 			add_action( 'after_setup_theme', array( &$this, 'child_monitor_less' ) );
 		endif;

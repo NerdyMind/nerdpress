@@ -6,31 +6,31 @@ if ( !function_exists( 'nerdpress_compiler' ) ) :
  * This function can be used to compile a less file to css using the lessphp compiler
  */
 function nerdpress_compiler() {
-  $minify_css = NerdPress::variable( 'minify_css' );
-  $options = ( $minify_css == 1 ) ? array( 'compress'=>true ) : array( 'compress'=>false );
-
-  $bootstrap_location = get_template_directory() . '/assets/less/';
-  $webfont_location   = get_template_directory() . '/assets/fonts/';
-  $bootstrap_uri      = '';
-  $custom_less_file   = get_template_directory() . '/assets/less/custom.less';
-
-  $parser = new Less_Parser( $options );
-
-  // The main app.less file
-  $parser->parseFile( $bootstrap_location . 'app.less', $bootstrap_uri );
-
-  // The custom.less file
-  if ( is_writable( $custom_less_file ) )
-    $parser->parseFile( $bootstrap_location . 'custom.less', $bootstrap_uri );
-
-  // Add a filter to the compiler
-  $parser->parse( apply_filters( 'nerdpress_compiler', '' ) );
-
-  $css = $parser->getCss();
-
-  // Below is just an ugly hack
-  $css = str_replace( 'bootstrap/fonts/', '', $css );
-  return apply_filters( 'nerdpress_compiler_output', $css );
+	$minify_css = NerdPress::variable( 'minify_css' );
+	$options = ( $minify_css == 1 ) ? array( 'compress'=>true ) : array( 'compress'=>false );
+	
+	$bootstrap_location = get_template_directory() . '/assets/less/';
+	$webfont_location   = get_template_directory() . '/assets/fonts/';
+	$bootstrap_uri      = '';
+	$custom_less_file   = get_template_directory() . '/assets/less/custom.less';
+	
+	$parser = new Less_Parser( $options );
+	
+	// The main app.less file
+	$parser->parseFile( $bootstrap_location . 'app.less', $bootstrap_uri );
+	
+	// The custom.less file
+	if ( is_writable( $custom_less_file ) )
+	$parser->parseFile( $bootstrap_location . 'custom.less', $bootstrap_uri );
+	
+	// Add a filter to the compiler
+	$parser->parse( apply_filters( 'nerdpress_compiler', '' ) );
+	
+	$css = $parser->getCss();
+	
+	// Below is just an ugly hack
+	$css = str_replace( 'bootstrap/fonts/', '', $css );
+	return apply_filters( 'nerdpress_compiler_output', $css );
 }
 endif;
 
@@ -154,7 +154,7 @@ function nerdpress_process_font( $font ) {
 endif;
 
 // If the Custom LESS exists and has changed after the last compilation, trigger the compiler.
-if ( is_writable( get_template_directory() . '/assets/less/custom.less' ) ) {
+if ( is_writable( get_template_directory() . '/assets/less/custom.less' ) && NerdPress::variable( 'use_compiler' ) ) {
   if ( filemtime( get_template_directory() . '/assets/less/custom.less' ) > filemtime( nerdpress_css() ) )
     nerdpress_makecss();
 }
