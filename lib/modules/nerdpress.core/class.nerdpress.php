@@ -187,8 +187,8 @@ class NerdPress {
 		
 		wp_enqueue_script( 'main', get_stylesheet_directory_uri() . '/assets/js/main.js', array( 'jquery' ), NULL, true );
 		
-		wp_enqueue_script( 'placeholder', get_template_directory_uri() . '/assets/js/vendor/jquery.placeholder.js', array( 'jquery'), NULL, true );		
-		wp_enqueue_script( 'retina', get_template_directory_uri() . '/assets/js/vendor/retina.js', NULL, NULL, true );
+		wp_enqueue_script( 'placeholder', '//cdnjs.cloudflare.com/ajax/libs/jquery-placeholder/2.0.7/jquery.placeholder.min.js', array( 'jquery'), NULL, true );		
+		wp_enqueue_script( 'retina', '//cdnjs.cloudflare.com/ajax/libs/retina.js/1.0.1/retina.js', NULL, NULL, true );
 		
 		if ( self::variable( 'analytics_id' ) ) 
 			wp_enqueue_script( 'analytics', get_template_directory_uri() . '/assets/js/analytics.php', array( 'jquery' ), NULL, NULL );
@@ -200,12 +200,12 @@ class NerdPress {
 		if ( $load_scripts ) :
 		
 			if ( in_array( 'animatecss', $load_scripts ) ) :
-				wp_register_style( 'animate-css', get_template_directory_uri() . '/assets/css/animate.min.css' );
+				wp_register_style( 'animate-css', '//cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.0/animate.min.css' );
 				wp_enqueue_style( 'animate-css' );
 			endif;
 			
 			if ( in_array( 'flexslider', $load_scripts ) ) 
-				wp_enqueue_script( 'flexslider', get_template_directory_uri() . '/assets/js/vendor/jquery.flexslider-min.js', array( 'jquery'), '2.2.0', true );
+				wp_enqueue_script( 'flexslider', '//cdnjs.cloudflare.com/ajax/libs/flexslider/2.2.2/jquery.flexslider-min.js', array( 'jquery'), '2.2.2', true );
 				
 			if ( in_array( 'lightbox', $load_scripts ) ) 
 				wp_enqueue_script( 'lightbox', get_template_directory_uri() . '/assets/js/vendor/ekko-lightbox.js', array( 'jquery'), NULL, true );
@@ -214,7 +214,7 @@ class NerdPress {
 				wp_enqueue_script( 'froogaloop', '//a.vimeocdn.com/js/froogaloop2.min.js', NULL, NULL, true );
 				
 			if ( in_array( 'bootstrap_hover', $load_scripts ) ) 
-				wp_enqueue_script( 'bootstrap-hover', get_template_directory_uri() . '/assets/js/vendor/bootstrap-hover-dropdown.js', array( 'jquery' ), NULL, true );
+				wp_enqueue_script( 'bootstrap-hover', '//cdnjs.cloudflare.com/ajax/libs/bootstrap-hover-dropdown/2.0.2/bootstrap-hover-dropdown.min.js', array( 'jquery' ), NULL, true );
 			
 		endif;
 			
