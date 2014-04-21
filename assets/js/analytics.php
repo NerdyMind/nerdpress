@@ -4,13 +4,21 @@
 require_once( '../../../../../wp-load.php' );
 header( 'Content-Type:text/javascript' );
 $analytics_id = get_option( 'options_analytics_id' );
+$analytics_site_url = get_option( 'options_analytics_site_url' );
 $analytics_demographics = get_option( 'options_analytics_demographics' );
 
 if ( !$analytics_id ) return;
 ?>
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', '<?= $analytics_id; ?>']);
-
+<?php
+	if ( $analytics_site_url ) {
+	?>
+_gaq.push(['_setDomainName', '<?= $analytics_site_url; ?>']);
+_gaq.push(['_setAllowLinker', true]);
+<?php
+}
+?>
 _gaq.push(['_trackPageview']);
 
 (function() {

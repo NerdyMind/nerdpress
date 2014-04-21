@@ -259,6 +259,29 @@ class NerdPressConfig {
 						'maxlength' => '',
 					),
 					array (
+						'key' => 'field_530e385248895',
+						'label' => 'Site URL',
+						'name' => 'analytics_site_url',
+						'type' => 'text',
+						'conditional_logic' => array (
+							'status' => 1,
+							'rules' => array (
+								array (
+									'field' => 'field_530e388b47877',
+									'operator' => '==',
+									'value' => '1',
+								),
+							),
+							'allorany' => 'all',
+						),
+						'default_value' => '',
+						'placeholder' => '',
+						'prepend' => '',
+						'append' => '',
+						'formatting' => 'none',
+						'maxlength' => '',
+					),
+					array (
 						'key' => 'field_530e386347876',
 						'label' => 'Demographics',
 						'name' => 'analytics_demographics',
