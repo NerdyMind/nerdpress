@@ -21,6 +21,10 @@ class NerdPress {
 		add_action( 'wp_footer', array( &$this, 'statcounter' ) );
 		add_action( 'init', array( &$this, 'load_menu_locations' ) );
 		add_action( 'init', array( &$this, 'load_client_role' ) );
+		add_action( 'init', array( &$this, 'roots_cleanup' ), 200 );
+		
+		if ( !class_exists('WPSEO_Frontend') ) 
+			add_action( 'wp_head', array( &$this, 'load_canonical' ) );
 		
 		add_shortcode( 'nerdpress_sitemap', array( &$this, 'sitemap' ) );
 		add_shortcode( 'nerdpress_social_networks', array( &$this, 'social_networks' ) );
@@ -1146,6 +1150,17 @@ class NerdPress {
 			
 			echo $pagination;
 		endif;
+	}
+	
+	function roots_cleanup() {
+		 remove_action('wp_head', 'roots_rel_canonical');
+	}
+	
+	function load_canonical() {
+		global $post;
+		
+		if ( get_field( 'nrd_seo_canonical' ) ) 
+			echo "\r\n" . '<link rel="canonical" href="' . get_field( 'nrd_seo_canonical' ) . '" />' . "\r\n";
 	}
 	
 } // End class

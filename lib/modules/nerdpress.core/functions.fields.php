@@ -46,6 +46,16 @@ if(function_exists("register_field_group"))
 				'formatting' => 'none',
 			),
 			array (
+				'key' => 'field_52ec1eb14c3b9',
+				'label' => 'Canonical URL',
+				'name' => 'nrd_seo_canonical',
+				'type' => 'text',
+				'default_value' => '',
+				'placeholder' => 'http://',
+				'maxlength' => '',
+				'formatting' => 'none',
+			),
+			array (
 				'key' => 'field_52ec1e754c2c1',
 				'label' => 'Options',
 				'name' => '',
