@@ -3,7 +3,7 @@ if(function_exists("register_field_group"))
 {
 	register_field_group(array (
 		'id' => 'acf_options',
-		'title' => 'Options',
+		'title' => 'Page/Post Options',
 		'fields' => array (
 			array (
 				'key' => 'field_52ec1ea24c2c2',
