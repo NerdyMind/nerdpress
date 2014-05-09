@@ -21,7 +21,7 @@ if(function_exists("register_field_group"))
 				'prepend' => '',
 				'append' => '',
 				'formatting' => 'none',
-				'maxlength' => 022,
+				'maxlength' => '',
 			),
 			array (
 				'key' => 'field_52ec1f7f28a1d',
