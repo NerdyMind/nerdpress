@@ -2,6 +2,8 @@
 class NerdPress {
 
 	function __construct() {
+		global $pagenow;
+		
 		add_action('init', array( &$this, 'init_filesystem' ) );
 		add_action( 'widgets_init', array( &$this, 'register_widget_areas' ) );
 		add_action( 'init', array( &$this, 'addl_integrations' ) );
@@ -33,8 +35,11 @@ class NerdPress {
 		if ( in_array( 'gravityforms/gravityforms.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) && !get_option( 'rg_gforms_key' ) ) 
 			add_action( 'init', array( &$this, 'setup_gravity_forms' ) );
 		
-		if ( in_array( 'nerdpress-panels/siteorigin-panels.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) && !get_option( 'rg_gforms_key' ) ) 
+		if ( in_array( 'siteorigin-panels/siteorigin-panels.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) && !get_option( 'rg_gforms_key' ) ) 
 			add_action( 'init', array( &$this, 'setup_nerdpress_panels' ) );
+			
+		if ( $pagenow == 'plugin-install.php' ) 
+			add_action( 'admin_notices', array( &$this, 'plugin_install_warning' ) );
 			
 		if ( is_child_theme() ) :
 /* 			if ( NerdPress::variable( 'use_compiler' ) == 1 ) : */
@@ -1076,8 +1081,8 @@ class NerdPress {
 	function setup_nerdpress_panels() {
 		$value = 'a:8:{s:10:"animations";b:1;s:15:"bundled-widgets";b:1;s:10:"responsive";b:1;s:12:"mobile-width";i:780;s:12:"margin-sides";i:30;s:13:"margin-bottom";i:30;s:12:"copy-content";b:0;s:10:"inline-css";b:0;}';
 		
-		if ( get_option( 'nerdpress_panels_display' ) != $value ) 
-			update_option( 'nerdpress_panels_display', $value );
+		if ( get_option( 'siteorigin_panels_display' ) != $value ) 
+			update_option( 'siteorigin_panels_display', $value );
 	}
 	
 	function child_load_less( $bootstrap ) {
@@ -1161,6 +1166,10 @@ class NerdPress {
 		
 		if ( get_field( 'nrd_seo_canonical' ) ) 
 			echo "\r\n" . '<link rel="canonical" href="' . get_field( 'nrd_seo_canonical' ) . '" />' . "\r\n";
+	}
+	
+	function plugin_install_warning() {
+		get_template_part( 'templates/admin', 'plugin-notice' );
 	}
 	
 } // End class

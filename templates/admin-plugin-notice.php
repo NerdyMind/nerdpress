@@ -1,0 +1,3 @@
+<div class="updated">
+	<p><?php _e( 'A note from NerdyMind: Before you install any WordPress plugins on your own, please note that some plugins can "break" or disable certain functionality on your website. NerdyMind would be happy to <a href="http://nerdymind.com/contact/" target="_blank">discuss what your needs are</a>, and offer some suggestions from our preferred plugins list.', 'nerdpress' ); ?></p>
+</div>
