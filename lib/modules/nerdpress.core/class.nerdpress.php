@@ -189,12 +189,10 @@ class NerdPress {
 	
 		wp_deregister_script( 'roots_scripts' );
 		
-		wp_register_style( 'font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css' );
+		wp_register_style( 'font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css' );
 		wp_enqueue_style( 'font-awesome' );
 		
 		wp_enqueue_script( 'bootstrap', '//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js', array( 'jquery' ), NULL, true );
-		
-		wp_enqueue_script( 'main', get_stylesheet_directory_uri() . '/assets/js/main.js', array( 'jquery' ), NULL, true );
 		
 		wp_enqueue_script( 'placeholder', '//cdnjs.cloudflare.com/ajax/libs/jquery-placeholder/2.0.7/jquery.placeholder.min.js', array( 'jquery'), NULL, true );		
 		wp_enqueue_script( 'retina', '//cdnjs.cloudflare.com/ajax/libs/retina.js/1.0.1/retina.js', NULL, NULL, true );
@@ -238,6 +236,8 @@ class NerdPress {
 				wp_enqueue_script( $script['script_url'], $script['script_url'], NULL, NULL, true );
 			}
 		endif;
+		
+		wp_enqueue_script( 'main', get_stylesheet_directory_uri() . '/assets/js/main.js', array( 'jquery' ), NULL, true );
 	}
 	
 	function make_crumb( $url = false, $text ) {
