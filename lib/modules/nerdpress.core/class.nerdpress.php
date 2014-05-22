@@ -186,8 +186,17 @@ class NerdPress {
 	}
 	
 	function load_scripts() {
+		global $blog_id;
 	
 		wp_deregister_script( 'roots_scripts' );
+		wp_dequeue_style( 'roots_main' );
+		
+		if ( is_multisite() ) 
+			$the_css = get_template_directory_uri() . '/assets/css/main.min_id-' . $blog_id . '.css';
+		else 
+			$the_css = get_template_directory_uri() . '/assets/css/main.min.css';
+		
+		wp_enqueue_style( 'nerdpress', $the_css, false, '6c39f42987ae297a5a21e2bb35bf3402' );
 		
 		wp_register_style( 'font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css' );
 		wp_enqueue_style( 'font-awesome' );
