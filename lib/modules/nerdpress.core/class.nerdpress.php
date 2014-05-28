@@ -24,6 +24,7 @@ class NerdPress {
 		add_action( 'init', array( &$this, 'load_menu_locations' ) );
 		add_action( 'init', array( &$this, 'load_client_role' ) );
 		add_action( 'init', array( &$this, 'roots_cleanup' ), 200 );
+		add_action( 'init', array( &$this, 'detect_mobile' ) );
 		
 		if ( !class_exists('WPSEO_Frontend') ) 
 			add_action( 'wp_head', array( &$this, 'load_canonical' ) );
@@ -1179,6 +1180,40 @@ class NerdPress {
 	
 	function plugin_install_warning() {
 		get_template_part( 'templates/admin', 'plugin-notice' );
+	}
+	
+	function detect_mobile() {
+		$ua = strtolower( $_SERVER['HTTP_USER_AGENT'] );
+		
+		if ( stripos( $ua, 'android' ) !== false || 
+			stripos( $ua, 'iphone' ) !== false || 
+			stripos( $ua, 'ipod' ) !== false || 
+			stripos( $ua, 'ipad' ) !== false ) {
+			define( 'NERDPRESS_IS_MOBILE', true );
+			
+			add_filter( 'body_class', array( &$this, 'mobile_body_classes' ) );
+		}
+	}
+	
+	function mobile_body_classes( $classes ) {
+		$ua = strtolower( $_SERVER['HTTP_USER_AGENT'] );
+		
+		if ( stripos( $ua, 'android' ) !== false ) 
+			$classes[] = 'android';
+			
+		if ( stripos( $ua, 'iphone' ) !== false || stripos( $ua, 'ipod' ) !== false || stripos( $ua, 'ipad' ) !== false ) 
+			$classes[] = 'ios';
+			
+		if ( stripos( $ua, 'iphone' ) !== false ) 
+			$classes[] = 'iphone';
+			
+		if ( stripos( $ua, 'ipod' ) !== false ) 
+			$classes[] = 'ipod';
+			
+		if ( stripos( $ua, 'ipad' ) !== false ) 
+			$classes[] = 'ipad';		
+		
+		return $classes;
 	}
 	
 } // End class
