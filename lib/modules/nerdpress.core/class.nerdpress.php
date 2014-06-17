@@ -1212,6 +1212,8 @@ class NerdPress {
 			
 		if ( stripos( $ua, 'ipad' ) !== false ) 
 			$classes[] = 'ipad';		
+			
+		$classes[] = 'mobile';
 		
 		return $classes;
 	}
