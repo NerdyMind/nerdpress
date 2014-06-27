@@ -224,8 +224,10 @@ class NerdPress {
 			if ( in_array( 'flexslider', $load_scripts ) ) 
 				wp_enqueue_script( 'flexslider', '//cdnjs.cloudflare.com/ajax/libs/flexslider/2.2.2/jquery.flexslider-min.js', array( 'jquery'), '2.2.2', true );
 				
-			if ( in_array( 'lightbox', $load_scripts ) ) 
-				wp_enqueue_script( 'lightbox', get_template_directory_uri() . '/assets/js/vendor/ekko-lightbox.js', array( 'jquery'), NULL, true );
+			if ( in_array( 'lightbox', $load_scripts ) ) {
+				wp_enqueue_style( 'ekko', '//cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/3.0.3a/ekko-lightbox.min.css' );
+				wp_enqueue_script( 'ekko', '//cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/3.0.3a/ekko-lightbox.min.js', array( 'jquery' ), null, true );
+			}
 				
 			if ( in_array( 'vimeo_api', $load_scripts ) ) 
 				wp_enqueue_script( 'froogaloop', '//a.vimeocdn.com/js/froogaloop2.min.js', NULL, NULL, true );
