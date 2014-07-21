@@ -43,6 +43,16 @@ ul.li-lfloat  li a, ol.li-lfloat li a, ul.li-rfloat li a, ol.li-rfloat li a {dis
 .top {margin-top:0;padding-top:0;}
 .bottom {margin-bottom:0;padding-bottom:0;}
 
+@media screen and ( max-width: @screen-xs ) {
+	.first {
+		padding-right: 0;
+	}
+	
+	.last {
+		padding-left: 0;
+	}
+}
+
 .space(@pixels: 10px) {
 	margin: @pixels;
 }
@@ -190,5 +200,27 @@ div.wrap.full-width {
 			padding-left: 0;
 			padding-right: 0;
 		}
+	}
+}
+
+/* ===== Modal Jump Fix ===== */
+
+.modal {
+	overflow-y: auto;
+}
+
+.modal-open {
+	overflow: auto;
+}
+
+/* ===== Remove Bootstrap panel markup from Page Builder ===== */
+
+.panel-grid-cell {
+	.panel {
+		background-color: inherit;
+		border: none;
+		border-radius: 0;
+		-webkit-box-shadow: none;
+		box-shadow: none;
 	}
 }

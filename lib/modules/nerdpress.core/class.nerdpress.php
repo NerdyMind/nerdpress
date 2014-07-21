@@ -769,6 +769,8 @@ class NerdPress {
 			set_transient( 'np_plugins_list', $plugins_list['body'], 86400 );
 		endif;
 		
+		$plugins_list = get_transient( 'np_plugins_list' );
+		
 		if ( ! is_wp_error( $plugins_list ) ) 
 			$plugins = json_decode( $plugins_list, true );
 	
