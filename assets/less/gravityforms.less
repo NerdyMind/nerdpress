@@ -1,60 +1,95 @@
 /* ==========================================================================
-   Gravity Forms - use Bootstrap styling
-   ========================================================================== */
+Gravity Forms - use Bootstrap styling
+========================================================================== */
 
-.gform_wrapper ul {
-  .list-unstyled();
-}
-.gform_wrapper li {
-  .form-group();
-}
-.gform_wrapper form {
-  margin-bottom: 0;
-}
-.gform_wrapper .gfield_label {
-}
-.gform_wrapper .gfield_required {
-  padding-left: 1px;
-  color: @state-danger-text;
-}
-.ginput_container input,
-.ginput_container select,
-.ginput_container textarea {
-  .form-control();
-}
-.ginput_container textarea {
-  height: auto;
-}
-.gform_button {
-  .btn();
-  .btn-primary();
-}
-.gform_wrapper .gfield_error {
-  .gfield_label {
-    color: @state-danger-text;
-  }
-  input,
-  select,
-  textarea {
-    border-color: @alert-danger-border;
-    background-color: @alert-danger-bg;
-    color: @alert-danger-text;
-    .form-control-focus(@alert-danger-text);
-  }
-}
-.validation_error {
-  .alert();
-  .alert-danger();
-}
-#gforms_confirmation_message {
-  .alert();
-}
-
-.ginput_container ul.gfield_checkbox input,
-.ginput_container ul.gfield_radio input {
-	float: left;
-	display: inline-block;
-	width: auto;
-	margin-right: 10px;
-	margin-top: -8px;
+.gform_wrapper {
+	ul {
+		.list-unstyled();
+	}
+	
+	li {
+		.form-group();
+	}
+	
+	form {
+		margin-bottom: 0;
+	}
+	
+	.gfield_required {
+		color: @state-danger-text;
+		padding-left: 1px;		
+	}
+	
+	.ginput_container {
+		input, select, textarea {
+			.form-control();
+		}
+		
+		textarea {
+			height: auto;
+		}
+		
+		ul.gfield_checkbox input, 
+		ul.gfield_radio input {
+			float: left;
+			display: block;
+			height: auto;
+			width: auto;
+			min-height: @line-height-computed;
+			vertical-align: middle;
+			position: absolute;
+			line-height: normal;
+		}
+		
+		ul.gfield_checkbox label,
+		ul.gfield_radio label {
+			margin-left: 20px;
+		}
+		
+		.ginput_left {
+			.make-sm-column(6);
+			.first();
+		}
+		
+		.ginput_right {
+			.make-sm-column(6);
+			.last();
+		}
+		
+		.ginput_full,
+		.gf_clear {
+			.clearfix();
+		}
+	}
+	
+	.gform_button {
+		.btn();
+		.btn-primary();
+	}
+	
+	.gfield_error {
+		.gfield_label {
+			color: @state-danger-text;
+		}
+		
+		input, select, textarea {
+			border-color: @alert-danger-border;
+			background-color: @alert-danger-bg;
+			color: @alert-danger-text;
+			.form-control-focus(@alert-danger-text);			
+		}
+	}
+	
+	.validation_error {
+		.alert();
+		.alert-danger();
+	}
+	
+	#gforms_confirmation_message {
+		.alert();
+	}
+	
+	.gform_validation_container {
+		.hidden();
+	}
 }
