@@ -154,7 +154,7 @@ function nerdpress_process_font( $font ) {
 endif;
 
 // If the Custom LESS exists and has changed after the last compilation, trigger the compiler.
-if ( file_exists( get_template_directory() . '/assets/less/custom.less' ) && file_exists( nerdpress_css() ) {
+if ( file_exists( get_template_directory() . '/assets/less/custom.less' ) && file_exists( nerdpress_css() ) ) {
 	if ( is_writable( get_template_directory() . '/assets/less/custom.less' ) ) {
 	  if ( filemtime( get_template_directory() . '/assets/less/custom.less' ) > filemtime( nerdpress_css() ) )
 	    nerdpress_makecss();
