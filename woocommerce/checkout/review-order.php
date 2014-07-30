@@ -194,6 +194,12 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 		</div><!-- /.panel -->
 
 		<?php endif; ?>
+		
+		<?php if ( !WC()->cart->needs_payment() ) : ?>
+		<div class="alert alert-success">
+			<i class="fa fa-fw fa-info-circle"></i> Payment information is not needed for this order. Please complete your order below.
+		</div>
+		<?php endif; ?>
 
 		<div class="form-row place-order">
 

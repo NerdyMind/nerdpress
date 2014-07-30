@@ -53,7 +53,7 @@ $get_checkout_url = apply_filters( 'woocommerce_get_checkout_url', WC()->cart->g
 					</li>
 					<li>
 						<a href="#review" data-toggle="tab">
-							<h4 class="list-group-item-heading"><i class="fa fa-credit-card fa-lg"></i> Review &amp; Pay</h4>
+							<h4 class="list-group-item-heading"><i class="fa fa-credit-card fa-lg"></i> Review &amp; Finish</h4>
 							<p class="list-group-item-text">
 								<span class="label label-default">Step 3</span>
 							</p>
@@ -72,7 +72,7 @@ $get_checkout_url = apply_filters( 'woocommerce_get_checkout_url', WC()->cart->g
 				
 				<div class="text-right space-top20">
 					<a href="#shipping" class="btn btn-primary btn-lg checkout-wizard" data-toggle="tab" data-tab="2">
-						Shipping 
+						<?php echo ( WC()->cart->needs_shipping_address() === true ) ? 'Shipping' : 'Additional Information'; ?> 
 						<i class="fa fa-chevron-right"></i>
 					</a>
 				</div>
@@ -93,7 +93,7 @@ $get_checkout_url = apply_filters( 'woocommerce_get_checkout_url', WC()->cart->g
 					</div>
 					<div class="col-xs-6 text-right">
 						<a href="#review" class="btn btn-primary btn-lg checkout-wizard" data-toggle="tab" data-tab="3">
-							Review &amp; Pay <i class="fa fa-chevron-right"></i>
+							Review &amp; Finish <i class="fa fa-chevron-right"></i>
 						</a>
 					</div>
 				</div>

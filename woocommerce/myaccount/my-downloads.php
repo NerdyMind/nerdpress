@@ -36,7 +36,7 @@ if ( $downloads = WC()->customer->get_downloadable_products() ) : ?>
 	
 <?php else : ?>
 
-<div class="alert alert-info">
+<div class="alert alert-info space-top20">
 	You have no available downloads at this time.
 </div>
 
