@@ -37,7 +37,7 @@ $get_checkout_url = apply_filters( 'woocommerce_get_checkout_url', WC()->cart->g
 				<ul class="nav nav-pills nav-justified thumbnail setup-panel">
 					<li class="active">
 						<a href="#billing" data-toggle="tab">
-							<h4 class="list-group-item-heading"><i class="fa fa-building fa-lg"></i> Billing</h4>
+							<h4 class="list-group-item-heading"><i class="fa fa-building fa-lg"></i> <?= ( WC()->cart->needs_payment() ) ? 'Billing' : 'Your'; ?> Details</h4>
 							<p class="list-group-item-text">
 								<span class="label label-default">Step 1</span>
 							</p>
