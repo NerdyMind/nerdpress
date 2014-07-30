@@ -33,5 +33,11 @@ if ( $downloads = WC()->customer->get_downloadable_products() ) : ?>
 			</li>
 		<?php endforeach; ?>
 	</ul>
+	
+<?php else : ?>
+
+<div class="alert alert-info">
+	You have no available downloads at this time.
+</div>
 
 <?php endif; ?>
