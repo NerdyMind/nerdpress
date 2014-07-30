@@ -11,6 +11,12 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+if ( class_exists( 'WC_Subscriptions' ) ) 
+	$has_subscriptions = true;
+	
+if ( class_exists( 'WC_Authorize_Net_CIM' ) || function_exists( 'woocommerce_stripe_init' ) ) 
+	$has_payments = true;
+
 wc_print_notices(); ?>
 
 <p class="myaccount_user">
@@ -29,8 +35,6 @@ wc_print_notices(); ?>
 
 <?php do_action( 'woocommerce_before_my_account' ); ?>
 
-<?php do_action( 'woocommerce_after_my_account' ); ?>
-
 <!-- Nav tabs -->
 <ul class="nav nav-tabs nav-justified" role="tablist">
 	<li class="active">
@@ -38,6 +42,15 @@ wc_print_notices(); ?>
 			<i class="fa fa-cubes text-primary"></i> Orders
 		</a>
 	</li>
+	
+	<?php if ( $has_payments ) : ?>
+	<li>
+		<a href="#my-payment-methods" role="tab" data-toggle="tab">
+			<i class="fa fa-credit-card text-primary"></i> Payment
+		</a>		
+	</li>
+	<?php endif; ?>
+	
 	<li>
 		<a href="#my-addresses" role="tab" data-toggle="tab">
 			<i class="fa fa-plane text-primary"></i> Addresses
@@ -50,7 +63,7 @@ wc_print_notices(); ?>
 	</li>
 	<li>
 		<a href="<?php echo wc_get_endpoint_url( 'edit-account' ); ?>">
-			<i class="fa fa-edit text-primary"></i> Change Password
+			<i class="fa fa-edit text-primary"></i> Password
 		</a>
 	</li>
 </ul>
@@ -58,8 +71,21 @@ wc_print_notices(); ?>
 <!-- Tab panes -->
 <div class="tab-content">
 	<div class="tab-pane active fade in" id="my-orders">
+	
+		<?php if ( $has_subscriptions ) WC_Subscriptions::get_my_subscriptions_template(); ?>
+	
 		<?php wc_get_template( 'myaccount/my-orders.php', array( 'order_count' => $order_count ) ); ?>
 	</div>
+	
+	<?php if ( $has_payments ) : ?>
+	<div class="tab-pane fade" id="my-payment-methods">
+		
+		<?php if ( function_exists( 'woocommerce_stripe_init' ) ) woocommerce_stripe_saved_cards(); ?>
+		
+		<?php if ( class_exists( 'WC_Authorize_Net_CIM' ) ) WC_Authorize_Net_CIM::add_my_payment_methods(); ?>
+		
+	</div>
+	<?php endif; ?>
 	
 	<div class="tab-pane fade" id="my-addresses">
 		<?php wc_get_template( 'myaccount/my-address.php' ); ?>
@@ -69,3 +95,5 @@ wc_print_notices(); ?>
 		<?php wc_get_template( 'myaccount/my-downloads.php' ); ?>
 	</div>
 </div>
+
+<?php do_action( 'woocommerce_after_my_account' ); ?>

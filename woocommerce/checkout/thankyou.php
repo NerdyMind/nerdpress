@@ -33,7 +33,7 @@ if ( $order ) : ?>
 
 	<?php else : ?>
 
-		<div class="alert alert-success"><?php _e( 'Thank you. Your order has been received.', 'woocommerce' ); ?></div>
+		<div class="alert alert-success"><?php _e( 'Thank you for your order. Your order details are below. A confirmation e-mail will be sent to you as well.', 'woocommerce' ); ?></div>
 
 		<ul class="order_details hidden">
 			<li class="order">

@@ -53,4 +53,11 @@ add_action( 'woocommerce_share', 'nrd_woo_share' );
 function nrd_woo_share() {
 	echo do_shortcode( '[nerdpress_social_share]' );
 }
+
+// Remove subscriptions from above My Account
+remove_action( 'woocommerce_before_my_account', 'WC_Subscriptions::get_my_subscriptions_template' );
+
+// Remove payment methods from My Account
+remove_action( 'woocommerce_after_my_account', 'woocommerce_stripe_saved_cards' ); // Stripe
+remove_action( 'woocommerce_after_my_account', array( 'WC_Authorize_Net_CIM', 'add_my_payment_methods' ) ); // Authorize.net
 ?>

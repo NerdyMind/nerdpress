@@ -10,6 +10,12 @@
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
+
+if ( class_exists( 'WC_Subscriptions' ) ) 
+	$has_subscriptions = true;
+	
+if ( class_exists( 'WC_Authorize_Net_CIM' ) || function_exists( 'woocommerce_stripe_init' ) ) 
+	$has_payments = true;
 ?>
 
 <?php wc_print_notices(); ?>
@@ -21,6 +27,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<i class="fa fa-cubes text-primary"></i> Orders
 		</a>
 	</li>
+	
+	<?php if ( $has_payments ) : ?>
+	<li>
+		<a href="<?php echo get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ); ?>#my-payment-methods">
+			<i class="fa fa-credit-card text-primary"></i> Payment
+		</a>		
+	</li>
+	<?php endif; ?>
+	
 	<li>
 		<a href="<?php echo get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ); ?>#my-addresses">
 			<i class="fa fa-plane text-primary"></i> Addresses
@@ -33,7 +48,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</li>
 	<li class="active">
 		<a href="<?php echo wc_get_endpoint_url( 'edit-account' ); ?>">
-			<i class="fa fa-edit text-primary"></i> Change Password
+			<i class="fa fa-edit text-primary"></i> Password
 		</a>
 	</li>
 </ul>

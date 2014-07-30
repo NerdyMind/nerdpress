@@ -582,3 +582,39 @@ span.onsale {
 		}
 	}
 }
+
+.woocommerce-account {
+	h2#cim-my-payment-methods, 
+	table.my-account-cim-payment-methods {
+		display: none;
+	}
+
+	#my-payment-methods {
+		table {
+			.table();
+			.table-striped();
+			.table-hover();
+			.table-bordered();
+			
+			input.button {
+				.btn();
+				.btn-sm();
+				.btn-primary();
+			}
+		}
+		
+		h2#cim-my-payment-methods, 
+		table.my-account-cim-payment-methods {
+			display: block;
+		}
+	}
+	
+	.input-text {
+		.form-control();
+	}
+	
+	input.button {
+		.btn();
+		.btn-primary();
+	}
+}
