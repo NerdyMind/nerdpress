@@ -284,6 +284,38 @@ span.onsale {
 .woocommerce-cart {
 	.shipping-calculator-form {
 		display: block !important;
+		
+		.shipping-states {
+			.make-sm-column(6);
+			.first();
+		}
+		
+		.shipping-zip {
+			.make-sm-column(6);
+			.last();
+		}
+		
+		.shipping-update {
+			.clear();
+		}
+	}
+	
+	.cross-sells {
+		.btn {
+			.btn-sm();
+		}
+	}
+}
+
+@media ( max-width: @screen-sm ) {
+	.woocommerce-cart {
+		.shipping-calculator-form {
+			.shipping-states,
+			.shipping-zip {
+				padding-left: 0;
+				padding-right: 0;
+			}
+		}
 	}
 }
 
@@ -620,6 +652,14 @@ span.onsale {
 	}
 	
 	input.button {
+		.btn();
+		.btn-primary();
+	}
+}
+
+// Notices
+.woocommerce-message {
+	.button {
 		.btn();
 		.btn-primary();
 	}

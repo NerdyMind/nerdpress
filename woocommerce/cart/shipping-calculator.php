@@ -30,7 +30,7 @@ if ( get_option( 'woocommerce_enable_shipping_calc' ) === 'no' || ! WC()->cart->
 
 	<section class="shipping-calculator-form">
 
-		<p class="form-row form-row-wide">
+		<p class="form-row form-row-wide shipping-country">
 			<select name="calc_shipping_country" id="calc_shipping_country" class="country_to_state form-control" rel="calc_shipping_state">
 				<option value=""><?php _e( 'Select a country&hellip;', 'woocommerce' ); ?></option>
 				<?php
@@ -40,7 +40,7 @@ if ( get_option( 'woocommerce_enable_shipping_calc' ) === 'no' || ! WC()->cart->
 			</select>
 		</p>
 
-		<p class="form-row form-row-wide">
+		<p class="form-row form-row-wide shipping-states">
 			<?php
 				$current_cc = WC()->customer->get_shipping_country();
 				$current_r  = WC()->customer->get_shipping_state();
@@ -75,7 +75,7 @@ if ( get_option( 'woocommerce_enable_shipping_calc' ) === 'no' || ! WC()->cart->
 
 		<?php if ( apply_filters( 'woocommerce_shipping_calculator_enable_city', false ) ) : ?>
 
-			<p class="form-row form-row-wide">
+			<p class="form-row form-row-wide shipping-city">
 				<input type="text" class="input-text form-control" value="<?php echo esc_attr( WC()->customer->get_shipping_city() ); ?>" placeholder="<?php _e( 'City', 'woocommerce' ); ?>" name="calc_shipping_city" id="calc_shipping_city" />
 			</p>
 
@@ -83,13 +83,13 @@ if ( get_option( 'woocommerce_enable_shipping_calc' ) === 'no' || ! WC()->cart->
 
 		<?php if ( apply_filters( 'woocommerce_shipping_calculator_enable_postcode', true ) ) : ?>
 
-			<p class="form-row form-row-wide">
+			<p class="form-row form-row-wide shipping-zip">
 				<input type="text" class="input-text form-control" value="<?php echo esc_attr( WC()->customer->get_shipping_postcode() ); ?>" placeholder="<?php _e( 'Postal Code / Zip', 'woocommerce' ); ?>" name="calc_shipping_postcode" id="calc_shipping_postcode" />
 			</p>
 
 		<?php endif; ?>
 
-		<p>
+		<p class="shipping-update">
 			<button type="submit" name="calc_shipping" value="1" class="btn btn-default">
 				<i class="fa fa-refresh"></i> <?php _e( 'Update Totals', 'woocommerce' ); ?>
 			</button>

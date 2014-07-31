@@ -33,21 +33,27 @@ $woocommerce_loop['columns'] = apply_filters( 'woocommerce_cross_sells_columns',
 
 if ( $products->have_posts() ) : ?>
 
-	<div class="cross-sells">
-
-		<h2><?php _e( 'You may be interested in&hellip;', 'woocommerce' ) ?></h2>
-
-		<?php woocommerce_product_loop_start(); ?>
-
+<div class="cross-sells">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<h3 class="panel-title"><?php _e( 'You may be interested in&hellip;', 'woocommerce' ) ?></h3>
+		</div>
+		
+		<ul class="list-group">
 			<?php while ( $products->have_posts() ) : $products->the_post(); ?>
-
-				<?php wc_get_template_part( 'content', 'product' ); ?>
-
-			<?php endwhile; // end of the loop. ?>
-
-		<?php woocommerce_product_loop_end(); ?>
-
-	</div>
+			<li class="list-group-item clearfix">
+				<div class="pull-right">
+					<?php echo do_shortcode( '[add_to_cart id="' . get_the_ID() . '" style=""]' ); ?>
+				</div>
+				<a href="<?php the_permalink(); ?>">
+					<i class="fa fa-cube text-primary"></i> 
+					<?php the_title(); ?>
+				</a>
+			</li>
+			<?php endwhile; // end of the loop. ?>		
+		</ul>
+	</div>	
+</div>
 
 <?php endif;
 

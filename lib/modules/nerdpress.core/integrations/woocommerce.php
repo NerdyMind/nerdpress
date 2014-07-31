@@ -60,4 +60,7 @@ remove_action( 'woocommerce_before_my_account', 'WC_Subscriptions::get_my_subscr
 // Remove payment methods from My Account
 remove_action( 'woocommerce_after_my_account', 'woocommerce_stripe_saved_cards' ); // Stripe
 remove_action( 'woocommerce_after_my_account', array( 'WC_Authorize_Net_CIM', 'add_my_payment_methods' ) ); // Authorize.net
+
+// Remove cross-sells from above the cart totals
+remove_action( 'woocommerce_cart_collaterals', 'woocommerce_cross_sell_display' );
 ?>

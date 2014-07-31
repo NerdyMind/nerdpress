@@ -175,6 +175,8 @@ do_action( 'woocommerce_before_cart' ); ?>
 	</div><!-- /.col-sm-7 -->
 	
 	<div class="col-sm-5">
+	
+		<?php woocommerce_cross_sell_display(); ?>
 
 		<div class="panel panel-primary">
 			<div class="panel-heading">
