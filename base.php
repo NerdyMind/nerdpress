@@ -1,4 +1,10 @@
-<?php get_template_part('templates/head'); ?>
+<?php 
+/**
+ * This is base.php changes to this file should be largely un-nescisary, as it acts as a theme wrapper for everything else.
+ * For an in-depth explanation of base.php and Roots Theme Wrappers check out:
+ * http://roots.io/an-introduction-to-the-roots-theme-wrapper/
+ */
+get_template_part('templates/head'); ?>
 <body <?php body_class(); ?>>
 
   <!--[if lt IE 8]>
