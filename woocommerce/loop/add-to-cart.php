@@ -3,7 +3,7 @@
  * Loop Add to Cart
  *
  * @author 		WooThemes
- * @package 	WooCommerce/Templates/loop/add-top-cart
+ * @package 	NerdPress/WooCommerce/loop/add-top-cart
  * @version     2.1.0
  */
 
