@@ -1,7 +1,21 @@
 <?php
+/**
+ * class.nerdpress.php, The main functionality file for nerdpress
+ * 
+ * This file controls many of the special features and output of nerdpress
+ * 
+ * 
+ * @version 1.0
+ * @package nerdpress
+ */
 class NerdPress {
 
 	function __construct() {
+/**
+ * Page Now Global
+ * @global string $pagenow['_var'] 
+ * 
+ */ 
 		global $pagenow;
 		
 		add_action('init', array( &$this, 'init_filesystem' ) );
@@ -50,14 +64,13 @@ class NerdPress {
 		endif;
 	}
 
-
 	/**
 	 * init_filesystem function.
 	 * 
 	 * Came from Roots. Makes sure that the theme can write files to the server, nescisary for the compiler
 	 * @TODO clean up this comment
 	 * @access public
-	 * @return void
+	 * @return The Location of a known file handler, if one is not present
 	 */
 	function init_filesystem() {
 		if ( empty( $wp_filesystem ) ) {
@@ -66,15 +79,13 @@ class NerdPress {
 		}
 	}
 	
-	
 	/**
 	 * Allows us to return any settings set in Nerdpress Settings
 	 * Gets variables from ACF (a wrapper for ACF)
 	 * 
-	 * @TODO clean up this comment
 	 * @access public
 	 * @param mixed $var
-	 * @return void
+	 * @return a mixed set of variables and arrays from the option area of ACF
 	 */
 	function variable( $var ) {
 		if ( !function_exists( 'get_field' ) ) return false;
@@ -90,9 +101,9 @@ class NerdPress {
 	 * Sidebar creater 
 	 * 
 	 * Gets the variables from nerdpress settings, creates widget areas programmatically 
- 	 * @TODO clean up this comment
+	 *
 	 * @access public
-	 * @return void
+	 * @return one or more regiser_sidebar() objects
 	 */
 	function register_widget_areas() {
 		$widget_areas = self::variable( 'widget_areas' );
@@ -120,10 +131,9 @@ class NerdPress {
 	 * A wrapper for dynamic_sidebar - adds the edit link if you are an administrator
 	 * Checks to make sure widget area exists, if not, echos error
 	 * 
- 	 * @TODO clean up this comment
 	 * @access public
 	 * @param mixed $widget_area_id
-	 * @return void
+	 * @return Sidebar output for the widget areas
 	 */
 	function widget_area( $widget_area_id ) {
 		global $wp_registered_sidebars;
@@ -152,11 +162,12 @@ class NerdPress {
 	 * addl_integrations function.
 	 * 
 	 * Looks in NP settings, checks the values of bbPress, Twitter API based off the integrations file - makes things play nice with wordpress
-	 * 	 
- 	 * @TODO clean up this comment
+	 *
+ 	 * @TODO Clean up this comment
  	 * @TODO Check integrations docs
+ 	 * 
 	 * @access public
-	 * @return void
+	 * @return adds the integrations 
 	 */
 	function addl_integrations() {
 		$addl_integrations = self::variable( 'addl_integrations' );
