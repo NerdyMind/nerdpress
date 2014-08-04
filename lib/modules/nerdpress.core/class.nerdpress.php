@@ -163,11 +163,10 @@ class NerdPress {
 	 * 
 	 * Looks in NP settings, checks the values of bbPress, Twitter API based off the integrations file - makes things play nice with wordpress
 	 *
- 	 * @TODO Clean up this comment
  	 * @TODO Check integrations docs
  	 * 
 	 * @access public
-	 * @return adds the integrations 
+	 * @return enques the selected integration settings 
 	 */
 	function addl_integrations() {
 		$addl_integrations = self::variable( 'addl_integrations' );
@@ -183,10 +182,10 @@ class NerdPress {
 	/**
 	 * container_class function.
 	 * 
-   *	 Checks to see if the page should be full width or not, returns a class depending
- 	 * @TODO clean up this comment
+   * Checks to see if the page should be full width or not, returns a class depending
+ 	 * 
 	 * @access public
-	 * @return void
+	 * @return the required class for the main container
 	 */
 	function container_class() {
 		global $post;
@@ -227,9 +226,8 @@ class NerdPress {
 	 * 
 	 * Checks for the conditions of if the sidebar should be hidden or not, 
 	 * for custom post types, you might need new conditions
-	 * @TODO clean up this comment
+	 *
  	 * @TODO change the behavior for this - checkboxes?? 
-	 * @TODO should this be hide by default or show by ddefault? 
 	 * @access public
 	 * @return void
 	 */
@@ -267,10 +265,10 @@ class NerdPress {
 	 * hide_sidebar_on function.
 	 * 
 	 * Checks to see if the choice to hide the existing page is checked, hides the page if it is
-	 * @TODO clean up this comment
+	 * 
 	 * @access public
 	 * @param mixed $sidebar
-	 * @return void
+	 * @return returns sidebar content, or nothing
 	 */
 	function hide_sidebar_on( $sidebar ) {
 		if ( get_field( 'nrd_hide_sidebar' ) ) return false;
@@ -285,7 +283,7 @@ class NerdPress {
 	 * For the template wrapper - takes the main class value in settings if the page has a sidebar, and echos it out, if no sidebar, it's 12 columns
 	 * @TODO clean up this comment
 	 * @access public
-	 * @return void
+	 * @return either returns the main class or a full width class
 	 */
 	function main_class() {
 		if ( self::display_sidebar() ) $class = self::variable( 'main_class' );
@@ -301,7 +299,7 @@ class NerdPress {
 	 * If the page has a sidebar, echos out what the settings for the sidebar class should be 
 	 * @TODO clean up this comment
 	 * @access public
-	 * @return void
+	 * @return returns the sidebar class or nothing
 	 */
 	function sidebar_class() {
 		return self::variable( 'sidebar_class' );

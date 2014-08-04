@@ -1,4 +1,8 @@
 <?php
+/**
+* Adds theme support for WooCommerce and functional enhancements
+* adds functionality for compatibility with nerdpress
+*/
 // Define theme support for WooCommerce
 add_theme_support( 'woocommerce' );
 
