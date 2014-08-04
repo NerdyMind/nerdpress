@@ -21,6 +21,14 @@ remove_action( 'wp_head', 'wc_generator_tag' );
 // Modifying the default product tabs
 add_filter( 'woocommerce_product_tabs', 'nrd_change_woo_tabs' );
 
+
+/**
+ * nrd_change_woo_tabs function.
+ * 
+ * @access public
+ * @param mixed $tabs
+ * @return void
+ */
 function nrd_change_woo_tabs( $tabs ) {
 	
 	// Add badge markup to "Reviews" tab

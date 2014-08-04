@@ -50,6 +50,15 @@ class NerdPress {
 		endif;
 	}
 
+
+	/**
+	 * init_filesystem function.
+	 * 
+	 * Came from Roots. Makes sure that the theme can write files to the server, nescisary for the compiler
+	 * @TODO clean up this comment
+	 * @access public
+	 * @return void
+	 */
 	function init_filesystem() {
 		if ( empty( $wp_filesystem ) ) {
 			require_once( ABSPATH .'/wp-admin/includes/file.php' );
@@ -57,6 +66,16 @@ class NerdPress {
 		}
 	}
 	
+	
+	/**
+	 * Allows us to return any settings set in Nerdpress Settings
+	 * Gets variables from ACF (a wrapper for ACF)
+	 * 
+	 * @TODO clean up this comment
+	 * @access public
+	 * @param mixed $var
+	 * @return void
+	 */
 	function variable( $var ) {
 		if ( !function_exists( 'get_field' ) ) return false;
 		
@@ -66,6 +85,15 @@ class NerdPress {
 			return false;
 	}
 
+
+	/**
+	 * Sidebar creater 
+	 * 
+	 * Gets the variables from nerdpress settings, creates widget areas programmatically 
+ 	 * @TODO clean up this comment
+	 * @access public
+	 * @return void
+	 */
 	function register_widget_areas() {
 		$widget_areas = self::variable( 'widget_areas' );
 		
@@ -86,6 +114,17 @@ class NerdPress {
 		endif;
 	}
 	
+	/**
+	 * widget_area function.
+	 * 
+	 * A wrapper for dynamic_sidebar - adds the edit link if you are an administrator
+	 * Checks to make sure widget area exists, if not, echos error
+	 * 
+ 	 * @TODO clean up this comment
+	 * @access public
+	 * @param mixed $widget_area_id
+	 * @return void
+	 */
 	function widget_area( $widget_area_id ) {
 		global $wp_registered_sidebars;
 		
@@ -108,6 +147,17 @@ class NerdPress {
 		endif;
 	}
 	
+	
+	/**
+	 * addl_integrations function.
+	 * 
+	 * Looks in NP settings, checks the values of bbPress, Twitter API based off the integrations file - makes things play nice with wordpress
+	 * 	 
+ 	 * @TODO clean up this comment
+ 	 * @TODO Check integrations docs
+	 * @access public
+	 * @return void
+	 */
 	function addl_integrations() {
 		$addl_integrations = self::variable( 'addl_integrations' );
 		
@@ -118,6 +168,15 @@ class NerdPress {
 		endif;
 	}
 
+
+	/**
+	 * container_class function.
+	 * 
+   *	 Checks to see if the page should be full width or not, returns a class depending
+ 	 * @TODO clean up this comment
+	 * @access public
+	 * @return void
+	 */
 	function container_class() {
 		global $post;
 			
@@ -125,6 +184,17 @@ class NerdPress {
 		else return 'container';
 	}
 
+
+	/**
+	 * navbar_class function.
+	 * 
+	 * not really using this
+	 * @TODO clean up this comment
+	 * @TODO remove this from Nerdpress, We don't use it
+	 * @access public
+	 * @param string $navbar (default: 'main')
+	 * @return void
+	 */
 	function navbar_class( $navbar = 'main' ) {
 	  $fixed    = variable( 'navbar_fixed' );
 	  $fixedpos = variable( 'navbar_fixed_position' );
@@ -140,6 +210,18 @@ class NerdPress {
 	    return 'navbar';
 	}
 
+
+	/**
+	 * display_sidebar function.
+	 * 
+	 * Checks for the conditions of if the sidebar should be hidden or not, 
+	 * for custom post types, you might need new conditions
+	 * @TODO clean up this comment
+ 	 * @TODO change the behavior for this - checkboxes?? 
+	 * @TODO should this be hide by default or show by ddefault? 
+	 * @access public
+	 * @return void
+	 */
 	function display_sidebar() {
 		$hide_sidebar_conditions = array();
 		
@@ -169,12 +251,31 @@ class NerdPress {
 		return apply_filters('roots_display_sidebar', $sidebar_config->display);
 	}
 
+
+	/**
+	 * hide_sidebar_on function.
+	 * 
+	 * Checks to see if the choice to hide the existing page is checked, hides the page if it is
+	 * @TODO clean up this comment
+	 * @access public
+	 * @param mixed $sidebar
+	 * @return void
+	 */
 	function hide_sidebar_on( $sidebar ) {
 		if ( get_field( 'nrd_hide_sidebar' ) ) return false;
 		
 		return $sidebar;
 	}
 
+
+	/**
+	 * main_class function.
+	 * 
+	 * For the template wrapper - takes the main class value in settings if the page has a sidebar, and echos it out, if no sidebar, it's 12 columns
+	 * @TODO clean up this comment
+	 * @access public
+	 * @return void
+	 */
 	function main_class() {
 		if ( self::display_sidebar() ) $class = self::variable( 'main_class' );
 		else $class = 'col-sm-12';
@@ -182,10 +283,47 @@ class NerdPress {
 		return $class;
 	}
 
+
+	/**
+	 * sidebar_class function.
+	 * 
+	 * If the page has a sidebar, echos out what the settings for the sidebar class should be 
+	 * @TODO clean up this comment
+	 * @access public
+	 * @return void
+	 */
 	function sidebar_class() {
 		return self::variable( 'sidebar_class' );
 	}
 	
+	
+	/**
+	 * load_scripts function.
+	 * 
+	 * Does a ton of shit
+	 * in order
+	 * disaibles the roots script file
+	 * figures out the location of the css based on if the site is multisite or not
+	 * enques the NP stype file
+	 * enques font awesome from CDN
+	 * enques bootstrap .js from CDN
+	 * placeholder .js
+	 * retina.js
+	 * if GA is on, enques GA
+	 * if StatCounter is on, enques StatCounter
+	 * checks if other scripts are defined, 
+	 * along with
+	 * animate.css
+	 * flexslider
+	 * vimeo api
+	 * bootstrap hover
+	 * enques main.js
+	 * 
+	 * @TODO clean up this comment
+	 * @access public
+	 * @return void
+	 * 
+	 */
 	function load_scripts() {
 		global $blog_id;
 	
@@ -252,6 +390,19 @@ class NerdPress {
 		wp_enqueue_script( 'main', get_stylesheet_directory_uri() . '/assets/js/main.js', array( 'jquery' ), NULL, true );
 	}
 	
+	
+	/**
+	 * make_crumb function.
+	 * 
+	 * returns the array of breadcrumb parts to be ecoed out later
+	 * look at breadcrumb.php
+	 * Concatinates the array together
+	 * @TODO clean up this comment
+	 * @access public
+	 * @param bool $url (default: false)
+	 * @param mixed $text
+	 * @return void
+	 */
 	function make_crumb( $url = false, $text ) {
 		global $breadcrumbs;
 		
@@ -263,16 +414,27 @@ class NerdPress {
 		return $breadcrumbs;
 	}
 	
+	
+	/**
+	 * breadcrumbs function.
+	 * 
+	 Figures out what page you are on, and builds the breadcrumb for wherever you are
+	 * @access public
+	 * @return void
+	 */
 	function breadcrumbs() {
+/* 	if not on, skip this */
 		if ( !self::variable( 'breadcrumbs' ) ) return;
 		
 		global $breadcrumbs, $post, $wp_query;
 		
+/* skip this if you are not these things		 */
 		$skip_post_types = array(
 			'forum',
 			'topic',
 			'reply',
 		);
+		
 		
 		$skip_taxonomies = array(
 			'topic-tag',
@@ -282,21 +444,31 @@ class NerdPress {
 		$taxonomy = get_query_var( 'taxonomy' );
 		$paged = get_query_var( 'paged' );
 		
-		// WooCommerce check
+		// WooCommerce check - set a variable we can use to see if WooCommerce is on
+		/**
+		* @TODO make this a seperate function that gets called even if breadcrumbs is turned off
+		*/
 		if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) 
 			$woo_active = true;
 			
-		// bbPress check
+		// bbPress check 
+		/**
+		* @TODO make this a seperate function that gets called even if breadcrumbs is turned off
+		*/
 		if ( class_exists( 'bbPress' ) ) 
 			$bbpress_active = true;
 	
 		$breadcrumbs = array();
 		
-		// Home URL
+		// Builds the Home URL
+		/**
+		* @TODO Make this possible to be a word, an icon, nothing, an image... not always font awesome
+		*/
 		self::make_crumb( home_url(), '<i class="fa fa-home fa-lg"></i>' );
 		
 		// Page -- Parents murdered in an alley
-		if ( is_page() && !$post->post_parent ) 
+		if ( is_page() && !$post->post_parent )
+/* 		throw out the url, and the name */ 
 			self::make_crumb( null, get_the_title() );
 		
 		// Page -- Has parents
@@ -324,6 +496,7 @@ class NerdPress {
 			
 			foreach ( $subcrumbs as $crumb => $data ) {
 				// Make crumbs for each ancestor
+/* 				Concatinate the breadcrumbs into one */
 				self::make_crumb( $data['url'], $data['text'] );
 			}
 			
@@ -333,10 +506,12 @@ class NerdPress {
 		endif; // Page with parents
 		
 		// Author archive
+/* 		find out who the offer is */
 		if ( is_author() ) :
 			global $author;
 		
 			$the_author = get_userdata( $author );
+/* 			concatinate it in */
 			self::make_crumb( null, $the_author->display_name . '\'s Posts' );
 		
 		endif; // Author archive
@@ -351,6 +526,9 @@ class NerdPress {
 	        // list and then split them out. This leaves the last element in the array
 	        // as blank. So we cut that and make crumbs for the rest. Should 
 	        // work nicely for nested categories.
+	  /**
+		* @TODO Audit this, we can't remember what this pipe shit is all about
+		*/
 	        if ( $this_cat->parent != 0 ) :
 	        	$parents = get_category_parents( get_category( $this_cat->parent ), false, '|', false );
 	        	$parents = explode( '|', $parents );
@@ -389,25 +567,44 @@ class NerdPress {
 		endif; // Search
 		
 		// Single post, except products
+/* 		tries to handle not only single posts, but any single post that is created by nerdpress or any other plugin */
+
+
 		if ( is_single() && !in_array( get_post_type(), $skip_post_types ) ) :
 		
 			$post_type = get_post_type_object( get_post_type() );
+
+/* What post type has been created in the backend? */
 			
 			$post_type_config = self::variable( 'post_types' );
 			
 			if ( $post_type_config ) :
-			
+/* split them all out */			
 				foreach ( $post_type_config as $type ) :
 				
 					if ( $type['type_name'] != $post_type->name ) continue;
 					
 					if ( $type['type_breadcrumb'] ) 
+		/**
+		* @TODO write better documentation regarding 
+		*/
+/* 					replaces whatever breadcrumb is the top level parent with whatever arbitrary page you would like by page ID */
 						self::make_crumb( get_permalink( $type['type_breadcrumb'] ), get_the_title( $type['type_breadcrumb'] ) );
-						
+/* 						figure out if it has an archive */
 					elseif ( $post_type->has_archive == 1 ) 
+/* tries to grab post types from anywhere */
+		/**
+		* @TODO verify that this checks that the archive has content
+		*/
+/* 					if you have a taxonomy, grab the first one, stick it in there */
+/* 					When createing a post type in the UI, you can define a breadcrumb */
+
 						self::make_crumb( home_url( $post_type->rewrite['slug'] ), $post_type->labels->name );
-						
+/* 					if no taxonomy, skip that part */
 					elseif ( $post_type->has_archive ) 
+					/**
+					* @TODO verify that this checks to see if the archive exists at all
+					*/
 						self::make_crumb( home_url( $post_type->has_archive ), get_the_title( get_page_by_path( $post_type->has_archive ) ) );
 						
 					else 
@@ -417,9 +614,11 @@ class NerdPress {
 			endif;
 					
 			// get the taxonomy names of this object
+/* 			grabs the first taxonmy that is found */
 			$taxonomy_names = get_object_taxonomies( $post_type->name );
 			
 			// Detect any hierarchical taxonomies that might exist on this post type
+/* 			if it's harerarchicar, grab all the kids */
 			$hierarchical = false;
 			
 			foreach ( $taxonomy_names as $taxonomy_name ) :
@@ -446,11 +645,13 @@ class NerdPress {
 				self::make_crumb( get_term_link( $main_term->slug, $tn ), $main_term->name );
 			}
 			
+/* 			And finally, on the last one, give it null */
 			self::make_crumb( null, get_the_title() );
 			
 		endif; // Single post
 		
 		// Post type archive
+/* 		exact same behavior as above, but with one less layer since it's just an archive */
 		if ( is_post_type_archive() ) :
 			
 			$post_type = get_post_type_object( get_post_type() );
@@ -481,6 +682,8 @@ class NerdPress {
 		
 		endif; // Post type archive
 		
+/* 		Tackles woocommerce, bbpress, any outlying taxonomy */
+/* gets post types, category, taxonomy */
 		// Generic taxonomy
 		if ( is_tax() ) :
 		
@@ -585,6 +788,9 @@ class NerdPress {
 				bbp_is_single_reply() || 
 				bbp_is_topic_tag() || 
 				bbp_is_user_home() ) ) :
+		/**
+		* @TODO burn || into your head
+		*/
 			
 			self::make_crumb( home_url( get_option( '_bbp_root_slug' ) ), 'Forums' );
 		
@@ -660,13 +866,24 @@ class NerdPress {
 		endif; // bbPress
 		
 		// Paged content
+/* 		if you are on a multiple page or not, says page and then number */
 		if ( $paged ) :
 			self::make_crumb( null, 'Page ' . $paged );
 		endif; // Paged
 		
+/* 		If you are not on home or front_page, go get the template and echo everything out */
 		if ( !is_front_page() && !is_home() ) get_template_part( 'templates/breadcrumbs' );
 	} // breadcrumbs
 	
+	
+	/**
+	 * sitemap function.
+	 * 
+	 * Gets the sitemap template
+	 * pages can be excluded by using the page wide URI
+	 * @access public
+	 * @return void
+	 */
 	function sitemap() {
 		ob_start();
 		get_template_part( 'templates/sitemap' );
@@ -675,24 +892,82 @@ class NerdPress {
 		
 		return $sitemap;
 	}
+
 	
+	/**
+	 * login_logo function.
+	 * 
+	 * Looks to see if the site logo file exists, if it does, it goes and gets a template for login 
+	 * put image in:
+	 * assets/img/site-logo.png
+	 * Defaults url for image to the home page
+	 * @TODO make this a seperate function that gets called even if breadcrumbs is turned off
+	 * @access public
+	 * @return void
+	 */
 	function login_logo() {
 		if ( !locate_template('assets/img/site-logo.png') ) return;
 		get_template_part( 'templates/login', 'logo' );
 	}
 	
+	added to filters at the top
+	
+	
+	/**
+	 * login_url function.
+	 * 
+	 * makes home URL available for the login page
+	 * @access public
+	 * @return void
+	 * @TODO Clean up this comment
+	 */
+	 
+	
 	function login_url() {
 		return get_bloginfo( 'url' );
 	}
 	
+	
+	/**
+	 * login_title function.
+	 * 
+	 * makes name of site available for the 
+	 * @access public
+	 * @return void
+	 * @TODO Clean up this comment
+	 */
 	function login_title() {
 		return get_bloginfo( 'name' );
 	}
 	
+	
+	/**
+	 * limit_revisions function.
+	 * 
+	 * Limits the number of revisions to 2
+	 * @TODO Clean up this comment
+	 * @TODO change number of revisions to 5
+	 * @access public
+	 * @param mixed $num
+	 * @param mixed $post
+	 * @return void
+	 */
 	function limit_revisions( $num, $post ) {
 		return 2;
 	}
 	
+	
+	/**
+	 * social_networks function.
+	 * 
+	 * Goes and grabs social networks from NerdPress Settings
+	 * Creates the short code to echo out the social network template
+	 * templates/socialnetworks.php
+	 * 
+	 * @TODO Clean up this comment
+	 * @access public
+	 * @return void
+	 */
 	function social_networks() {
 		ob_start();
 		get_template_part( 'templates/social', 'networks' );
@@ -702,6 +977,17 @@ class NerdPress {
 		return $social_networks;
 	}
 	
+	
+	/**
+	 * seo_title function.
+	 * 
+	 * If an SEO title is entered for the current page, SEO title overrides the existing title
+	 * @TODO Clean up this comment
+	 * @access public
+	 * @param mixed $title
+	 * @param mixed $sep
+	 * @return void
+	 */
 	function seo_title( $title, $sep ) {
 		global $post;
 		
@@ -712,6 +998,15 @@ class NerdPress {
 		return $title;
 	}
 	
+	
+	/**
+	 * page_title function.
+	 * 
+	 * Calls every use case for the title, figures out what it should be depending on if it exists or not
+	 * @TODO Clean up this comment
+	 * @access public
+	 * @return void
+	 */
 	function page_title() {
 		global $post;
 		
@@ -752,6 +1047,17 @@ class NerdPress {
 		}
 	}
 	
+	
+	/**
+	 * seo_description function.
+	 * 
+	 * checks if a meta has been written on the post, echos out the description 
+	 * hooked in WP-head
+	 * @TODO Clean up this comment
+	 * @TODO find out how to find functions that call this function how to show hooks
+	 * @access public
+	 * @return void
+	 */
 	function seo_description() {
 		global $post;
 		
@@ -762,10 +1068,21 @@ class NerdPress {
 		echo '<meta name="description" content="' . htmlspecialchars_decode( $seo_desc, ENT_QUOTES ) . '"/>';	
 	}
 	
+	
+	/**
+	 * register_required_plugins function.
+	 * 
+	 * This does a bunch of stuff and uses another class
+	 * @access public
+	 * @return void
+	 	 * @TODO Clean up this comment
+	 */
 	function register_required_plugins() {
 	
+/* 	goes to a location, gets a json list of things we need */
 		if ( false === ( $plugins_list = get_transient( 'np_plugins_list' ) ) ) :		
 			$plugins_list = wp_remote_get( 'http://repo.nerdymind.com/nerdpress-helpers/plugin-list.php' );
+/* 			the contents of this file gets stored in a transient */
 			set_transient( 'np_plugins_list', $plugins_list['body'], 86400 );
 		endif;
 		
@@ -777,13 +1094,17 @@ class NerdPress {
 		// Change this to your theme text domain, used for internationalising strings
 		$theme_text_domain = 'nerdpress';
 	
-		/**
-		 * Array of configuration settings. Amend each line as needed.
-		 * If you want the default strings to be available under your own theme domain,
-		 * leave the strings uncommented.
-		 * Some of the strings are added into a sprintf, so see the comments at the
-		 * end of each line for what each argument will be.
-		 */
+	
+			/**
+			* Array of configuration settings. Amend each line as needed.
+			* If you want the default strings to be available under your own theme domain,
+			* leave the strings uncommented.
+			* Some of the strings are added into a sprintf, so see the comments at the
+			* end of each line for what each argument will be.
+			* @TODO Clean up this comment
+			* @TODO Research TGMPA class class-tgm-plugin-activation.php
+				 * @TODO explore how to update code we bake in
+			*/
 		$config = array(
 			'domain'       		=> $theme_text_domain,         	// Text domain - likely want to be the same as your theme.
 			'default_path' 		=> '',                         	// Default absolute path to pre-packaged plugins
@@ -819,6 +1140,19 @@ class NerdPress {
 			tgmpa( $plugins, $config );	
 	}
 	
+/* 	after a bunch of config is generated, the class is ran */
+
+
+	/**
+	 * setup_post_types function.
+	 * 
+	 * checks to make sure that "Super Custom Post Type" is active
+	 * Looks in the settings page
+	 * creates the things in the settings area
+	 * @TODO Clean up this comment
+	 * @access public
+	 * @return void
+	 */
 	function setup_post_types() {
 		
 		// Check to make sure our class is here before we waste our time!
@@ -832,6 +1166,7 @@ class NerdPress {
 		
 		if ( $post_types ) :
 		
+/* 		Assigns configuration settings, passes it to custom post type for it to work it's magic */
 			foreach ( $post_types as $post_type => $options ) :
 				if ( $options['type_create'] != true ) continue;
 				
@@ -857,7 +1192,7 @@ class NerdPress {
 		endif;
 		
 		if ( $taxonomies ) :
-			
+/* Loops through taxonomies, makes stuff with super custom taxonomy  */			
 			foreach ( $taxonomies as $taxonomy => $options ) :
 			
 				if ( $options['tax_create'] != true ) continue;
@@ -878,11 +1213,31 @@ class NerdPress {
 		
 	}
 	
+	
+	/**
+	 * bootstrap_reply_link_class function.
+	 * 
+	 * makes wp play nicer with wordpress
+	 * makes the comment button look cool
+	 *
+	 * @access public
+	 * @param mixed $class
+	 * @return void
+	 */
 	function bootstrap_reply_link_class( $class ) {
 		$class = str_replace( "class='comment-reply-link", "class='comment-reply-link btn btn-primary btn-small", $class );
 		return $class;
 	}
 	
+	
+	/**
+	 * bootstrap_password_form function.
+	 * 
+	 * If a page has a password defined, it makes the form look nice in bootstrap
+	 * @access public
+	 * @return void
+	 	 * @TODO Clean up this comment
+	 */
 	function bootstrap_password_form() {
 		global $post;
 		
@@ -900,6 +1255,16 @@ class NerdPress {
 		return $content;
 	}
 	
+	
+	/**
+	 * statcounter function.
+	 * 
+	 * Checks to see if the statcounter ID has been set, echos out JS if it has
+	 * tacked onto WP footer
+	 * @TODO Clean up this comment
+	 * @access public
+	 * @return void
+	 */
 	function statcounter() {
 		$statcounter_id = self::variable( 'statcounter_id' );
 		
@@ -908,6 +1273,16 @@ class NerdPress {
 		get_template_part( 'templates/statcounter' );
 	}
 	
+	
+	/**
+	 * load_menu_locations function.
+	 * 
+	 * Checks menu locations box, if there is something in there, create it
+	 * 
+	 * @access public
+	 * @return void
+	 	 * @TODO Clean up this comment
+	 */
 	function load_menu_locations() {
 		$menu_locations = self::variable( 'menu_locations' );
 		
@@ -922,6 +1297,18 @@ class NerdPress {
 		endif;
 	}
 	
+	
+	/**
+	 * load_client_role function.
+	 * 
+	 * Creates a role for clients that is seperate from admin
+	 * basically makes an alternative to Admin for clients
+	 * allows for future super admin roles
+	 	 * @TODO Clean up this comment
+	 	 	 * @TODO Check out all the capabilities that Woocommerce adds
+	 * @access public
+	 * @return void
+	 */
 	function load_client_role() {
 		$caps = array(
 			'activate_plugins' => true,
@@ -1086,12 +1473,35 @@ class NerdPress {
 		endif;	
 	}
 	
+	
+	/**
+	 * setup_gravity_forms function.
+	 * 
+	 * sets defaults for Gravity forms so we don't have to do it every time. 
+	 * adds out liscense kee
+	 * disables gravity forms css
+	 * forces HTML5 output
+		* @TODO Clean up this comment
+		* @TODO Remove liscense key from public repo
+	 * @access public
+	 * @return void
+	 */
 	function setup_gravity_forms() {
 		update_option( 'rg_gforms_key', '55443c0c81be6d6cef07480d077ff677' );
 		update_option( 'rg_gforms_disable_css', '1' );
 		update_option( 'rg_gforms_enable_html5', '1' );
 	}
 	
+	
+	/**
+	 * setup_nerdpress_panels function.
+	 * 
+	 defaults for panels plugin, might not work any longer
+	 	 * @TODO Clean up this comment
+	 	 	 * @TODO Debug pannel settings still working
+	 * @access public
+	 * @return void
+	 */
 	function setup_nerdpress_panels() {
 		$value = 'a:8:{s:10:"animations";b:1;s:15:"bundled-widgets";b:1;s:10:"responsive";b:1;s:12:"mobile-width";i:780;s:12:"margin-sides";i:30;s:13:"margin-bottom";i:30;s:12:"copy-content";b:0;s:10:"inline-css";b:0;}';
 		
@@ -1099,11 +1509,31 @@ class NerdPress {
 			update_option( 'siteorigin_panels_display', $value );
 	}
 	
+	
+	/**
+	 * child_load_less function.
+	 * 
+	 * Detects if the child theme is being used
+	 * adds it to the list of files to be compiled
+	 * @access public
+	 * @param mixed $bootstrap
+	 	 	 * @TODO Clean up this comment
+	 * @return void
+	 */
 	function child_load_less( $bootstrap ) {
 		return $bootstrap . '
 		@import "' . get_stylesheet_directory() . '/assets/less/child.less";';
 	}
 
+
+	/**
+	 * child_monitor_less function.
+	 * 
+	 * @access public
+	 * @return void
+	 * Looks at modified time to trigger compiler if it's a new version
+	 	 	 * @TODO Clean up this comment
+	 */
 	function child_monitor_less() {
 		if ( file_exists( get_stylesheet_directory() . '/assets/less/child.less' ) ) {
 			if ( filemtime( get_stylesheet_directory() . '/assets/less/child.less' ) > filemtime( nerdpress_css() ) ) 
@@ -1111,6 +1541,18 @@ class NerdPress {
 		}		
 	}
 	
+	
+	/**
+	 * social_share function.
+	 * 
+	 * shortcode for share buttons
+	 * enques .js
+	 * enques the template
+	 * @TODO Clean up this comment
+	 * @access public
+	 * @param mixed $atts
+	 * @return void
+	 */
 	function social_share( $atts ) {
 		global $share_url;
 				
@@ -1134,6 +1576,19 @@ class NerdPress {
 		return $social_share;
 	}
 	
+	
+	/**
+	 * pagination function.
+	 * 
+	 * If you are on a page with multiple pages, echos out page numbers at the bottom
+	 * Builds an array here, passes the array to the template to echo it out
+	 * templates/pagination/pagination.php
+	 * @TODO Clean up this comment
+	 * @access public
+	 * @param string $pages (default: '')
+	 * @param int $range (default: 4)
+	 * @return void
+	 */
 	function pagination ( $pages = '', $range = 4 ) {
 		global $paged, $page_links;
 		
@@ -1171,10 +1626,28 @@ class NerdPress {
 		endif;
 	}
 	
+	
+	/**
+	 * roots_cleanup function.
+	 * 
+	 * Roots forces a canonical URL, this removes the roots canonical
+	 * @access public
+	 * @return void
+	 */
 	function roots_cleanup() {
 		 remove_action('wp_head', 'roots_rel_canonical');
 	}
 	
+	
+	/**
+	 * load_canonical function.
+	 * 
+	 * If a page has a cononical URL, echoes out the URL in the head
+	 * @access public
+	 * @return void
+	 	 	 * @TODO Clean up this comment
+
+	 */
 	function load_canonical() {
 		global $post;
 		
@@ -1182,10 +1655,31 @@ class NerdPress {
 			echo "\r\n" . '<link rel="canonical" href="' . get_field( 'nrd_seo_canonical' ) . '" />' . "\r\n";
 	}
 	
+	
+	/**
+	 * plugin_install_warning function.
+	 * 
+	 * Inserts a warning on the add plugin page to remind clients that plugins can be dangerous
+	* @TODO Clean up this comment
+	* @TODO Add ability to dismiss this message
+	 * @access public
+	 * @return void
+	 */
 	function plugin_install_warning() {
 		get_template_part( 'templates/admin', 'plugin-notice' );
 	}
+
 	
+	/**
+	 * detect_mobile function.
+	 * 
+	 * Does a User agent sniff, decides if you are on android, ipod, iphone, or ipad
+	 * defines if you on a mobile device or not
+	 * @TODO Clean up this comment
+
+	 * @access public
+	 * @return void
+	 */
 	function detect_mobile() {
 		$ua = strtolower( $_SERVER['HTTP_USER_AGENT'] );
 		
@@ -1199,6 +1693,16 @@ class NerdPress {
 		}
 	}
 	
+	
+	/**
+	 * mobile_body_classes function.
+	 * 
+	 * Adds a class for each platform, allows for platform specific CSS
+	 * @TODO Clean up this comment
+	 * @access public
+	 * @param mixed $classes
+	 * @return void
+	 */
 	function mobile_body_classes( $classes ) {
 		$ua = strtolower( $_SERVER['HTTP_USER_AGENT'] );
 		

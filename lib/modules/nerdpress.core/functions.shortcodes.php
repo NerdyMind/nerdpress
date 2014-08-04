@@ -1,5 +1,25 @@
 <?php
 // Create the shortcodes and format for WP
+
+/**
+ * nerdpress_register_shortcode function.
+ * 
+ * @access public
+ * @param mixed $shortcode
+ * @return void
+ * there are shortcodes for 
+ * icons
+ * buttons
+ * labels
+ * alerts
+ * panels
+ * a well
+ * a modal
+	* @TODO Clean up this comment
+	* @TODO document this page!
+	* bottom function registers it
+	* bottom area makes sure short codes can be ran in in widgets
+ */
 function nerdpress_register_shortcode( $shortcode ) {
 	// vars
 	$function = "";
@@ -189,6 +209,7 @@ $shortcodes[] = array(
 );
 
 // Do not edit below this line...
+
 
 foreach ( $shortcodes as $shortcode ) :
 	nerdpress_register_shortcode( $shortcode );
