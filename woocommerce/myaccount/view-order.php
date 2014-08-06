@@ -18,25 +18,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <p class="order-info alert alert-info"><?php printf( __( 'Order <mark class="order-number">%s</mark> was placed on <mark class="order-date">%s</mark> and is currently <mark class="order-status">%s</mark>.', 'woocommerce' ), $order->get_order_number(), date_i18n( get_option( 'date_format' ), strtotime( $order->order_date ) ), __( $status->name, 'woocommerce' ) ); ?></p>
 
-<?php if ( $notes = $order->get_customer_order_notes() ) :
+<?php if ( $notes = $order->get_customer_order_notes() ) : $the_note = 0;
 	?>
-	<h2><?php _e( 'Order Updates', 'woocommerce' ); ?></h2>
-	<ol class="commentlist notes">
-		<?php foreach ( $notes as $note ) : ?>
-		<li class="comment note">
-			<div class="comment_container">
-				<div class="comment-text">
-					<p class="meta"><?php echo date_i18n( __( 'l jS \o\f F Y, h:ia', 'woocommerce' ), strtotime( $note->comment_date ) ); ?></p>
-					<div class="description">
-						<?php echo wpautop( wptexturize( $note->comment_content ) ); ?>
+	
+	<div class="panel panel-success">
+		<div class="panel-heading">
+			<h3 class="panel-title"><?php _e( 'Order Updates', 'woocommerce' ); ?></h3>
+		</div>
+		
+		<ul class="list-group">
+			<?php foreach ( $notes as $note ) : $the_note++; ?>
+			<li class="list-group-item">
+				<div class="row">
+					<div class="col-sm-1 text-center">
+						<span class="text-primary top label label-default"><?= $the_note; ?></span>
 					</div>
-	  				<div class="clear"></div>
-	  			</div>
-				<div class="clear"></div>
-			</div>
-		</li>
-		<?php endforeach; ?>
-	</ol>
+					<div class="col-sm-11">
+						<?php echo wpautop( wptexturize( $note->comment_content ) ); ?>
+						
+						<div class="small">
+							<em><?php echo date_i18n( __( 'l F jS, Y, h:ia', 'woocommerce' ), strtotime( $note->comment_date ) ); ?></em>
+						</div>
+					</div>
+				</div>
+			</li>
+			<?php endforeach; ?>
+		</ul>
+	</div>
 	<?php
 endif;
 
