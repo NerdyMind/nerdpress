@@ -32,36 +32,42 @@ $get_checkout_url = apply_filters( 'woocommerce_get_checkout_url', WC()->cart->g
 
 		<?php do_action( 'woocommerce_checkout_before_customer_details' ); ?>
 
-		<div class="row form-group">
+		<div class="row">
 			<div class="col-xs-12">
-				<ul class="nav nav-pills nav-justified thumbnail setup-panel">
-					<li class="active">
+				<ul class="nav nav-crumbs">
+					<li class="crumb-cart">
+						<a href="<?php echo $woocommerce->cart->get_cart_url(); ?>">
+							<i class="fa fa-fw fa-shopping-cart fa-g"></i> 
+							<span class="step-label">Your Cart</span>
+						</a>
+					</li>
+					<li class="crumb-billing active">
 						<a href="#billing" data-toggle="tab">
-							<h4 class="list-group-item-heading"><i class="fa fa-building fa-lg"></i> <?= ( WC()->cart->needs_payment() ) ? 'Billing' : 'Your'; ?> Details</h4>
-							<p class="list-group-item-text">
-								<span class="label label-default">Step 1</span>
-							</p>
+							<i class="fa fa-fw fa-building fa-lg"></i> 
+							<span class="step-label">Details</span>
 						</a>
 					</li>
-					<li>
+					<li class="crumb-shipping">
 						<a href="#shipping" data-toggle="tab">
-							<h4 class="list-group-item-heading"><i class="fa fa-lg fa-<?php echo ( WC()->cart->needs_shipping_address() === true ) ? 'plane' : 'info-circle'; ?>"></i> <?php echo ( WC()->cart->needs_shipping_address() === true ) ? 'Shipping' : 'Additional Information'; ?></h4>
-							<p class="list-group-item-text">
-								<span class="label label-default">Step 2</span>
-							</p>
+							<i class="fa fa-fw fa-lg fa-<?php echo ( WC()->cart->needs_shipping_address() === true ) ? 'plane' : 'info-circle'; ?>"></i> 
+							<span class="step-label"><?php echo ( WC()->cart->needs_shipping_address() === true ) ? 'Shipping' : 'Additional'; ?></span>
 						</a>
 					</li>
-					<li>
+					<li class="crumb-review">
 						<a href="#review" data-toggle="tab">
-							<h4 class="list-group-item-heading"><i class="fa fa-credit-card fa-lg"></i> Review &amp; Finish</h4>
-							<p class="list-group-item-text">
-								<span class="label label-default">Step 3</span>
-							</p>
+							<i class="fa fa-fw fa-credit-card fa-lg"></i> 
+							<span class="step-label">Review</span>
+						</a>
+					</li>
+					<li class="crumb-confirmation">
+						<a href="#" class="disabled">
+							<i class="fa fa-fw fa-check-circle-o fa-lg"></i> 
+							<span class="step-label">Confirmation</span>
 						</a>
 					</li>
 				</ul>
-			</div>
-		</div>
+			</div><!-- /.col-xs-12 -->
+		</div><!-- /.row -->
 		
 		<div class="tab-content">
 			<div class="tab-pane fade in active" id="billing">
@@ -71,7 +77,7 @@ $get_checkout_url = apply_filters( 'woocommerce_get_checkout_url', WC()->cart->g
 				<hr/>
 				
 				<div class="text-right space-top20">
-					<a href="#shipping" class="btn btn-primary btn-lg checkout-wizard" data-toggle="tab" data-tab="2">
+					<a href="#shipping" class="btn btn-primary btn-lg crumb-shipping" data-toggle="tab">
 						<?php echo ( WC()->cart->needs_shipping_address() === true ) ? 'Shipping' : 'Additional Information'; ?> 
 						<i class="fa fa-chevron-right"></i>
 					</a>
@@ -87,12 +93,12 @@ $get_checkout_url = apply_filters( 'woocommerce_get_checkout_url', WC()->cart->g
 				
 				<div class="row space-top20">
 					<div class="col-xs-6">
-						<a href="#billing" class="btn btn-primary btn-lg checkout-wizard" data-toggle="tab" data-tab="1">
+						<a href="#billing" class="btn btn-primary btn-lg crumb-billing" data-toggle="tab" data-tab="1">
 							<i class="fa fa-chevron-left"></i> Back to Billing
 						</a>
 					</div>
 					<div class="col-xs-6 text-right">
-						<a href="#review" class="btn btn-primary btn-lg checkout-wizard" data-toggle="tab" data-tab="3">
+						<a href="#review" class="btn btn-primary btn-lg crumb-review" data-toggle="tab" data-tab="3">
 							Review &amp; Finish <i class="fa fa-chevron-right"></i>
 						</a>
 					</div>
@@ -101,6 +107,8 @@ $get_checkout_url = apply_filters( 'woocommerce_get_checkout_url', WC()->cart->g
 			</div>
 			
 			<div class="tab-pane fade" id="review">
+			
+				<h3>Review &amp; Finish</h3>
 
 				<?php do_action( 'woocommerce_checkout_after_customer_details' ); ?>
 				

@@ -319,7 +319,132 @@ span.onsale {
 	}
 }
 
+body.woocommerce-checkout {
+	overflow: scroll;
+}
+
 .woocommerce-checkout {
+	.nav-crumbs {
+		overflow: hidden;
+		width: 100%;
+		
+		li {	
+			display: table-cell;
+			text-align: center;
+			width: 1%;
+			
+			a {
+				color: #fff;
+				text-decoration: none; 
+				padding: 10px 0 10px 55px;
+				background: @gray-light;
+				position: relative; 
+				display: block;
+				.transition(all 0.3s ease);
+				
+				&:after {
+					content: " "; 
+					display: block; 
+					width: 0; 
+					height: 0;
+					border-top: 50px solid transparent;           /* Go big on the size, and let overflow hide */
+					border-bottom: 50px solid transparent;
+					border-left: 30px solid @gray-light;
+					position: absolute;
+					top: 50%;
+					margin-top: -50px; 
+					left: 100%;
+					z-index: 2;
+					.transition(all 0.3s ease);
+				}
+				
+				&:before {
+					content: " "; 
+					display: block; 
+					width: 0; 
+					height: 0;
+					border-top: 50px solid transparent;           /* Go big on the size, and let overflow hide */
+					border-bottom: 50px solid transparent;
+					border-left: 30px solid white;
+					position: absolute;
+					top: 50%;
+					margin-top: -50px; 
+					margin-left: 1px;
+					left: 100%;
+					z-index: 1; 
+					.transition(all 0.3s ease);
+				}
+			}
+			
+			&.crumb-cart {
+				a {
+					background: @gray-light;
+					border-radius: @border-radius-base 0 0 @border-radius-base;
+					padding-left: 10px;
+					
+					&:after {
+						border-left-color: @gray-light;
+					}
+				}
+			}
+			
+			&.crumb-billing {
+				a {
+					background: lighten(@brand-primary, 10%);
+					
+					&:after {
+						border-left-color: lighten(@brand-primary, 10%);
+					}
+				}
+			}
+			
+			&.crumb-shipping {
+				a {
+					background: lighten(@brand-primary, 20%);
+					
+					&:after {
+						border-left-color: lighten(@brand-primary, 20%);
+					}
+				}
+			}
+			
+			&.crumb-review {
+				a {
+					background: lighten(@brand-primary, 30%);
+					
+					&:after {
+						border-left-color: lighten(@brand-primary, 30%);
+					}
+				}
+			}
+			
+			&.crumb-confirmation {
+				a {
+					background: @brand-success;
+					border-radius: 0 @border-radius-base @border-radius-base 0;
+					pointer-events: none;
+					cursor: default;
+					
+					&:after {
+						border-left-color: @brand-success;
+					}
+				}
+			}
+			
+			&.current, 
+			&.active {
+				a {
+					background: @brand-primary;
+					
+					&:after {
+						border-left-color: @brand-primary;
+					}
+				}
+			}
+		}
+	}
+
+
 	.required {
 		border-bottom: none;
 		color: @brand-danger;
@@ -447,6 +572,32 @@ span.onsale {
 			padding-left: 5px;
 		}
 		
+	}
+}
+
+@media ( max-width: @screen-sm ) {
+	.woocommerce-checkout {
+		.nav-crumbs {
+			li {
+				a {
+					.step-label {
+						.hidden();
+					}
+				}
+			}
+		}
+	}
+}
+
+@media ( min-width: @screen-sm ) and ( max-width: @screen-md ) {
+	.woocommerce-checkout {
+		.nav-crumbs {
+			li {
+				a {
+					font-size: 13px;
+				}
+			}
+		}
 	}
 }
 

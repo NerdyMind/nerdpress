@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php wc_print_notices(); ?>
 
-<p class="order-info alert alert-info"><?php printf( __( 'Order <mark class="order-number">%s</mark> was placed on <mark class="order-date">%s</mark> and is currently <mark class="order-status">%s</mark>.', 'woocommerce' ), $order->get_order_number(), date_i18n( get_option( 'date_format' ), strtotime( $order->order_date ) ), __( $status->name, 'woocommerce' ) ); ?></p>
+<p class="order-info alert alert-info hidden"><?php printf( __( 'Order <mark class="order-number">%s</mark> was placed on <mark class="order-date">%s</mark> and is currently <mark class="order-status">%s</mark>.', 'woocommerce' ), $order->get_order_number(), date_i18n( get_option( 'date_format' ), strtotime( $order->order_date ) ), __( $status->name, 'woocommerce' ) ); ?></p>
 
 <?php if ( $notes = $order->get_customer_order_notes() ) : $the_note = 0;
 	?>
@@ -37,7 +37,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php echo wpautop( wptexturize( $note->comment_content ) ); ?>
 						
 						<div class="small">
-							<em><?php echo date_i18n( __( 'l F jS, Y, h:ia', 'woocommerce' ), strtotime( $note->comment_date ) ); ?></em>
+							<em><?php echo date_i18n( __( 'l F jS, Y, h:ia', 'woocommerce' ), strtotime( $note->comment_date ) ); ?></em> 
 						</div>
 					</div>
 				</div>
@@ -49,3 +49,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 endif;
 
 do_action( 'woocommerce_view_order', $order_id );
+?>
+
+<div class="text-right">
+	<a href="<?php echo get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ); ?>" class="btn btn-primary">
+		<i class="fa fa-chevron-left"></i> Back to My Account
+	</a>
+</div>

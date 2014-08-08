@@ -1,10 +1,20 @@
 jQuery(document).ready(function($) {
-	$('ul.setup-panel li').addClass('disabled');
-	$('ul.setup-panel li:first-child').removeClass('disabled');
+	$('.crumb-billing').click(function() {
+		$('ul.nav-crumbs > li').removeClass('current');
+		$('ul.nav-crumbs > li.crumb-billing').addClass('current');
+	});
 	
-	$('.checkout-wizard').click(function() {
-		$('ul.setup-panel li').removeClass('active');
-		$('ul.setup-panel li:nth-child(' + $(this).attr('data-tab') + ')').addClass('active').removeClass('disabled');
+	$('.crumb-shipping').click(function() {
+		$('ul.nav-crumbs > li').removeClass('current');
+		$('ul.nav-crumbs > li.crumb-billing').addClass('current');
+		$('ul.nav-crumbs > li.crumb-shipping').addClass('current');
+	});
+	
+	$('.crumb-review').click(function() {
+		$('ul.nav-crumbs > li').removeClass('current');
+		$('ul.nav-crumbs > li.crumb-billing').addClass('current');
+		$('ul.nav-crumbs > li.crumb-shipping').addClass('current');
+		$('ul.nav-crumbs > li.crumb-review').addClass('current');
 	});
 	
 	$('#order_review').on( 'click', '.payment_methods input.input-radio', function() {

@@ -17,8 +17,9 @@ $order = new WC_Order( $order_id );
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<h3 class="panel-title">
-			<div class="pull-right italic">
-				Order <?php echo $order->get_order_number(); ?>, placed on <?php echo date_i18n( get_option( 'date_format' ), strtotime( $order->order_date ) ); ?>
+			<div class="pull-right">
+				<span class="italic">Order <?php echo $order->get_order_number(); ?>, placed on <?php echo date_i18n( get_option( 'date_format' ), strtotime( $order->order_date ) ); ?></span> 
+				<span class="label label-<?= ( $order->status == 'completed' ) ? 'success' : 'default'; ?>"><?= ucfirst( $order->status ); ?></span>
 			</div>
 			
 			<i class="fa fa-fw fa-cubes text-primary"></i> Your Order
