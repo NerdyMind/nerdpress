@@ -85,8 +85,12 @@ $shortcodes[] = array(
 			'name' 	=> 'text',
 			'default' 	=> 'Learn More',
 		),
+                array(
+                    'name' => 'target',
+                    'default' => '_self'
+                ),
 	),
-	'return' 			=> '<a href="$link" class="btn $class">$text</a>',
+	'return' 			=> '<a href="$link" class="btn $class" target="$target">$text</a>',
 );
 
 $shortcodes[] = array(
