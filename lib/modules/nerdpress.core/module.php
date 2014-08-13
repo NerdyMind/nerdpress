@@ -4,7 +4,9 @@
 
 /* This isn't really needed any more, we need to clean up nerdpress */
 
-holdover from schoestack 
+/**
+ * holdover from shoe stack 
+ */
 define( 'themeURI', get_template_directory_uri() );
 define( 'themeFOLDER', get_template() );
 define( 'themePATH', get_theme_root() );

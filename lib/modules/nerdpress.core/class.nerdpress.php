@@ -919,7 +919,7 @@ class NerdPress {
 		get_template_part( 'templates/login', 'logo' );
 	}
 	
-	added to filters at the top
+//	added to filters at the top
 	
 	
 	/**
