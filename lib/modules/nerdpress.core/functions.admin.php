@@ -140,6 +140,7 @@ function nerdpress_admin_bar_options() {
 	$current_theme = wp_get_theme();
 	
 	$args = array(
+		'id' => 'nerdpress-version',
 		'parent' => 'nerdy',
 		'title' => $current_theme->get( 'Name' ) . ' v' . $current_theme->get( 'Version' ),
 	);
@@ -151,6 +152,7 @@ function nerdpress_admin_bar_options() {
 		$parent_theme = wp_get_theme( 'nerdpress' );
 		
 		$args = array(
+			'id' => 'nerdpress-child',
 			'parent' => 'nerdy',
 			'title' => 'Child of ' . $parent_theme->get( 'Name' ) . ' v' . $parent_theme->get( 'Version' ),
 		);
@@ -160,6 +162,7 @@ function nerdpress_admin_bar_options() {
 	endif;
 	
 	$args = array(
+		'id' => 'nerdpress-link',
 		'parent' => 'nerdy',
 		'title' => 'Visit NerdyMind',
 		'href' => 'http://nerdymind.com/',
@@ -171,6 +174,7 @@ function nerdpress_admin_bar_options() {
 	$wp_admin_bar->add_node( $args );
 	
 	$args = array(
+		'id' => 'nerdpress-settings',
 		'parent' => 'site-name',
 		'title' => 'NerdPress Settings',
 		'href' => admin_url( 'options-general.php?page=nerdpress-settings' ),
