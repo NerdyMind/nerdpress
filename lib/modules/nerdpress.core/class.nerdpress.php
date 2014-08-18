@@ -454,7 +454,7 @@ class NerdPress {
 		if ( $woo_active ) :
 			$shop_id = get_option( 'woocommerce_shop_page_id' );
 			
-			if ( get_option( 'page_on_front' ) !== $shop_id ) 
+			if ( is_cart() || is_checkout() || is_woocommerce() && get_option( 'page_on_front' ) !== $shop_id ) 
 				self::make_crumb( ( is_shop() ? null : get_permalink( $shop_id ) ), get_the_title( $shop_id ) );
 		endif; // WooCommerce
 		
