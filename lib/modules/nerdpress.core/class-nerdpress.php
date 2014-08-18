@@ -160,7 +160,7 @@ class NerdPress {
 	/**
 	 * addl_integrations function.
 	 * 
-	 * Looks in NP settings, checks the values of bbPress, Twitter API based off the integrations file - makes things play nice with wordpress
+	 * Looks in NP settings, checks the values of bbPress, Twitter API based off the integrations file - makes things play nice with WordPress
 	 *
  	 * @TODO Check integrations docs
  	 * 
@@ -1208,7 +1208,7 @@ class NerdPress {
 	/**
 	 * bootstrap_reply_link_class function.
 	 * 
-	 * makes wp play nicer with wordpress
+	 * makes wp play nicer with WordPress
 	 * makes the comment button look cool
 	 *
 	 * @access public
