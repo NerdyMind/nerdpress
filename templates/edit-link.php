@@ -20,14 +20,14 @@ if ( is_category() || is_tax() ) {
 	$link = admin_url( 'edit-tags.php?action=edit&taxonomy=' . $object->taxonomy . '&tag_ID=' . $object->term_id );
 	$title = $tax->labels->singular_name . ' (' . $object->name . ')';
 }
-if ( $widget_area_id ) {
+if ( isset( $widget_area_id ) ) {
 	$edit = true;
 	$link = admin_url( 'widgets.php' );
 	$title = 'Widgets (' . $widget_area_id . ')';
 	$icon = 'cog';
 }
 ?>
-<?php if ( current_user_can( 'edit_posts' ) && $edit ) : ?>
+<?php if ( current_user_can( 'edit_posts' ) && isset( $edit ) ) : ?>
 <div class="text-right nerdpress-edit-link">
 	<a href="<?= $link; ?>" target="_blank" class="btn btn-default btn-sm" title="Edit <?= $title; ?>" data-toggle="tooltip"><i class="fa fa-<?= ( $icon ) ? $icon : 'edit'; ?> text-primary"></i> Edit</a>
 </div>

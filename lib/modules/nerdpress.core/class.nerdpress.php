@@ -72,7 +72,7 @@ class NerdPress {
 	 * @access public
 	 * @return The Location of a known file handler, if one is not present
 	 */
-	function init_filesystem() {
+	static function init_filesystem() {
 		if ( empty( $wp_filesystem ) ) {
 			require_once( ABSPATH .'/wp-admin/includes/file.php' );
 			WP_Filesystem();
@@ -87,7 +87,7 @@ class NerdPress {
 	 * @param mixed $var
 	 * @return a mixed set of variables and arrays from the option area of ACF
 	 */
-	function variable( $var ) {
+	static function variable( $var ) {
 		if ( !function_exists( 'get_field' ) ) return false;
 		
 		if ( get_field( $var, 'option' ) ) 
@@ -105,7 +105,7 @@ class NerdPress {
 	 * @access public
 	 * @return one or more regiser_sidebar() objects
 	 */
-	function register_widget_areas() {
+	static function register_widget_areas() {
 		$widget_areas = self::variable( 'widget_areas' );
 		
 		if ( $widget_areas ) :
@@ -135,7 +135,7 @@ class NerdPress {
 	 * @param mixed $widget_area_id
 	 * @return Sidebar output for the widget areas
 	 */
-	function widget_area( $widget_area_id ) {
+	static function widget_area( $widget_area_id ) {
 		global $wp_registered_sidebars;
 		
 		$safe_name = strtolower( str_replace( ' ', '-', $widget_area_id ) );
@@ -143,7 +143,7 @@ class NerdPress {
 		if ( array_key_exists( $safe_name, $wp_registered_sidebars ) ) :
 		
 			if ( is_dynamic_sidebar( $safe_name ) ) :
-				echo "\n" . '<div class="' . $all_widget_areas[$safe_name]['class'] . '">' . "\n";
+				echo "\n" . '<div class="' . $wp_registered_sidebars[$safe_name]['class'] . '">' . "\n";
 				dynamic_sidebar( $safe_name );
 				echo "\n" . '</div>' . "\n";
 				include( locate_template( 'templates/edit-link.php' ) );
@@ -168,7 +168,7 @@ class NerdPress {
 	 * @access public
 	 * @return enques the selected integration settings 
 	 */
-	function addl_integrations() {
+	static function addl_integrations() {
 		$addl_integrations = self::variable( 'addl_integrations' );
 		
 		if ( $addl_integrations ) :		
@@ -187,38 +187,13 @@ class NerdPress {
 	 * @access public
 	 * @return the required class for the main container
 	 */
-	function container_class() {
+	static function container_class() {
 		global $post;
 			
 		if ( get_field( 'nrd_full_width' ) ) return 'full-width';
 		else return 'container';
 	}
 
-
-	/**
-	 * navbar_class function.
-	 * 
-	 * not really using this
-	 * @TODO clean up this comment
-	 * @TODO remove this from Nerdpress, We don't use it
-	 * @access public
-	 * @param string $navbar (default: 'main')
-	 * @return void
-	 */
-	function navbar_class( $navbar = 'main' ) {
-	  $fixed    = variable( 'navbar_fixed' );
-	  $fixedpos = variable( 'navbar_fixed_position' );
-	
-	  if ( $fixed != 1 )
-	    $class = 'navbar navbar-static-top';
-	  else
-	    $class = ( $fixedpos == 1 ) ? 'navbar navbar-fixed-bottom' : 'navbar navbar-fixed-top';
-	
-	  if ( $navbar != 'secondary' )
-	    return $class;
-	  else
-	    return 'navbar';
-	}
 
 
 	/**
@@ -231,7 +206,7 @@ class NerdPress {
 	 * @access public
 	 * @return void
 	 */
-	function display_sidebar() {
+	static function display_sidebar() {
 		$hide_sidebar_conditions = array();
 		
 		$hide_sidebar_conditions_option = self::variable( 'hide_sidebar_conditions' );
@@ -270,7 +245,7 @@ class NerdPress {
 	 * @param mixed $sidebar
 	 * @return returns sidebar content, or nothing
 	 */
-	function hide_sidebar_on( $sidebar ) {
+	static function hide_sidebar_on( $sidebar ) {
 		if ( get_field( 'nrd_hide_sidebar' ) ) return false;
 		
 		return $sidebar;
@@ -285,7 +260,7 @@ class NerdPress {
 	 * @access public
 	 * @return either returns the main class or a full width class
 	 */
-	function main_class() {
+	static function main_class() {
 		if ( self::display_sidebar() ) $class = self::variable( 'main_class' );
 		else $class = 'col-sm-12';
 		
@@ -301,7 +276,7 @@ class NerdPress {
 	 * @access public
 	 * @return returns the sidebar class or nothing
 	 */
-	function sidebar_class() {
+	static function sidebar_class() {
 		return self::variable( 'sidebar_class' );
 	}
 	
@@ -333,7 +308,7 @@ class NerdPress {
 	 * @return void
 	 * 
 	 */
-	function load_scripts() {
+	static function load_scripts() {
 		global $blog_id;
 	
 		wp_deregister_script( 'roots_scripts' );
@@ -412,7 +387,7 @@ class NerdPress {
 	 * @param mixed $text
 	 * @return void
 	 */
-	function make_crumb( $url = false, $text ) {
+	static function make_crumb( $url = false, $text ) {
 		global $breadcrumbs;
 		
 		$breadcrumbs[] = array(
@@ -431,7 +406,7 @@ class NerdPress {
 	 * @access public
 	 * @return void
 	 */
-	function breadcrumbs() {
+	static function breadcrumbs() {
 /* 	if not on, skip this */
 		if ( !self::variable( 'breadcrumbs' ) ) return;
 		
@@ -795,7 +770,7 @@ class NerdPress {
 		
 		// bbPress wrap
 		// We check for the existence of the BBpress class
-		if ( $bbpress_active && 
+		if ( isset( $bbpress_active ) && 
 			( bbp_is_topic_archive() || 
 				bbp_is_search() || 
 				bbp_is_forum_archive() || 
@@ -901,7 +876,7 @@ class NerdPress {
 	 * @access public
 	 * @return void
 	 */
-	function sitemap() {
+	static function sitemap() {
 		ob_start();
 		get_template_part( 'templates/sitemap' );
 		$sitemap = ob_get_contents();
@@ -922,7 +897,7 @@ class NerdPress {
 	 * @access public
 	 * @return void
 	 */
-	function login_logo() {
+	static function login_logo() {
 		if ( !locate_template('assets/img/site-logo.png') ) return;
 		get_template_part( 'templates/login', 'logo' );
 	}
@@ -940,7 +915,7 @@ class NerdPress {
 	 */
 	 
 	
-	function login_url() {
+	static function login_url() {
 		return get_bloginfo( 'url' );
 	}
 	
@@ -953,7 +928,7 @@ class NerdPress {
 	 * @return void
 	 * @TODO Clean up this comment
 	 */
-	function login_title() {
+	static function login_title() {
 		return get_bloginfo( 'name' );
 	}
 	
@@ -969,7 +944,7 @@ class NerdPress {
 	 * @param mixed $post
 	 * @return void
 	 */
-	function limit_revisions( $num, $post ) {
+	static function limit_revisions( $num, $post ) {
 		return 2;
 	}
 	
@@ -985,7 +960,7 @@ class NerdPress {
 	 * @access public
 	 * @return void
 	 */
-	function social_networks() {
+	static function social_networks() {
 		ob_start();
 		get_template_part( 'templates/social', 'networks' );
 		$social_networks = ob_get_contents();
@@ -1005,7 +980,7 @@ class NerdPress {
 	 * @param mixed $sep
 	 * @return void
 	 */
-	function seo_title( $title, $sep ) {
+	static function seo_title( $title, $sep ) {
 		global $post;
 		
 		$seo_title = get_field( 'nrd_seo_title' );
@@ -1024,7 +999,7 @@ class NerdPress {
 	 * @access public
 	 * @return void
 	 */
-	function page_title() {
+	static function page_title() {
 		global $post;
 		
 		$seo_heading = get_field( 'nrd_seo_heading' );
@@ -1075,7 +1050,7 @@ class NerdPress {
 	 * @access public
 	 * @return void
 	 */
-	function seo_description() {
+	static function seo_description() {
 		global $post;
 		
 		$seo_desc = get_field( 'nrd_seo_desc' );
@@ -1094,7 +1069,7 @@ class NerdPress {
 	 * @return void
 	 	 * @TODO Clean up this comment
 	 */
-	function register_required_plugins() {
+	static function register_required_plugins() {
 	
 /* 	goes to a location, gets a json list of things we need */
 		if ( false === ( $plugins_list = get_transient( 'np_plugins_list' ) ) ) :		
@@ -1170,7 +1145,7 @@ class NerdPress {
 	 * @access public
 	 * @return void
 	 */
-	function setup_post_types() {
+	static function setup_post_types() {
 		
 		// Check to make sure our class is here before we waste our time!
 		if ( !class_exists( 'Super_Custom_Post_Type' ) ) 
@@ -1241,7 +1216,7 @@ class NerdPress {
 	 * @param mixed $class
 	 * @return void
 	 */
-	function bootstrap_reply_link_class( $class ) {
+	static function bootstrap_reply_link_class( $class ) {
 		$class = str_replace( "class='comment-reply-link", "class='comment-reply-link btn btn-primary btn-small", $class );
 		return $class;
 	}
@@ -1255,7 +1230,7 @@ class NerdPress {
 	 * @return void
 	 	 * @TODO Clean up this comment
 	 */
-	function bootstrap_password_form() {
+	static function bootstrap_password_form() {
 		global $post;
 		
 		$label = 'pwbox-' . ( empty( $post->ID ) ? rand() : $post->ID );
@@ -1282,7 +1257,7 @@ class NerdPress {
 	 * @access public
 	 * @return void
 	 */
-	function statcounter() {
+	static function statcounter() {
 		$statcounter_id = self::variable( 'statcounter_id' );
 		
 		if ( !$statcounter_id ) return;
@@ -1300,7 +1275,7 @@ class NerdPress {
 	 * @return void
 	 	 * @TODO Clean up this comment
 	 */
-	function load_menu_locations() {
+	static function load_menu_locations() {
 		$menu_locations = self::variable( 'menu_locations' );
 		
 		if ( $menu_locations ) :
@@ -1326,7 +1301,7 @@ class NerdPress {
 	 * @access public
 	 * @return void
 	 */
-	function load_client_role() {
+	static function load_client_role() {
 		$caps = array(
 			'activate_plugins' => true,
 			'install_plugins' => true,
@@ -1503,7 +1478,7 @@ class NerdPress {
 	 * @access public
 	 * @return void
 	 */
-	function setup_gravity_forms() {
+	static function setup_gravity_forms() {
 		update_option( 'rg_gforms_key', '55443c0c81be6d6cef07480d077ff677' );
 		update_option( 'rg_gforms_disable_css', '1' );
 		update_option( 'rg_gforms_enable_html5', '1' );
@@ -1519,7 +1494,7 @@ class NerdPress {
 	 * @access public
 	 * @return void
 	 */
-	function setup_nerdpress_panels() {
+	static function setup_nerdpress_panels() {
 		$value = 'a:8:{s:10:"animations";b:1;s:15:"bundled-widgets";b:1;s:10:"responsive";b:1;s:12:"mobile-width";i:780;s:12:"margin-sides";i:30;s:13:"margin-bottom";i:30;s:12:"copy-content";b:0;s:10:"inline-css";b:0;}';
 		
 		if ( get_option( 'siteorigin_panels_display' ) != $value ) 
@@ -1537,7 +1512,7 @@ class NerdPress {
 	 	 	 * @TODO Clean up this comment
 	 * @return void
 	 */
-	function child_load_less( $bootstrap ) {
+	static function child_load_less( $bootstrap ) {
 		return $bootstrap . '
 		@import "' . get_stylesheet_directory() . '/assets/less/child.less";';
 	}
@@ -1551,7 +1526,7 @@ class NerdPress {
 	 * Looks at modified time to trigger compiler if it's a new version
 	 	 	 * @TODO Clean up this comment
 	 */
-	function child_monitor_less() {
+	static function child_monitor_less() {
 		if ( file_exists( get_stylesheet_directory() . '/assets/less/child.less' ) ) {
 			if ( filemtime( get_stylesheet_directory() . '/assets/less/child.less' ) > filemtime( nerdpress_css() ) ) 
 				nerdpress_makecss();
@@ -1570,7 +1545,7 @@ class NerdPress {
 	 * @param mixed $atts
 	 * @return void
 	 */
-	function social_share( $atts ) {
+	static function social_share( $atts ) {
 		global $share_url;
 				
 		extract( 
@@ -1606,7 +1581,7 @@ class NerdPress {
 	 * @param int $range (default: 4)
 	 * @return void
 	 */
-	function pagination ( $pages = '', $range = 4 ) {
+	static function pagination ( $pages = '', $range = 4 ) {
 		global $paged, $page_links;
 		
 		if ( empty( $paged ) ) $paged = 1;
@@ -1651,7 +1626,7 @@ class NerdPress {
 	 * @access public
 	 * @return void
 	 */
-	function roots_cleanup() {
+	static function roots_cleanup() {
 		 remove_action('wp_head', 'roots_rel_canonical');
 	}
 	
@@ -1665,7 +1640,7 @@ class NerdPress {
 	 	 	 * @TODO Clean up this comment
 
 	 */
-	function load_canonical() {
+	static function load_canonical() {
 		global $post;
 		
 		if ( get_field( 'nrd_seo_canonical' ) ) 
@@ -1682,7 +1657,7 @@ class NerdPress {
 	 * @access public
 	 * @return void
 	 */
-	function plugin_install_warning() {
+	static function plugin_install_warning() {
 		get_template_part( 'templates/admin', 'plugin-notice' );
 	}
 
@@ -1697,7 +1672,7 @@ class NerdPress {
 	 * @access public
 	 * @return void
 	 */
-	function detect_mobile() {
+	static function detect_mobile() {
 		$ua = strtolower( $_SERVER['HTTP_USER_AGENT'] );
 		
 		if ( stripos( $ua, 'android' ) !== false || 
@@ -1720,7 +1695,7 @@ class NerdPress {
 	 * @param mixed $classes
 	 * @return void
 	 */
-	function mobile_body_classes( $classes ) {
+	static function mobile_body_classes( $classes ) {
 		$ua = strtolower( $_SERVER['HTTP_USER_AGENT'] );
 		
 		if ( stripos( $ua, 'android' ) !== false ) 
