@@ -225,6 +225,14 @@ class NerdPress {
 				$hide_sidebar_templates[] = $template;
 			}
 		endif;
+				
+		$hide_sidebar_post_types_option = self::variable( 'hide_sidebar_post_types' );
+		
+		if ( $hide_sidebar_post_types_option ) :
+			foreach ( $hide_sidebar_post_types_option as $post_type ) {
+				$hide_sidebar_conditions[] = array( 'is_singular', $post_type );
+			}
+		endif;
 	
 		$sidebar_config = new Roots_Sidebar(
 			$hide_sidebar_conditions,

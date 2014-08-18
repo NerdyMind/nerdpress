@@ -17,6 +17,7 @@ class NerdPressConfig {
 
 		if ( is_admin() ) add_filter( 'acf/load_field/name=hide_sidebar_templates', array( &$this, 'nerdpress_load_config_templates' ) );
 		if ( is_admin() ) add_filter( 'acf/load_field/name=tax_connect', array( &$this, 'nerdpress_load_config_post_types' ) );
+		if ( is_admin() ) add_filter( 'acf/load_field/name=hide_sidebar_post_types', array( &$this, 'nerdpress_load_config_post_types' ) );
 		add_action( 'after_setup_theme', array( &$this, 'load_fields' ) );
 	}
 	
@@ -216,6 +217,17 @@ class NerdPressConfig {
 						'row_limit' => '',
 						'layout' => 'table',
 						'button_label' => '+ Add Condition',
+					),
+					array (
+						'key' => 'field_530e600cbb945',
+						'label' => 'Hide Sidebar on Post Types',
+						'name' => 'hide_sidebar_post_types',
+						'type' => 'checkbox',
+						'instructions' => 'Define post types where the sidebar will not display.',
+						'choices' => array (
+						),
+						'default_value' => '',
+						'layout' => 'vertical',
 					),
 					array (
 						'key' => 'field_530e600cba750',
