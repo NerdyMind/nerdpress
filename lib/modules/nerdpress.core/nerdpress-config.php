@@ -108,7 +108,7 @@ class NerdPressConfig {
 						'label' => 'Branding',
 						'name' => 'brand_wp',
 						'type' => 'true_false',
-						'message' => 'Show NerdyMind branding in backend',
+						'message' => 'Allow NerdyMind branding and color scheme on backend',
 						'default_value' => 1,
 					),
 					array (
