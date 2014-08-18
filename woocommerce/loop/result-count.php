@@ -16,7 +16,7 @@ global $woocommerce, $wp_query;
 if ( ! woocommerce_products_will_display() )
 	return;
 ?>
-<div class="row space-bottom20">
+<div class="row space-bottom20 woocommerce-results">
 	<div class="col-sm-8">
 		<p class="woocommerce-result-count">
 			<?php
