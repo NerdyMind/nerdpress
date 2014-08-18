@@ -20,8 +20,8 @@ require_once( 'nerdpress-config.php' );
 
 $files_to_include = array(
 	'class-tgm-plugin-activation.php',
-	'class.nerdpress.php',
-	'functions.admin.php',
+	'class-nerdpress.php',
+	'class-nerdpress-admin.php',
 	'functions.fields.php',
 	'functions.shortcodes.php',
 );

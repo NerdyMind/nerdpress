@@ -1217,7 +1217,7 @@ class NerdPress {
 	 * @return void
 	 */
 	static function bootstrap_reply_link_class( $class ) {
-		$class = str_replace( "class='comment-reply-link", "class='comment-reply-link btn btn-primary btn-small", $class );
+		$class = str_replace( "class='comment-reply-link", "class='comment-reply-link btn btn-primary btn-sm", $class );
 		return $class;
 	}
 	
@@ -1234,15 +1234,17 @@ class NerdPress {
 		global $post;
 		
 		$label = 'pwbox-' . ( empty( $post->ID ) ? rand() : $post->ID );
-		$content  = '<form action="';
+		$content = '<div class="row space-top20"><div class="col-sm-8 col-sm-offset-2">';
+		$content  .= '<form action="';
 		$content .= esc_url( site_url( 'wp-login.php?action=postpass', 'login_post' ) );
 		$content .= '" method="post">';
-		$content .= __( 'This post is password protected. To view it please enter your password below:', 'nerdpress' );
+		$content .= __( 'This post is password protected. To view it, please enter your password below:', 'nerdpress' );
 		$content .= '<div class="input-group">';
-		$content .= '<input name="post_password" id="' . $label . '" type="password" size="20" />';
+		$content .= '<input name="post_password" id="' . $label . '" type="password" class="form-control" size="20" />';
 		$content .= '<span class="input-group-btn">';
-		$content .= '<input type="submit" name="Submit" value="' . esc_attr__( "Submit" ) . '" class="btn btn-default" />';
+		$content .= '<input type="submit" name="Submit" value="' . esc_attr__( "Submit" ) . '" class="btn btn-primary" />';
 		$content .= '</span></div></form>';
+		$content .= '</div></div>';
 		
 		return $content;
 	}
