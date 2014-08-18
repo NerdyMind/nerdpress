@@ -295,6 +295,14 @@ class NerdPress {
 		// Home URL
 		self::make_crumb( home_url(), '<i class="fa fa-home fa-lg"></i>' );
 		
+		// WooCommerce
+		if ( $woo_active ) :
+			$shop_id = get_option( 'woocommerce_shop_page_id' );
+			
+			if ( get_option( 'page_on_front' ) !== $shop_id ) 
+				self::make_crumb( ( is_shop() ? null : get_permalink( $shop_id ) ), get_the_title( get_option( 'woocommerce_shop_page_id' ) ) );
+		endif; // WooCommerce
+		
 		// Page -- Parents murdered in an alley
 		if ( is_page() && !$post->post_parent ) 
 			self::make_crumb( null, get_the_title() );
