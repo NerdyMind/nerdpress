@@ -1,15 +1,4 @@
 <?php
-/*
-	* this creates our nerdpress settings page
-	* runs a couple of functions to help ACF
-	* helps echo out page templates
-	* post type configs
-	* loads all the function.fields stuff
-	* @TODO Clean up this comment
-	* @TODO Clean up this comment
-*/
-
-
 
 class NerdPressConfig {
 	
@@ -105,6 +94,14 @@ class NerdPressConfig {
 						'type' => 'true_false',
 						'message' => 'Enable breadcrumbs',
 						'default_value' => 1,
+					),
+					array (
+						'key' => 'field_530e37fe48749',
+						'label' => 'Breadcrumb Home Text',
+						'name' => 'breadcrumb_home_text',
+						'type' => 'text',
+						'instructions' => 'Defines the text or icon for breadcrumbs.',
+						'default_value' => '<i class="fa fa-home fa-lg"></i>',
 					),
 					array (
 						'key' => 'field_530e383247873',

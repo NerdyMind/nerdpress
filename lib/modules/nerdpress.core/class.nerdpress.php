@@ -473,7 +473,7 @@ class NerdPress {
 		/**
 		* @TODO Make this possible to be a word, an icon, nothing, an image... not always font awesome
 		*/
-		self::make_crumb( home_url(), '<i class="fa fa-home fa-lg"></i>' );
+		self::make_crumb( home_url(), self::variable( 'breadcrumb_home_text' ) );
 		
 		// WooCommerce
 		if ( $woo_active ) :
