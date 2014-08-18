@@ -30,14 +30,16 @@ $woocommerce_loop['loop']++;
 
 // Extra post classes
 $classes = array();
-$classes[] = 'col-sm-6 text-center';
 
-/*
-if ( 0 == ( $woocommerce_loop['loop'] - 1 ) % $woocommerce_loop['columns'] || 1 == $woocommerce_loop['columns'] )
-	$classes[] = 'first';
-if ( 0 == $woocommerce_loop['loop'] % $woocommerce_loop['columns'] )
-	$classes[] = 'last';
-*/
+// Return Bootstrap column based on WooCommerce column setting
+if ( $woocommerce_loop['columns'] == 1 ) $cols = 12;
+if ( $woocommerce_loop['columns'] == 2 ) $cols = 6;
+if ( $woocommerce_loop['columns'] == 3 ) $cols = 4;
+if ( $woocommerce_loop['columns'] == 4 ) $cols = 3;
+if ( $woocommerce_loop['columns'] == 6 ) $cols = 2;
+
+$classes[] = 'text-center';
+$classes[] = 'col-sm-' . $cols;
 ?>
 <div <?php post_class( $classes ); ?>>
 

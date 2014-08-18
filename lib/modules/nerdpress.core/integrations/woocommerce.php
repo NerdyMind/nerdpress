@@ -63,4 +63,10 @@ remove_action( 'woocommerce_after_my_account', array( 'WC_Authorize_Net_CIM', 'a
 
 // Remove cross-sells from above the cart totals
 remove_action( 'woocommerce_cart_collaterals', 'woocommerce_cross_sell_display' );
+
+//add_filter('loop_shop_columns', 'loop_columns' );
+
+function loop_columns() {
+	return 2;
+}
 ?>

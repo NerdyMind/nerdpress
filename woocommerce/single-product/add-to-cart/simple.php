@@ -30,7 +30,7 @@ if ( ! $product->is_purchasable() ) return;
 	 	<?php do_action( 'woocommerce_before_add_to_cart_button' ); ?>
 
 		 	<button type="submit" class="single_add_to_cart_button btn btn-lg btn-primary">
-		 		<i class="fa fa-shopping-cart"></i> <?php echo $product->single_add_to_cart_text(); ?>
+		 		<i class="fa fa-plus-circle"></i> <?php echo $product->single_add_to_cart_text(); ?>
 		 	</button>
 
 	 		<?php
