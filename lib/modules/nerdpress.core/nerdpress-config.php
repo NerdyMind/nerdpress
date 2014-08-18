@@ -451,7 +451,7 @@ class NerdPressConfig {
 						'label' => 'Post Types',
 						'name' => 'post_types',
 						'type' => 'repeater',
-						'instructions' => 'Easily create post types here. You can also modify the breadcrumb behavior for existing post types. Icons use <a href="http://melchoyce.github.io/dashicons/" target="_blank">WordPress Dashicons</a>.
+						'instructions' => 'Easily create post types here. You can also modify the breadcrumb behavior for existing post types. Icons use <a href="http://fontawesome.io/icons/" target="_blank" rel="nofollow">FontAwesome</a>.
 			
 			<a href="http://codex.wordpress.org/register_post_type" target="_blank">Documentation</a>',
 						'sub_fields' => array (
