@@ -1,4 +1,8 @@
 <?php
+/**
+* Loads required modules and includes for proper functionality
+*/
+
 // Load the modules
 require_once locate_template('/lib/modules/load.modules.php');
 

@@ -2,12 +2,26 @@
 $brand_wp = get_option( 'options_brand_wp' );
 
 // Customise the footer in admin area
+
+/**
+ * nerdpress_footer_admin function.
+ * 
+ * @access public
+ * @return void
+	* @TODO Clean up this comment
+	* @TODO Would like to warap this whole file into it's own class
+ */
 function nerdpress_footer_admin() {
 	echo '<strong>NerdPress</strong><sup>&trade;</sup> Framework for WordPress by <a href="http://nerdymind.com/" target="_blank">NerdyMind Marketing</a>. <em style="font-size: x-small">Made with &#x2764; in Fort Collins, Colorado.</em>';
 }
 
 if ( $brand_wp ) add_filter( 'admin_footer_text', 'nerdpress_footer_admin' );
 
+
+/**
+ * nerdy_Admin_Color_Scheme class.
+ * adds our color scheme 
+ */
 class nerdy_Admin_Color_Scheme {
 
 	function __construct() {
@@ -100,6 +114,16 @@ if ( !is_user_logged_in() && !is_admin() ) show_admin_bar( false );
 else show_admin_bar( true );
 
 // Add to Toolbar
+
+
+/**
+ * nerdpress_admin_bar_options function.
+ * 
+ * adds glasses to header of admin pages
+ 	 	 * @TODO Clean up this comment
+ * @access public
+ * @return void
+ */
 function nerdpress_admin_bar_options() {
 	global $wp_admin_bar;
 	

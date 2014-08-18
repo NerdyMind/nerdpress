@@ -4,3 +4,4 @@ assets/css/main.min.css.map
 assets/css/main.min.css
 docs/*
 *error_log*
+/nbproject/private/

@@ -1,4 +1,12 @@
 <?php
+/* This is what includes everything else */
+/* 	 	 * @TODO Clean up this comment */
+
+/* This isn't really needed any more, we need to clean up nerdpress */
+
+/**
+ * holdover from shoe stack 
+ */
 define( 'themeURI', get_template_directory_uri() );
 define( 'themeFOLDER', get_template() );
 define( 'themePATH', get_theme_root() );

@@ -5,7 +5,7 @@
  * Used by list_attributes() in the products class
  *
  * @author 		WooThemes
- * @package 	WooCommerce/Templates
+ * @package 	NerdPress/WooCommerce/single-product/product-attributes
  * @version     2.1.3
  */
 

@@ -1,3 +1,9 @@
+<?php
+	/** Social network template
+	* echos out warning if nothing here, or networks if there is
+	* @TODO Clean up this comment
+	*/
+?>
 <div class="nerdpress-social-networks">
 	<ul class="list-inline">
 	<?php

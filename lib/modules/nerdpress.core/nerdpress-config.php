@@ -1,4 +1,15 @@
 <?php
+/*
+	* this creates our nerdpress settings page
+	* runs a couple of functions to help ACF
+	* helps echo out page templates
+	* post type configs
+	* loads all the function.fields stuff
+	* @TODO Clean up this comment
+	* @TODO Clean up this comment
+*/
+
+
 
 class NerdPressConfig {
 	

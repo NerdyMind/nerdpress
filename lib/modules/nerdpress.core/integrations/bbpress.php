@@ -1,5 +1,18 @@
 <?php
+/**
+* Extends bbpress.php from the bbpress package. 
+* adds functionality for compatibility with nerdpress
+*/
 
+/**
+ * nerdpress_bbp_forum_class function.
+ * 
+ * injects classes for bootstrap and nerdpress compatibility
+ *
+ * @access public
+ * @param mixed $classes
+ * @return void
+ */
 function nerdpress_bbp_forum_class( $classes ) {
 	$classes[] = 'row';
 	$classes[] = 'list-unstyled';
@@ -8,6 +21,15 @@ function nerdpress_bbp_forum_class( $classes ) {
 }
 add_filter('bbp_get_forum_class', 'nerdpress_bbp_forum_class');
 
+/**
+ * nerdpress_bbp_topic_class function.
+ * 
+ * injects classes for bootstrap and nerdpress compatibility
+ * 
+ * @access public
+ * @param mixed $classes
+ * @return void
+ */
 function nerdpress_bbp_topic_class( $classes ) {
 	$classes[] = 'row';
 	$classes[] = 'list-unstyled';
@@ -17,6 +39,15 @@ function nerdpress_bbp_topic_class( $classes ) {
 }
 add_filter('bbp_get_topic_class', 'nerdpress_bbp_topic_class');
 
+
+/**
+ * nerdpress_bbp_reply_class function.
+ * 
+ * injects classes for bootstrap and nerdpress compatibility
+ * @access public
+ * @param mixed $classes
+ * @return void
+ */
 function nerdpress_bbp_reply_class( $classes ) {
 	$classes[] = 'row';
 	$classes[] = 'list-unstyled';
@@ -25,6 +56,15 @@ function nerdpress_bbp_reply_class( $classes ) {
 }
 add_filter('bbp_get_reply_class', 'nerdpress_bbp_reply_class');
 
+
+/**
+ * nerdpress_bbp_styles function.
+ * 
+ * injects classes for bootstrap and nerdpress compatibility
+ *
+ * @access public
+ * @return void
+ */
 function nerdpress_bbp_styles() { ?>
 	<style type="text/css">
 		a.bbp-author-avatar { display: inline-block; }
@@ -37,6 +77,7 @@ function nerdpress_bbp_styles() { ?>
 	</style>
 	<?php
 }
+
 add_action( 'wp_head', 'nerdpress_bbp_styles' );
 
 remove_action( 'wp_enqueue_scripts', 'bbp_enqueue_scripts', 10 );
@@ -620,6 +661,12 @@ function nerdpress_bbp_dropdown( $args = '' ) {
 	}
 
 
+/**
+ * nerdpress_bbps_get_topic_status function.
+ * 
+ * @access public
+ * @return void
+ */
 function nerdpress_bbps_get_topic_status() {
 	$topic_id = bbp_get_topic_id();
 	$default = get_option( '_bbps_default_status' );
@@ -647,6 +694,14 @@ remove_action('bbp_theme_before_topic_title', 'bbps_modify_title');
 
 add_filter( 'bbp_no_breadcrumb', 'nerdpress_bbps_no_breadcrumbs' );
 
+
+/**
+ * nerdpress_bbps_no_breadcrumbs function.
+ * 
+ * @access public
+ * @param mixed $param
+ * @return void
+ */
 function nerdpress_bbps_no_breadcrumbs( $param ) {
 	return true;
 }
