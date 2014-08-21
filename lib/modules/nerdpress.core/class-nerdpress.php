@@ -27,7 +27,7 @@ class NerdPress {
 		add_filter( 'login_headerurl', array( &$this, 'login_url' ) );
 		add_filter( 'login_headertitle', array( &$this, 'login_title' ) );
 		add_filter( 'wp_revisions_to_keep', array( &$this, 'limit_revisions' ), 10, 2 );		
-		add_filter( 'wp_title', array( &$this, 'seo_title' ), 10, 2 );
+		add_filter( 'wp_title', array( &$this, 'seo_title' ), 20, 2 );
 		add_action( 'wp_head', array( &$this, 'seo_description') );
 		add_action( 'tgmpa_register', array( &$this, 'register_required_plugins' ) );
 		add_filter( 'scpt_show_admin_menu', '__return_false' ); // Hide SuperCPT's useless icon menu item
@@ -992,7 +992,7 @@ class NerdPress {
 		
 		$seo_title = get_field( 'nrd_seo_title' );
 		
-		if ( $seo_title ) $title = $seo_title . ' ' . $sep . ' ';
+		if ( $seo_title ) $title = $seo_title;
 		
 		return $title;
 	}
