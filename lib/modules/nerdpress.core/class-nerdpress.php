@@ -1505,7 +1505,7 @@ class NerdPress {
 	 * @access public
 	 * @return void
 	 */
-	static function detect_mobile() {
+	function detect_mobile() {
 		$ua = strtolower( $_SERVER['HTTP_USER_AGENT'] );
 		
 		if ( stripos( $ua, 'android' ) !== false || 
@@ -1528,7 +1528,7 @@ class NerdPress {
 	 * @param mixed $classes
 	 * @return void
 	 */
-	static function mobile_body_classes( $classes ) {
+	function mobile_body_classes( $classes ) {
 		$ua = strtolower( $_SERVER['HTTP_USER_AGENT'] );
 		
 		if ( stripos( $ua, 'android' ) !== false ) 
