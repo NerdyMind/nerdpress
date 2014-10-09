@@ -7,7 +7,7 @@
 				</div>
 				
 				<div class="site-credits">
-					<a href="http://nerdymind.com/" target="_blank" title="We're not an agency. We're NERDS." rel="nofollow">Custom Web Design and Development by NerdyMind Marketing</a>
+					<a href="http://nerdymind.com/" target="_blank" title="We're not an agency. We're NERDS." rel="nofollow">Custom Web Design and Development by NerdyMind Marketing, LLC</a>
 				</div>
 			</div><!-- /.col-sm-12 -->
 		</div><!-- /.row -->
