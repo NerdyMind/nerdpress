@@ -4,7 +4,7 @@
  *
  * @author 		WooThemes
  * @package 	WooCommerce/Templates
- * @version     1.6.4
+ * @version     2.2.7
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -54,6 +54,8 @@ if ( class_exists( 'WC_Authorize_Net_CIM' ) || function_exists( 'woocommerce_str
 </ul>
 
 <form action="" method="post">
+	
+	<?php do_action( 'woocommerce_edit_account_form_start' ); ?>
 
 	<div class="row space-bottom20">
 		<div class="col-sm-6">
@@ -83,9 +85,16 @@ if ( class_exists( 'WC_Authorize_Net_CIM' ) || function_exists( 'woocommerce_str
 			<input type="password" class="form-control" name="password_2" id="password_2" />			
 		</div>
 	</div><!-- /.row -->
+	
+	<?php do_action( 'woocommerce_edit_account_form' ); ?>
 
-	<p><input type="submit" class="btn btn-lg btn-primary" name="save_account_details" value="<?php _e( 'Save changes', 'woocommerce' ); ?>" /></p>
+	<p>
+		<input type="submit" class="btn btn-lg btn-primary" name="save_account_details" value="<?php _e( 'Save changes', 'woocommerce' ); ?>" />
+	</p>
 
 	<?php wp_nonce_field( 'save_account_details' ); ?>
 	<input type="hidden" name="action" value="save_account_details" />
+	
+	<?php do_action( 'woocommerce_edit_account_form_end' ); ?>
+	
 </form>
