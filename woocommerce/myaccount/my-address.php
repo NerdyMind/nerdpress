@@ -4,7 +4,7 @@
  *
  * @author 		WooThemes
  * @package 	WooCommerce/Templates
- * @version     2.0.0
+ * @version     2.2.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $customer_id = get_current_user_id();
 
-if ( get_option( 'woocommerce_ship_to_billing_address_only' ) === 'no' && get_option( 'woocommerce_calc_shipping' ) !== 'no' ) {
+if ( ! wc_ship_to_billing_address_only() && get_option( 'woocommerce_calc_shipping' ) !== 'no' ) {
 	$page_title = apply_filters( 'woocommerce_my_account_my_address_title', __( 'My Addresses', 'woocommerce' ) );
 	$get_addresses    = apply_filters( 'woocommerce_my_account_get_addresses', array(
 		'billing' => __( 'Billing Address', 'woocommerce' ),
@@ -35,11 +35,11 @@ $col = 1;
 	<?php echo apply_filters( 'woocommerce_my_account_my_address_description', __( 'The following addresses will be used on the checkout page by default.', 'woocommerce' ) ); ?>
 </p>
 
-<?php if ( get_option( 'woocommerce_ship_to_billing_address_only' ) === 'no' && get_option( 'woocommerce_calc_shipping' ) !== 'no' ) echo '<div class="row addresses">'; ?>
+<?php if ( ! wc_ship_to_billing_address_only() && get_option( 'woocommerce_calc_shipping' ) !== 'no' ) echo '<div class="row addresses">'; ?>
 
 <?php foreach ( $get_addresses as $name => $title ) : ?>
 
-	<?php if ( get_option( 'woocommerce_ship_to_billing_address_only' ) === 'no' && get_option( 'woocommerce_calc_shipping' ) !== 'no' ) echo '<div class="col-sm-6">'; ?>
+	<?php if ( ! wc_ship_to_billing_address_only() && get_option( 'woocommerce_calc_shipping' ) !== 'no' ) echo '<div class="col-sm-6">'; ?>
 
 	<div class="col-<?php echo ( ( $col = $col * -1 ) < 0 ) ? 1 : 2; ?> address">
 		<header class="title">
@@ -73,8 +73,8 @@ $col = 1;
 		</address>
 	</div>
 	
-	<?php if ( get_option( 'woocommerce_ship_to_billing_address_only' ) === 'no' && get_option( 'woocommerce_calc_shipping' ) !== 'no' ) echo '</div>'; ?>
+	<?php if ( ! wc_ship_to_billing_address_only() && get_option( 'woocommerce_calc_shipping' ) !== 'no' ) echo '</div>'; ?>
 
 <?php endforeach; ?>
 
-<?php if ( get_option( 'woocommerce_ship_to_billing_address_only' ) === 'no' && get_option( 'woocommerce_calc_shipping' ) !== 'no' ) echo '</div>'; ?>
+<?php if ( ! wc_ship_to_billing_address_only() && get_option( 'woocommerce_calc_shipping' ) !== 'no' ) echo '</div>'; ?>
