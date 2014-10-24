@@ -16,7 +16,7 @@ class NerdPressConfig {
 		endif;		
 
 		if ( is_admin() ) add_filter( 'acf/load_field/name=hide_sidebar_templates', array( &$this, 'nerdpress_load_config_templates' ) );
-		if ( is_admin() ) add_filter( 'acf/load_field/name=tax_connect', array( &$this, 'nerdpress_load_config_post_types' ) );
+		//if ( is_admin() ) add_filter( 'acf/load_field/name=tax_connect', array( &$this, 'nerdpress_load_config_post_types' ) );
 		if ( is_admin() ) add_filter( 'acf/load_field/name=hide_sidebar_post_types', array( &$this, 'nerdpress_load_config_post_types' ) );
 		add_action( 'after_setup_theme', array( &$this, 'load_fields' ) );
 	}
@@ -678,7 +678,7 @@ class NerdPressConfig {
 								'key' => 'field_530e7cf8b3659',
 								'label' => 'Connect To',
 								'name' => 'tax_connect',
-								'type' => 'select',
+								'type' => 'text',
 								'conditional_logic' => array (
 									'status' => 1,
 									'rules' => array (
@@ -691,6 +691,7 @@ class NerdPressConfig {
 									'allorany' => 'all',
 								),
 								'column_width' => '',
+/*
 								'choices' => array (
 									'post' => 'post',
 									'page' => 'page',
@@ -709,6 +710,7 @@ class NerdPressConfig {
 									'shop_coupon' => 'shop_coupon',
 									'movie' => 'movie',
 								),
+*/
 								'default_value' => '',
 								'allow_null' => 1,
 								'multiple' => 0,
