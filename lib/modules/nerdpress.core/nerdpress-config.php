@@ -256,6 +256,14 @@ class NerdPressConfig {
 						'default_value' => 0,
 					),
 					array (
+						'key' => 'field_530e388457842',
+						'label' => 'Universal Analytics',
+						'name' => 'enable_universal_google_analytics',
+						'type' => 'true_false',
+						'message' => 'Enable Universal Google Analytics',
+						'default_value' => 0,
+					),
+					array (
 						'key' => 'field_530e385247875',
 						'label' => 'Google Analytics ID',
 						'name' => 'analytics_id',

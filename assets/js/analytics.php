@@ -6,9 +6,23 @@ header( 'Content-Type:text/javascript' );
 $analytics_id = get_option( 'options_analytics_id' );
 $analytics_site_url = get_option( 'options_analytics_site_url' );
 $analytics_demographics = get_option( 'options_analytics_demographics' );
+$analytics_universal = get_option( 'options_enable_universal_google_analytics');
 
 if ( !$analytics_id ) return;
+
+if ( $analytics_universal ) :
 ?>
+ (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+ })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ ga('create', '<?= $analytics_id; ?>', 'auto');
+ <?php if ( $analytics_demographics ) : ?>
+ ga('require', 'displayfeatures');
+ <?php endif; ?>
+ ga('send', 'pageview');
+<?php else : ?>
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', '<?= $analytics_id; ?>']);
 <?php
@@ -33,6 +47,7 @@ ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www')
 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 
 })();
+<?php endif; ?>
 
 if (typeof jQuery != 'undefined') {
   jQuery(document).ready(function($) {
@@ -76,7 +91,11 @@ if (typeof jQuery != 'undefined') {
         else track = false;
  
         if (track) {
+	      <?php if ( $analytics_universal ) : ?>
+	      ga('send', 'event', elEv.category.toLowerCase(), elEv.action.toLowerCase(), elEv.label.toLowerCase(), elEv.value);
+	      <?php else : ?>
           _gaq.push(['_trackEvent', elEv.category.toLowerCase(), elEv.action.toLowerCase(), elEv.label.toLowerCase(), elEv.value, elEv.non_i]);
+          <?php endif; ?>
           if ( el.attr('target') == undefined || el.attr('target').toLowerCase() != '_blank') {
             setTimeout(function() { location.href = elEv.loc; }, 400);
             return false;
@@ -90,10 +109,18 @@ if (typeof jQuery != 'undefined') {
 jQuery(document).ready(function($) {
 	$('a[data-toggle="tab"]').click(function() {
 		var tabName = $(this).text();
+		<?php if ( $analytics_universal ) : ?>
+		ga( 'send', 'event', 'click', 'tab', tabName );
+		<?php else : ?>
 		_gaq.push(['_trackEvent', 'click', 'tab', tabName]);
+		<?php endif; ?>
 	});
 
 	$('.nerdpress-social-share a').click(function(share) {
+		<?php if ( $analytics_universal ) : ?>
+		ga( 'send', 'event', 'share', 'social', $(this).attr('data-network') );
+		<?php else : ?>
 		_gaq.push(['_trackEvent', 'share', 'social', $(this).attr('data-network')]);
+		<?php endif; ?>
 	});
 });
