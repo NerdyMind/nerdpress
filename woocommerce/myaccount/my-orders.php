@@ -99,4 +99,8 @@ if ( $customer_orders ) : ?>
 
 	</table>
 
+<?php else : ?>
+
+	<div class="alert alert-info">You have not yet placed any orders.</div>
+
 <?php endif; ?>
