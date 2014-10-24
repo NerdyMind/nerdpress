@@ -4,16 +4,14 @@
  *
  * @author 		WooThemes
  * @package 	WooCommerce/Templates
- * @version     2.0.0
+ * @version     2.2.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-global $woocommerce;
-
 if ( $order ) : ?>
 
-	<?php if ( in_array( $order->status, array( 'failed' ) ) ) : ?>
+	<?php if ( $order->has_status( 'failed' ) ) : ?>
 
 		<div class="alert alert-danger"><?php _e( 'Unfortunately your order cannot be processed as the originating bank/merchant has declined your transaction.', 'woocommerce' ); ?></div>
 
@@ -33,7 +31,7 @@ if ( $order ) : ?>
 
 	<?php else : ?>
 
-		<div class="alert alert-success"><?php _e( 'Thank you for your order. Your order details are below. A confirmation e-mail will be sent to you as well.', 'woocommerce' ); ?></div>
+		<div class="alert alert-success"><?php echo apply_filters( 'woocommerce_thankyou_order_received_text', __( 'Thank you. Your order has been received.', 'woocommerce' ), $order ); ?></div>
 
 		<ul class="order_details hidden">
 			<li class="order">
@@ -55,7 +53,6 @@ if ( $order ) : ?>
 			</li>
 			<?php endif; ?>
 		</ul>
-		
 		<div class="clear"></div>
 
 	<?php endif; ?>
@@ -65,6 +62,6 @@ if ( $order ) : ?>
 
 <?php else : ?>
 
-	<p><?php _e( 'Thank you. Your order has been received.', 'woocommerce' ); ?></p>
+	<div class="alert alert-success"><?php echo apply_filters( 'woocommerce_thankyou_order_received_text', __( 'Thank you. Your order has been received.', 'woocommerce' ), null ); ?></div>
 
 <?php endif; ?>
