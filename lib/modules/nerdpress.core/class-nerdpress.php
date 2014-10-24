@@ -328,7 +328,7 @@ class NerdPress {
 		
 		wp_enqueue_style( 'nerdpress', $the_css, false, '6c39f42987ae297a5a21e2bb35bf3402' );
 		
-		wp_register_style( 'font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css' );
+		wp_register_style( 'font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css' );
 		wp_enqueue_style( 'font-awesome' );
 		
 		wp_enqueue_script( 'bootstrap', '//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js', array( 'jquery' ), NULL, true );
